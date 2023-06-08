@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="main_vector_size">24dp</dimen>
+    <dimen name="toolbar_height">84dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="back_button_backgrounded">42dp</dimen>
+
+    <!-- Dimensions -->
+    <dimen name="main_margin_horizontal">24dp</dimen>
+    <dimen name="main_margin_vertical">24dp</dimen>
+
+    <!-- Labels -->
+    <dimen name="screen_title_size">16sp</dimen>
+    <dimen name="subtitle_size">14sp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="main_radius">8dp</dimen>
+    <dimen name="main_stroke_width">2dp</dimen>
+
+    <dimen name="collapsing_toolbar_title_size">12sp</dimen>
+    <dimen name="collapsing_toolbar_description_baseline">40dp</dimen> <!-- (curve_main + collapsing_toolbar_arrow_height / 2) -->
+    <dimen name="collapsing_toolbar_description_margin_expanded">84dp</dimen> <!-- brand_logo_size(64) + collapsing_toolbar_title_padding_start(12) + 8dp -->
+    <dimen name="collapsing_toolbar_description_translation">-28dp</dimen> <!-- -(collapsing_toolbar_description_margin_expanded - collapsing_toolbar_arrow_height) -->
+    <dimen name="collapsing_toolbar_show_more_padding">32dp</dimen> <!-- padding for collapsed content with show more button -->
+
+
+    <dimen name="shadow_nav_bar">6dp</dimen>
+    <dimen name="shadow_nav_bar_negative">-6dp</dimen>
+    <dimen name="nav_bar_offset">20dp</dimen> <!-- curve_nav_bar + 4 -->
+    <dimen name="curve_top_offset_negative_double_standard">-32dp</dimen>
+    <dimen name="curve_top_offset_negative_medium">-24dp</dimen>
+    <dimen name="curve_main_negative_standard">-10dp</dimen>
+    <dimen name="curve_top_offset_small_negative">-16dp</dimen>
+</resources>

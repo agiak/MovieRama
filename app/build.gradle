@@ -1,0 +1,121 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.android.extensions'
+}
+
+android {
+    namespace 'com.example.movierama'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.movierama"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug{
+
+            buildConfigField 'String', 'BASE_API_URL', '"https://api.themoviedb.org/3/search/"'
+            buildConfigField 'String', 'BASE_API_KEY', '"2810b46c0fe82e2e7eb43466581d495f"'
+
+            // Splash
+            buildConfigField 'boolean', 'SPLASH_ENABLE', 'true'
+            buildConfigField 'int', 'SPLASH_DURATION', '3000'
+        }
+        release {
+
+            buildConfigField 'String', 'BASE_API_URL', '"https://api.themoviedb.org/3/"'
+            buildConfigField 'String', 'BASE_API_KEY', '"2810b46c0fe82e2e7eb43466581d495f"'
+
+            // Splash
+            buildConfigField 'boolean', 'SPLASH_ENABLE', 'true'
+            buildConfigField 'int', 'SPLASH_DURATION', '2000'
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+    kotlinOptions {
+        jvmTarget = kotlinTarget
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:${coreKTXVersion}"
+
+    // Support
+    implementation "androidx.appcompat:appcompat:${appCompatVersion}"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
+
+    // Storage
+    implementation "com.orhanobut:hawk:${hawkVersion}"
+
+    // UI components
+    implementation "com.google.android.material:material:${materialVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
+    implementation "androidx.recyclerview:recyclerview:${recyclerViewVersion}"
+
+    // Lifecycle Components
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-process:${lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${navigationVersion}"
+    implementation "androidx.navigation:navigation-ui-ktx:${navigationVersion}"
+
+    // Networking - Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okHttp3Logging}"
+
+    // Image loading
+    implementation "com.github.bumptech.glide:glide:${glideVersion}"
+
+    // Dependency Injection - Hilt
+    implementation "com.google.dagger:hilt-android:${hiltVersion}"
+    kapt "com.google.dagger:hilt-android-compiler:${hiltVersion}"
+
+    // Legacy
+    implementation "androidx.legacy:legacy-support-v4:${androidXLegacyVersion}"
+    // Splash Api
+
+    implementation "androidx.core:core-splashscreen:${splashVersion}"
+
+    // Location
+    implementation "com.google.android.gms:play-services-location:${locationVersion}"
+
+    // Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
+    // Test
+    testImplementation "junit:junit:${jUnit}"
+    androidTestImplementation "androidx.test:core-ktx:${testCoreKtx}"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+}

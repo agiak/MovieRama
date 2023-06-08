@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BackButtonBlack">
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_width">@dimen/main_vector_size</item>
+        <item name="android:layout_height">@dimen/main_vector_size</item>
+        <item name="srcCompat">@drawable/ic_back_black</item>
+    </style>
+
+    <style name="BackButtonBackgrounded">
+        <item name="android:layout_width">@dimen/back_button_backgrounded</item>
+        <item name="android:layout_height">@dimen/back_button_backgrounded</item>
+        <item name="android:background">@drawable/bg_circle_grey</item>
+        <item name="srcCompat">@drawable/ic_back_black</item>
+    </style>
+
+    <!-- Labels -->
+
+    <style name="Title">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/screen_title_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="SubTitle">
+        <item name="android:textColor">@color/label_subtitle</item>
+        <item name="android:textSize">@dimen/subtitle_size</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- Buttons -->
+
+    <style name="PrimaryButton">
+        <item name="android:background">@drawable/button_primary</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="SecondaryButton">
+        <item name="android:background">@drawable/button_secondary</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="AlternativeButton">
+        <item name="android:background">@drawable/button_alternative</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+</resources>

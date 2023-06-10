@@ -25,8 +25,8 @@ android {
     buildTypes {
         debug{
 
-            buildConfigField 'String', 'BASE_API_URL', '"https://api.themoviedb.org/3/search/"'
-            buildConfigField 'String', 'BASE_API_KEY', '"2810b46c0fe82e2e7eb43466581d495f"'
+            buildConfigField 'String', 'BASE_API_URL', '"https://api.themoviedb.org/3/"'
+            buildConfigField 'String', 'BASE_API_KEY', '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjhkYjc0OGQ0ZDczOGEyMjhmNGM4OGVkYzA1YTI3NSIsInN1YiI6IjY0ODA5NWNmOTkyNTljMDBlMmYyZDljMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T9BMoyeYnCgihW0iOXFBaEVyIPF6Z8BG3GiUKxmK8Lw"'
 
             // Splash
             buildConfigField 'boolean', 'SPLASH_ENABLE', 'true'
@@ -35,7 +35,7 @@ android {
         release {
 
             buildConfigField 'String', 'BASE_API_URL', '"https://api.themoviedb.org/3/"'
-            buildConfigField 'String', 'BASE_API_KEY', '"2810b46c0fe82e2e7eb43466581d495f"'
+            buildConfigField 'String', 'BASE_API_KEY', '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjhkYjc0OGQ0ZDczOGEyMjhmNGM4OGVkYzA1YTI3NSIsInN1YiI6IjY0ODA5NWNmOTkyNTljMDBlMmYyZDljMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T9BMoyeYnCgihW0iOXFBaEVyIPF6Z8BG3GiUKxmK8Lw"'
 
             // Splash
             buildConfigField 'boolean', 'SPLASH_ENABLE', 'true'

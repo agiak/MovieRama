@@ -243,11 +243,20 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/item_similar_movie" />
 
+            <ProgressBar
+                android:id="@+id/loader_similar_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/similar_movies_list"
+                app:layout_constraintBottom_toBottomOf="@+id/similar_movies_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/similar_movies_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="similar_movies_label,similar_movies_list" />
+                app:constraint_referenced_ids="similar_movies_label,similar_movies_list, loader_similar_movies" />
 
             <TextView
                 android:id="@+id/reviews_label"
@@ -272,17 +281,26 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/item_review" />
 
+            <ProgressBar
+                android:id="@+id/loader_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/reviews_list"
+                app:layout_constraintBottom_toBottomOf="@+id/reviews_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/reviews_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="reviews_label, reviews_list" />
+                app:constraint_referenced_ids="reviews_label, reviews_list, loader_reviews" />
 
             <ProgressBar
                 android:id="@+id/contentLoader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/similar_movies_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

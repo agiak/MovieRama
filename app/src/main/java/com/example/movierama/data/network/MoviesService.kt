@@ -13,7 +13,16 @@ interface MoviesService {
     @GET("movie/popular")
     suspend fun getMovies(
         @Query("language") language: String = "en-US",
+        @Query("page") page: Int
+    ): MoviesResponse
+
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("language") language: String = "en-US",
+        @Query("query") movieName: String? = null,
         @Query("page") page: Int,
+        @Query("include_adult") include_adult: Boolean = false,
+        @Query("year") year: String? = null
     ): MoviesResponse
 
     @GET("movie/{movie_id}")
@@ -21,15 +30,6 @@ interface MoviesService {
         @Path("movie_id") movieId: Long,
         @Query("language") language: String = "en-US",
     ): MovieDetailsResponse
-
-    @GET("search/movie")
-    suspend fun searchMovies(
-        @Query("language") language: String = "en-US",
-        @Query("query") movieName: String,
-        @Query("page") page: Int,
-        @Query("include_adult") include_adult: Boolean = false,
-        @Query("year") year: Boolean = false
-    ): MoviesResponse
 
     @GET("movie/{movie_id}/reviews")
     suspend fun getReviews(

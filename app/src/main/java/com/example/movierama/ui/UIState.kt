@@ -30,6 +30,8 @@ sealed class UIState<out T> {
      */
     object InProgress: UIState<Nothing>()
 
+    object LoadingMore: UIState<Nothing>()
+
     /**
      * State about to change.
      */

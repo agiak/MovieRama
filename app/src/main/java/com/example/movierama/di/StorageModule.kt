@@ -1,7 +1,7 @@
 package com.example.movierama.di
 
 import android.content.Context
-import android.preference.PreferenceManager
+import com.example.movierama.storage.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,10 +13,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class StorageModule {
 
-/*    @Singleton
+    @Singleton
     @Provides
-    fun provideSessionDatabase(@ApplicationContext applicationContext: Context): MyDatabase = Room.databaseBuilder(
-        applicationContext,
-        MyDatabase::class.java, "my_database"
-    ).build()*/
+    fun providePreferenceManager(@ApplicationContext context: Context) = PreferenceManager(context)
 }

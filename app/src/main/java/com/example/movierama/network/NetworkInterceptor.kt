@@ -10,36 +10,27 @@ import javax.inject.Inject
 
 class NetworkInterceptor @Inject constructor() : Interceptor, RequestHeader {
 
+    companion object {
+        const val HEADER_AUTH = "Authorization"
+        const val ContentType = "Content-Type"
+        const val ACCEPTANCE = "accept"
+        const val AUTH_TYPE = "Bearer"
+    }
+
     private val tag = NetworkInterceptor::class.java.simpleName
 
     private fun getRequest(request: Request): Request {
         return request.newBuilder()
-            .addHeader("Authorization", getBasicAuthentication())
-            .addHeader("Content-Type", "application/json")
-            .addHeader("accept", "application/json")
+            .addHeader(HEADER_AUTH, getBasicAuthentication())
+            .addHeader(ContentType, "application/json")
+            .addHeader(ACCEPTANCE, "application/json")
             .build()
     }
 
-    override fun getBasicAuthentication(): String = "Bearer " + BuildConfig.BASE_API_KEY
-
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-
-        val initialRequest = chain.request()
-
-        // Assemble new request
-        val request = getRequest(initialRequest)
-
-        // Make the request and get the response
-        val response = chain.proceed(request)
-
-        // Get content type and body. At this point the response is consumed, so it must be built again on return
-        val contentType = response.body?.contentType()
-        val bodyString = response.body?.string() ?: throw IOException("Empty response body")
-
-        // Rebuild and return the response
-        val body = ResponseBody.create(contentType, bodyString)
-        return response.newBuilder().body(body).build()
+        return chain.proceed(getRequest(chain.request()))
     }
+
+    override fun getBasicAuthentication(): String = AUTH_TYPE + " " + BuildConfig.BASE_API_KEY
 
 }

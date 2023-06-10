@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movierama.data.Movie
 import com.example.movierama.data.network.EmptyResponseDataException
+import com.example.movierama.data.network.movies.MoviesResponse
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.ui.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,56 +19,101 @@ class MoviesViewModel @Inject constructor(
     private val repository: MoviesRepository
 ) : ViewModel() {
 
-    private val _movies = MutableStateFlow<UIState<List<Movie>>>(UIState.IDLE)
-    val movies: StateFlow<UIState<List<Movie>>> = _movies
+    private val _homeState = MutableStateFlow<UIState<List<Movie>>>(UIState.IDLE)
+    val homeState: StateFlow<UIState<List<Movie>>> = _homeState
 
-    var layoutManagerState: Parcelable? = null
+    private var allMovies: MutableSet<Movie> = mutableSetOf()
 
-    private var allMovies: MutableList<Movie> = mutableListOf()
+    var searchFilter = MovieFilter()
 
     private var totalPages = 1
     private var currentPage = 1
 
-    fun getMoviesPerPage(resetPages: Boolean = false): Boolean {
-        _movies.value = UIState.InProgress
+    init {
+        loadPopularMovies()
+    }
 
-        if (resetPages) {
-            currentPage = 1
-            allMovies = mutableListOf()
-            _movies.value = UIState.Result(allMovies.toList())
-        }
-
-        if (currentPage <= totalPages) {
-            viewModelScope.launch {
-                _movies.value = if (currentPage == 1)
-                    UIState.InProgress // show central loader only first time
-                else UIState.IDLE // change the state because flows collector are not triggered if you pass same value
-                try {
-                    val response = repository.getMovies(currentPage = currentPage)
-                    if (response.totalResults == 0)
-                        _movies.value =
-                            UIState.Error(EmptyResponseDataException(if (currentPage == 1) "empty" else "end"))
-                    else {
-                        currentPage = if (response.totalPages > currentPage) {
-                            totalPages = response.totalPages
-                            currentPage + 1
-                        } else {
-                            response.totalPages + 1
-                        }
-                        response.moviesNetwork.forEach { movie ->
-                            val uiMovie = movie.toHomeMovie()
-                            if (!allMovies.contains(uiMovie)) allMovies.add(uiMovie)
-                        }
-                        _movies.value = UIState.Result(allMovies)
-                    }
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                    _movies.value = UIState.Error(ex)
-                }
+    fun loadPopularMovies() {
+        viewModelScope.launch {
+            _homeState.value = UIState.InProgress
+            try {
+                val movies = repository.getPopularMovies(currentPage)
+                handleMovieResponse(movies)
+            } catch (ex: Exception) {
+                _homeState.value = UIState.Error(ex)
             }
-            return true
-        } else {
-            return false
         }
     }
+
+    fun searchMovies(input: MovieFilter) {
+        searchFilter = input
+        if (searchFilter.isEmpty()) {
+            loadPopularMovies()
+        } else {
+            currentPage = 1
+            viewModelScope.launch {
+                _homeState.value = UIState.InProgress
+                try {
+                    val response = repository.searchMovies(
+                        page = currentPage,
+                        movieName = searchFilter.movieName,
+                        year = searchFilter.year
+                    )
+                    allMovies.clear()
+                    handleMovieResponse(response)
+                } catch (ex: Exception) {
+                    _homeState.value = UIState.Error(ex)
+                }
+            }
+        }
+    }
+
+    fun loadMoreMovies() {
+        if (currentPage < totalPages) {
+            currentPage++
+            if (searchFilter.isEmpty()) {
+                loadPopularMovies()
+            } else {
+                viewModelScope.launch {
+                    _homeState.value = UIState.LoadingMore
+                    try {
+                        val movies = repository.searchMovies(
+                            page = currentPage,
+                            movieName = searchFilter.movieName,
+                            year = searchFilter.year
+                        )
+                        handleMovieResponse(movies)
+                    } catch (ex: Exception) {
+                        _homeState.value = UIState.Error(ex)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleMovieResponse(response: MoviesResponse) {
+        totalPages = response.totalPages
+        allMovies.addAll(response.getUiMovies().also {
+            it.setIsFavouriteToMovies()
+        })
+        _homeState.value = UIState.Result(allMovies.toList())
+    }
+
+    fun onFavouriteChaned(movieId: Long) {
+        repository.onFavouriteChange(movieId)
+    }
+
+    // updates isFavourite state of each movie element of the list
+    private fun List<Movie>.setIsFavouriteToMovies() {
+        forEach {
+            it.isFavourite = repository.isMovieFavourite(it.id)
+        }
+    }
+}
+
+data class MovieFilter(
+    val movieName: String? = null,
+    val year: String? = null
+) {
+    fun isEmpty() = movieName.isNullOrEmpty() && year.isNullOrEmpty()
 }

@@ -6,7 +6,13 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+/**
+ * Format a string to the desired date format.
+ *
+ * 2023-01-20 -> 20 January 2023
+ * */
 fun String.mapToDate(): String {
+    if (isEmpty()) return ""
     val inputFormat = DateTimeFormatter.ofPattern(date_input_format, Locale.getDefault())
     val outputFormat = DateTimeFormatter.ofPattern(date_output_format, Locale.getDefault())
 

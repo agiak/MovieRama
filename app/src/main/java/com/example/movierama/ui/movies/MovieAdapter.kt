@@ -13,7 +13,8 @@ import com.example.movierama.data.Movie
 import com.example.movierama.databinding.ItemMovieBinding
 
 class MovieAdapter (
-    private val onClick: (movie: Movie) -> Unit
+    private val onClick: (movie: Movie) -> Unit,
+    private val onFavouriteClick: (movieId: Long) -> Unit
 ) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
     private lateinit var context: Context
@@ -34,15 +35,27 @@ class MovieAdapter (
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            Glide.with(context)
-                .load(movie.poster)
-                .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_movie_placeholder))
-                .into(binding.logo)
-            binding.title.text = movie.title
-            binding.rating.rating = movie.rating
+            with(movie){
+                Glide.with(context)
+                    .load(poster)
+                    .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_movie_placeholder))
+                    .into(binding.logo)
+                binding.title.text = title
+                binding.rating.rating = rating
+                binding.releaseDate.text = releaseDate
 
-            binding.root.setOnClickListener {
-                onClick(movie)
+                binding.root.setOnClickListener {
+                    onClick(movie)
+                }
+                binding.favouriteBtn.apply {
+                    setOnClickListener {
+                        with(binding.favouriteBtn){
+                            isSelected = isSelected.not()
+                        }
+                        onFavouriteClick(this@with.id)
+                    }
+                    isSelected = isFavourite
+                }
             }
         }
     }

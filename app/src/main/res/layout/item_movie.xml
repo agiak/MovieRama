@@ -24,12 +24,13 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
             style="@style/Title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="12dp"
             app:layout_constraintBottom_toTopOf="@+id/rating"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:text="Jurassic World: Fallen Kingdom" />
@@ -39,7 +40,7 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/title"
@@ -48,6 +49,7 @@
             tools:text="Jurassic World: Fallen Kingdom" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/release_date"
             style="@style/SubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,10 +64,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/rating"
+            android:layout_marginTop="6dp"
+            app:layout_constraintBottom_toTopOf="@+id/rating"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/title"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:srcCompat="@drawable/bg_favourite" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

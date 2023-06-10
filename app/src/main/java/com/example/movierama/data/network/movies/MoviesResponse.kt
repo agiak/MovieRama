@@ -10,7 +10,14 @@ data class MoviesResponse(
     @SerializedName("results") val moviesNetwork: List<MovieNetwork>,
     @SerializedName("total_pages") val totalPages: Int,
     @SerializedName("total_results") val totalResults: Int
-)
+) {
+    fun getUiMovies(): List<Movie> =
+        ArrayList<Movie>().apply {
+            moviesNetwork.forEach { networkMovie ->
+                add(networkMovie.toHomeMovie())
+            }
+        }
+}
 
 data class MovieNetwork(
     @SerializedName("adult") val adult: Boolean,
@@ -27,13 +34,13 @@ data class MovieNetwork(
     @SerializedName("video") val video: Boolean,
     @SerializedName("vote_average") val vote_average: Float,
     @SerializedName("vote_count") val vote_count: Int
-){
+) {
     fun toHomeMovie() = Movie(
         id = this.id,
         title = title,
-        rating = vote_average,
+        rating = vote_average / 2.0F, // round the rating to a 5 stars scale
         releaseDate = release_date.mapToDate(),
-        poster = URL_POSTER + poster_path,
-        isFavourite = false
+        poster = URL_POSTER + poster_path, // add base image url because server returns only the prefix
+        isFavourite = false // by default is false
     )
 }

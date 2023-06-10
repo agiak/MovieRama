@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,9 +30,9 @@ class MovieViewModel @Inject constructor(
             reviewsState = ReviewsState()
         )
     )
-    val movieState: StateFlow<MovieState> = _movieState.asStateFlow()
+    val movieState: StateFlow<MovieState> = _movieState
 
-    init {
+    fun getData(){
         getMovieDetails()
         getReviews()
         getSimilarMovies()
@@ -61,8 +62,10 @@ class MovieViewModel @Inject constructor(
 
     fun getMovieDetails() {
         viewModelScope.launch {
-            _movieState.value.copy(
-                movieDetailsState = try {
+            _movieState.update { it.movieDetailsState =
+
+            }
+                try {
                     val movieResponse =
                         repository.getMovie(movieId = movieId)
                     MovieDetailsState(
@@ -77,7 +80,7 @@ class MovieViewModel @Inject constructor(
                         errorMessage = ex.message.toString()
                     )
                 }
-            )
+
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.movierama.data.network.movies
 
 import com.example.movierama.data.MovieDetails
+import com.example.movierama.ui.URL_POSTER
 import com.example.movierama.ui.utils.mapToDate
 import com.google.gson.annotations.SerializedName
 
@@ -36,8 +37,8 @@ data class MovieDetailsResponse(
         title = title,
         type = getType(),
         releaseDate = releaseDate.mapToDate(),
-        rating = rating,
-        poster = posterPath,
+        rating = rating / 2.0F,
+        poster = URL_POSTER + posterPath,
         isFavourite = false,
         description = overview,
         author = "director",

@@ -5,7 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,10 +16,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.databinding.FragmentMoviesBinding
-import com.example.movierama.ui.PagingScrollingState
 import com.example.movierama.ui.UIState
+import com.example.movierama.ui.utils.addOnLoadMoreListener
+import com.example.movierama.ui.utils.isNumber
+import com.example.movierama.ui.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import gr.baseapps.baselistapp.ui.utils.addTitleElevationAnimation
+import com.example.movierama.ui.utils.addTitleElevationAnimation
+import com.example.movierama.ui.utils.scrollToUp
+import com.example.movierama.ui.utils.showUpButtonListener
 import gr.baseapps.baselistapp.ui.utils.hide
 import gr.baseapps.baselistapp.ui.utils.show
 import kotlinx.coroutines.launch
@@ -33,8 +38,6 @@ class MoviesFragment : Fragment() {
 
     private lateinit var moviesAdapter: MovieAdapter
 
-    var pagingState = PagingScrollingState.FETCH_MORE
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,59 +51,63 @@ class MoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initSubscriptions()
-        viewModel.getMoviesPerPage(true)
     }
 
-    private fun initViews(){
-        moviesAdapter = MovieAdapter {
-            findNavController().navigate(MoviesFragmentDirections.actionNavMoviesToNavMovie(it.id))
+    private fun initViews() {
+        initMoviesListView()
+        initSearchBar()
+        binding.moveUpBtn.setOnClickListener {
+            binding.moviesList.scrollToUp()
         }
+    }
+
+    private fun initSearchBar() {
+        binding.searchBar.doAfterTextChanged {
+            viewModel.searchMovies(getSearchValue(it.toString()))
+        }
+    }
+
+    private fun getSearchValue(input: String): MovieFilter = MovieFilter(movieName = input)
+
+    private fun initMoviesListView() {
+        moviesAdapter = MovieAdapter(onClick = {
+            findNavController().navigate(MoviesFragmentDirections.actionNavMoviesToNavMovie(it.id))
+        }, onFavouriteClick = {
+            viewModel.onFavouriteChaned(it)
+        })
         binding.moviesList.apply {
             addTitleElevationAnimation(binding.searchBar)
-            val llm = LinearLayoutManager(requireContext()).also {
-                it.onRestoreInstanceState(viewModel.layoutManagerState)
-            }
-
-            layoutManager = llm
             adapter = moviesAdapter
-
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (pagingState == PagingScrollingState.FETCH_MORE &&
-                        llm.findLastCompletelyVisibleItemPosition() != -1 &&
-                        llm.findLastCompletelyVisibleItemPosition() >= llm.itemCount - 2
-                    ) {
-                        binding.moreLoader.show()
-                        pagingState = if (viewModel.getMoviesPerPage()) PagingScrollingState.PAUSE
-                        else {
-                            binding.moreLoader.hide()
-                            PagingScrollingState.STOP
-                        }
-                    }
-                }
-            })
+            addOnLoadMoreListener {
+                viewModel.loadMoreMovies()
+            }
+            showUpButtonListener(binding.moveUpBtn)
         }
     }
 
-    private fun hideLoaders(){
+    private fun hideLoaders() {
         binding.moreLoader.hide()
         binding.loader.hide()
     }
 
-    private fun initSubscriptions(){
+    private fun initSubscriptions() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.movies.collect {
+                viewModel.homeState.collect {
                     when (it) {
                         is UIState.Result -> {
                             hideLoaders()
-                            Log.d("MoviesFragment","Ui updated with ${it.data.size} movies")
+                            Log.d("MoviesFragment", "Ui updated with ${it.data.size} movies")
                             moviesAdapter.submitList(it.data)
-                            pagingState = PagingScrollingState.FETCH_MORE
+                            handleEmptyData(it.data.isEmpty())
                         }
+
                         is UIState.Error -> {
                             hideLoaders()
-                            Toast.makeText(requireContext(),"Error ${it.error.message}",Toast.LENGTH_LONG).show()
+                            showToast(it.error.message.toString())
+                        }
+                        UIState.LoadingMore -> {
+                            binding.moreLoader.show()
                         }
                         UIState.InProgress -> {
                             binding.loader.show()
@@ -112,6 +119,11 @@ class MoviesFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun handleEmptyData(isEmpty: Boolean) {
+        binding.moviesList.isVisible = isEmpty.not()
+        binding.noResultsLbl.isVisible = isEmpty
     }
 
     override fun onDestroyView() {

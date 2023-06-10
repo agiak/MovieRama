@@ -6,7 +6,7 @@ data class Movie(
     val poster: String,
     val rating: Float,
     val releaseDate: String,
-    val isFavourite: Boolean
+    var isFavourite: Boolean
 )
 
 data class MovieDetails(

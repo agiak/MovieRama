@@ -32,8 +32,8 @@ class ReviewAdapter: ListAdapter<Review, ReviewAdapter.ReviewViewHolder>(ReviewD
             with(review){
                 binding.review.text = content
                 binding.author.text = author
+                binding.rating.text = rating.toString()
             }
-
         }
     }
 

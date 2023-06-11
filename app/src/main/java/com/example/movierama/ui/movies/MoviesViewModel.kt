@@ -1,10 +1,8 @@
 package com.example.movierama.ui.movies
 
-import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movierama.data.Movie
-import com.example.movierama.data.network.EmptyResponseDataException
 import com.example.movierama.data.network.movies.MoviesResponse
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.ui.UIState
@@ -99,7 +97,7 @@ class MoviesViewModel @Inject constructor(
         _homeState.value = UIState.Result(allMovies.toList())
     }
 
-    fun onFavouriteChaned(movieId: Long) {
+    fun onFavouriteChanged(movieId: Long) {
         repository.onFavouriteChange(movieId)
     }
 

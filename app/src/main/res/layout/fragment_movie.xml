@@ -104,208 +104,216 @@
             app:layout_anchor="@id/appBar"
             app:srcCompat="@drawable/ic_back_white" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginVertical="24dp"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/release_date"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="6 March 2018" />
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="24dp">
 
-            <RatingBar
-                android:id="@+id/rating"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="@+id/release_date"
-                app:layout_constraintTop_toBottomOf="@+id/release_date"
-                tools:text="Jurassic World: Fallen Kingdom" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="6 March 2018" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/favourite_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/rating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/release_date"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                <RatingBar
+                    android:id="@+id/rating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/release_date"
+                    app:layout_constraintTop_toBottomOf="@+id/release_date"
+                    tools:text="Jurassic World: Fallen Kingdom" />
 
-            <TextView
-                android:id="@+id/description_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/movie_description_label"
-                android:textAllCaps="true"
-                android:textColor="@color/secondary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rating" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/favourite_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rating"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/release_date"
+                    app:srcCompat="@drawable/bg_favourite" />
 
-            <TextView
-                android:id="@+id/description_field"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description_label"
-                tools:maxLines="5"
-                tools:text="@tools:sample/lorem/random" />
+                <TextView
+                    android:id="@+id/description_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/movie_description_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/secondary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rating" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/description_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="description_label,description_field" />
+                <TextView
+                    android:id="@+id/description_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/description_label"
+                    tools:maxLines="5"
+                    tools:text="@tools:sample/lorem/random" />
 
-            <TextView
-                android:id="@+id/director_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/movie_director_label"
-                android:textAllCaps="true"
-                android:textColor="@color/secondary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description_field" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/description_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="description_label,description_field" />
 
-            <TextView
-                android:id="@+id/director_field"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/director_label"
-                tools:maxLines="5"
-                tools:text="J.A. Bayona" />
+                <TextView
+                    android:id="@+id/director_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/movie_director_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/secondary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/description_field" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/director_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="director_label,director_field" />
+                <TextView
+                    android:id="@+id/director_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/director_label"
+                    tools:maxLines="5"
+                    tools:text="J.A. Bayona" />
 
-            <TextView
-                android:id="@+id/cast_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/movie_cast_label"
-                android:textAllCaps="true"
-                android:textColor="@color/secondary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/director_field" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/director_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="director_label,director_field" />
 
-            <TextView
-                android:id="@+id/cast_field"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cast_label"
-                tools:maxLines="5"
-                tools:text="Chris Pratt, Bryce Dallas Howard, Rafe Spall" />
+                <TextView
+                    android:id="@+id/cast_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/movie_cast_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/secondary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/director_field" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/cast_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="cast_label,cast_field" />
+                <TextView
+                    android:id="@+id/cast_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cast_label"
+                    tools:maxLines="5"
+                    tools:text="Chris Pratt, Bryce Dallas Howard, Rafe Spall" />
 
-            <TextView
-                android:id="@+id/similar_movies_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/movie_similar_movies_label"
-                android:textAllCaps="true"
-                android:textColor="@color/secondary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cast_field" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/cast_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="cast_label,cast_field" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/similar_movies_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/similar_movies_label"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_similar_movie" />
+                <TextView
+                    android:id="@+id/similar_movies_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/movie_similar_movies_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/secondary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cast_field" />
 
-            <ProgressBar
-                android:id="@+id/loader_similar_movies"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/similar_movies_list"
-                app:layout_constraintBottom_toBottomOf="@+id/similar_movies_list"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/similar_movies_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/similar_movies_label"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_similar_movie" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/similar_movies_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="similar_movies_label,similar_movies_list, loader_similar_movies" />
+                <ProgressBar
+                    android:id="@+id/loader_similar_movies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/similar_movies_list"
+                    app:layout_constraintBottom_toBottomOf="@+id/similar_movies_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/reviews_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/movie_reviews_label"
-                android:textAllCaps="true"
-                android:textColor="@color/secondary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/similar_movies_list" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/similar_movies_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="similar_movies_label,similar_movies_list, loader_similar_movies" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/reviews_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reviews_label"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_review" />
+                <TextView
+                    android:id="@+id/reviews_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/movie_reviews_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/secondary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/similar_movies_list" />
 
-            <ProgressBar
-                android:id="@+id/loader_reviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/reviews_list"
-                app:layout_constraintBottom_toBottomOf="@+id/reviews_list"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviews_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:nestedScrollingEnabled="false"
+                    tools:itemCount="5"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reviews_label"
+                    tools:listitem="@layout/item_review" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/reviews_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="reviews_label, reviews_list, loader_reviews" />
+                <ProgressBar
+                    android:id="@+id/loader_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/reviews_list"
+                    app:layout_constraintBottom_toBottomOf="@+id/reviews_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <ProgressBar
-                android:id="@+id/contentLoader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/similar_movies_label"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/reviews_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="reviews_label, reviews_list, loader_reviews" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ProgressBar
+                    android:id="@+id/contentLoader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/similar_movies_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

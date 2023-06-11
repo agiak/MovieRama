@@ -13,12 +13,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.databinding.FragmentMoviesBinding
 import com.example.movierama.ui.UIState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
-import com.example.movierama.ui.utils.isNumber
 import com.example.movierama.ui.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.movierama.ui.utils.addTitleElevationAnimation
@@ -73,14 +70,12 @@ class MoviesFragment : Fragment() {
         moviesAdapter = MovieAdapter(onClick = {
             findNavController().navigate(MoviesFragmentDirections.actionNavMoviesToNavMovie(it.id))
         }, onFavouriteClick = {
-            viewModel.onFavouriteChaned(it)
+            viewModel.onFavouriteChanged(it)
         })
         binding.moviesList.apply {
-            addTitleElevationAnimation(binding.searchBar)
             adapter = moviesAdapter
-            addOnLoadMoreListener {
-                viewModel.loadMoreMovies()
-            }
+            addTitleElevationAnimation(binding.searchBar)
+            addOnLoadMoreListener { viewModel.loadMoreMovies() }
             showUpButtonListener(binding.moveUpBtn)
         }
     }

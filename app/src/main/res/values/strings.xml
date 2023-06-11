@@ -9,7 +9,7 @@
     <string name="movies_no_results_found">No results found</string>
 
     <!-- Movie screen -->
-    <string name="movies_search_hint">Search MovieRama</string>
+    <string name="movies_search_hint">Search your movie by name</string>
     <string name="movie_description_label">Description</string>
     <string name="movie_director_label">Director</string>
     <string name="movie_cast_label">Cast</string>

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SimilarResponse(
     @SerializedName("page") val page: Int,
-    @SerializedName("similarMovies") val similarMovieNetworks: List<SimilarMovieNetwork>,
+    @SerializedName("results") val similarMovieNetworks: List<SimilarMovieNetwork>,
     @SerializedName("total_pages") val totalPages: Int,
     @SerializedName("total_results") val totalResults: Int
 )

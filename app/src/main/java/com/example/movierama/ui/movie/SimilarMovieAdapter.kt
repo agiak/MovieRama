@@ -39,7 +39,6 @@ class SimilarMovieAdapter: ListAdapter<SimilarMovie, SimilarMovieAdapter.Similar
                     .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_movie_placeholder))
                     .into(binding.poster)
             }
-
         }
     }
 

@@ -61,7 +61,7 @@ fun RecyclerView.addOnLoadMoreListener(
  *
  * @param moveUpButton = represents button
  *
- * Note that you need implement the on click listener to the button separately
+ * Note that you need implement the on click listener to the button separately.
  * */
 fun RecyclerView.showUpButtonListener(moveUpButton: View) {
     addOnScrollListener(object : RecyclerView.OnScrollListener() {

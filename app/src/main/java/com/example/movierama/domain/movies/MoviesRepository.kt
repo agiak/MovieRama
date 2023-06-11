@@ -2,6 +2,7 @@ package com.example.movierama.domain.movies
 
 import com.example.movierama.data.network.movies.MoviesResponse
 import com.example.movierama.data.network.MoviesService
+import com.example.movierama.data.network.credits.CreditsResponse
 import com.example.movierama.data.network.movies.MovieDetailsResponse
 import com.example.movierama.data.network.reviews.ReviewsResponse
 import com.example.movierama.data.network.similar.SimilarResponse
@@ -52,6 +53,12 @@ class MoviesRepository @Inject constructor(
         currentPage: Int
     ): SimilarResponse = withContext(dispatchersImpl.backgroundThread()) {
         service.getSimilarMovies(movieId = movieId, page = currentPage)
+    }
+
+    suspend fun getMovieCredits(
+        movieId: Long
+    ): CreditsResponse = withContext(dispatchersImpl.backgroundThread()) {
+        service.getMovieCredits(movieId = movieId)
     }
 
     fun onFavouriteChange(movieId: Long) {

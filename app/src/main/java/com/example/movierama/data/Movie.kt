@@ -16,8 +16,11 @@ data class MovieDetails(
     val releaseDate: String,
     val rating: Float,
     val poster: String,
-    val isFavourite: Boolean,
-    val description: String,
-    val author: String,
-    val cast: String
+    var isFavourite: Boolean,
+    val description: String
+)
+
+data class CreditsDetails(
+    val director: String = "",
+    val cast: String = ""
 )

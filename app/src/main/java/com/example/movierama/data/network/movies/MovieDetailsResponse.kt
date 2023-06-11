@@ -40,13 +40,11 @@ data class MovieDetailsResponse(
         rating = rating / 2.0F,
         poster = URL_POSTER + posterPath,
         isFavourite = false,
-        description = overview,
-        author = "director",
-        cast = ""
+        description = overview
     )
 
     fun getType(): String {
-        return genres.joinToString { ", ${it.name}" }
+        return genres.joinToString(", ") { it.name }
     }
 }
 

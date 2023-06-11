@@ -46,6 +46,7 @@ class MoviesViewModel @Inject constructor(
     fun searchMovies(input: MovieFilter) {
         searchFilter = input
         if (searchFilter.isEmpty()) {
+            allMovies.clear()
             loadPopularMovies()
         } else {
             currentPage = 1
@@ -113,5 +114,5 @@ data class MovieFilter(
     val movieName: String? = null,
     val year: String? = null
 ) {
-    fun isEmpty() = movieName.isNullOrEmpty() && year.isNullOrEmpty()
+    fun isEmpty() = movieName.isNullOrBlank() && year.isNullOrBlank()
 }

@@ -4,8 +4,6 @@ import com.example.movierama.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.ResponseBody
-import java.io.IOException
 import javax.inject.Inject
 
 class NetworkInterceptor @Inject constructor() : Interceptor, RequestHeader {
@@ -16,8 +14,6 @@ class NetworkInterceptor @Inject constructor() : Interceptor, RequestHeader {
         const val ACCEPTANCE = "accept"
         const val AUTH_TYPE = "Bearer"
     }
-
-    private val tag = NetworkInterceptor::class.java.simpleName
 
     private fun getRequest(request: Request): Request {
         return request.newBuilder()

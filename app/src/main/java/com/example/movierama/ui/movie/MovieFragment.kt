@@ -1,7 +1,6 @@
 package com.example.movierama.ui.movie
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,18 +16,16 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.movierama.R
 import com.example.movierama.data.CreditsDetails
-import com.example.movierama.databinding.FragmentMovie2Binding
 import com.example.movierama.databinding.FragmentMovieBinding
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.item_review.author
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieFragment : Fragment() {
 
-    private var _binding: FragmentMovie2Binding? = null
+    private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: MovieViewModel by viewModels()
@@ -43,7 +40,7 @@ class MovieFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMovie2Binding.inflate(inflater, container, false)
+        _binding = FragmentMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,7 +53,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun initViews() {
-        binding.backButton.setOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -125,7 +122,7 @@ class MovieFragment : Fragment() {
                         )
                     )
                     .into(binding.logo)
-                binding.title.text = title
+                binding.collapsingLayout.title = title
                 binding.type.text = type
                 binding.favouriteBtn.isSelected = isFavourite
                 binding.releaseDate.text = releaseDate

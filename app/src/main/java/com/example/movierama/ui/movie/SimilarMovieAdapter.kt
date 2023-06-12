@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movierama.R
-import com.example.movierama.data.network.reviews.Review
 import com.example.movierama.data.network.similar.SimilarMovie
 import com.example.movierama.databinding.ItemSimilarMovieBinding
 
-class SimilarMovieAdapter: ListAdapter<SimilarMovie, SimilarMovieAdapter.SimilarMovieViewHolder>(SimilarMovieDiffCallback()) {
+class SimilarMovieAdapter :
+    ListAdapter<SimilarMovie, SimilarMovieAdapter.SimilarMovieViewHolder>(SimilarMovieDiffCallback()) {
 
     private lateinit var context: Context
 
@@ -33,10 +33,15 @@ class SimilarMovieAdapter: ListAdapter<SimilarMovie, SimilarMovieAdapter.Similar
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(similarMovie: SimilarMovie) {
-            with(similarMovie){
+            with(similarMovie) {
                 Glide.with(context)
                     .load(similarMovie.poster)
-                    .placeholder(ContextCompat.getDrawable(context, R.drawable.ic_movie_placeholder))
+                    .placeholder(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.ic_movie_placeholder
+                        )
+                    )
                     .into(binding.poster)
             }
         }

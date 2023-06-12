@@ -9,7 +9,7 @@ import java.util.Locale
 /**
  * Format a string to the desired date format.
  *
- * 2023-01-20 -> 20 January 2023
+ * 2023-01-20 -> 20 January 23
  * */
 fun String.mapToDate(): String {
     if (isEmpty()) return ""

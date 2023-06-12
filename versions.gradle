@@ -53,4 +53,5 @@ ext {
     testCoreKtx = "1.5.0"
     testJunit = "1.1.5"
     espresso = "3.5.1"
+    truth = "1.1.4"
 }

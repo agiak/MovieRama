@@ -68,7 +68,7 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
 
-    // Storage
+    // Storage - Shared prefs editor
     implementation "com.orhanobut:hawk:${hawkVersion}"
 
     // UI components
@@ -100,23 +100,18 @@ dependencies {
 
     // Legacy
     implementation "androidx.legacy:legacy-support-v4:${androidXLegacyVersion}"
-    // Splash Api
 
+    // Splash Api
     implementation "androidx.core:core-splashscreen:${splashVersion}"
 
     // Location
     implementation "com.google.android.gms:play-services-location:${locationVersion}"
 
-    // Room
-    implementation "androidx.room:room-runtime:$roomVersion"
-    annotationProcessor "androidx.room:room-compiler:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
-
     // Test
     testImplementation "junit:junit:${jUnit}"
-    testImplementation "com.google.truth:truth:1.1.4"
+    testImplementation "com.google.truth:truth:${truth}"
+    testImplementation 'org.mockito:mockito-core:5.3.0'
     androidTestImplementation "androidx.test:core-ktx:${testCoreKtx}"
-    androidTestImplementation "androidx.test.ext:junit:1.1.5"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    androidTestImplementation "androidx.test.ext:junit:${testJunit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${espresso}"
 }

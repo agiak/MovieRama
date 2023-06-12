@@ -9,7 +9,6 @@ import com.example.movierama.data.network.reviews.ReviewNetwork
 import com.example.movierama.data.network.similar.SimilarMovie
 import com.example.movierama.data.network.similar.SimilarMovieNetwork
 import com.example.movierama.domain.movies.MoviesRepository
-import com.example.movierama.ui.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

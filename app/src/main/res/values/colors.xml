@@ -4,9 +4,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
 
-    <color name="primary">#69F0AE</color>
-    <color name="primary_light">#B9F6CA</color>
-    <color name="primary_dark">#00E676</color>
+    <color name="primary">#00756A</color>
+    <color name="primary_light">#00A595</color>
+    <color name="primary_dark">#00635A</color>
 
     <color name="secondary">#40C4FF</color>
     <color name="secondary_light">#80D8FF</color>

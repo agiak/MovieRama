@@ -36,18 +36,25 @@
         app:srcCompat="@drawable/ic_clear_text"
         tools:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movies_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="24dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/moreLoader"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"
-        tools:listitem="@layout/item_movie"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/search_bar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="24dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_movie"
+            tools:visibility="visible" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/no_results_lbl"

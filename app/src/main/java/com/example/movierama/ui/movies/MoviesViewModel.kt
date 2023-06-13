@@ -31,9 +31,15 @@ class MoviesViewModel @Inject constructor(
         loadPopularMovies()
     }
 
-    fun loadPopularMovies() {
+    fun loadPopularMovies(isRefresh: Boolean = false) {
         viewModelScope.launch {
             _homeState.value = UIState.InProgress
+            if (isRefresh){
+                allMovies.clear()
+                totalPages = 1
+                currentPage = 1
+                _homeState.value = UIState.Result(allMovies.toList())
+            }
             try {
                 val movies = repository.getPopularMovies(currentPage)
                 handleMovieResponse(movies)
@@ -107,6 +113,10 @@ class MoviesViewModel @Inject constructor(
         forEach {
             it.isFavourite = repository.isMovieFavourite(it.id)
         }
+    }
+
+    fun refresh() {
+        loadPopularMovies(isRefresh = true)
     }
 }
 

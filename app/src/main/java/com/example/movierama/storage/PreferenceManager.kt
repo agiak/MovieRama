@@ -4,33 +4,67 @@ import android.content.Context
 import com.orhanobut.hawk.Hawk
 import javax.inject.Inject
 
+/**
+ * Manages the preferences using Hawk library for storing and retrieving data.
+ * Hawk is a third-party library that handles Android shared preferences.
+ *
+ * @param context The context used to initialize Hawk.
+ */
 class PreferenceManager @Inject constructor(context: Context) {
 
-    companion object{
+    companion object {
         const val FAVOURITE_MOVIES_KEY = "favourite_movies_key"
     }
 
     init {
+        // Initialize Hawk with the provided context
         Hawk.init(context).build()
     }
 
-    fun<T> get(key: String, defaultValue: T): T{
+    /**
+     * Retrieves the value associated with the given key from preferences.
+     *
+     * @param key The key used to retrieve the value.
+     * @param defaultValue The default value to be returned if the key is not found.
+     * @return The value associated with the key, or the defaultValue if not found.
+     */
+    fun <T> get(key: String, defaultValue: T): T {
         return Hawk.get(key, defaultValue)
     }
 
-    fun<T> put(key: String, defaultValue: T){
-         Hawk.put(key, defaultValue)
+    /**
+     * Stores the given value associated with the provided key in preferences.
+     *
+     * @param key The key used to store the value.
+     * @param value The value to be stored.
+     */
+    fun <T> put(key: String, value: T) {
+        Hawk.put(key, value)
     }
 
-    fun delete(key: String){
+    /**
+     * Deletes the preference entry associated with the given key.
+     *
+     * @param key The key of the preference entry to be deleted.
+     */
+    fun delete(key: String) {
         Hawk.delete(key)
     }
 
-    fun deleteAll(){
+    /**
+     * Deletes all preference entries.
+     */
+    fun deleteAll() {
         Hawk.deleteAll()
     }
 
-    fun contains(key: String): Boolean{
+    /**
+     * Checks if a preference entry exists with the given key.
+     *
+     * @param key The key to check for existence.
+     * @return true if a preference entry with the key exists, false otherwise.
+     */
+    fun contains(key: String): Boolean {
         return Hawk.contains(key)
     }
 }

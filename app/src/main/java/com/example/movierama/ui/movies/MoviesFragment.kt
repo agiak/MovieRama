@@ -57,6 +57,9 @@ class MoviesFragment : Fragment() {
         binding.moveUpBtn.setOnClickListener {
             binding.moviesList.scrollToUp()
         }
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+        }
     }
 
     private fun initSearchBar() {
@@ -92,6 +95,7 @@ class MoviesFragment : Fragment() {
     private fun hideLoaders() {
         binding.moreLoader.hide()
         binding.loader.hide()
+        binding.refreshLayout.hide()
     }
 
     private fun initSubscriptions() {

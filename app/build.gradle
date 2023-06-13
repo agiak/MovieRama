@@ -110,7 +110,7 @@ dependencies {
     // Test
     testImplementation "junit:junit:${jUnit}"
     testImplementation "com.google.truth:truth:${truth}"
-    testImplementation 'org.mockito:mockito-core:5.3.0'
+    testImplementation "org.mockito:mockito-core:${mockito}"
     androidTestImplementation "androidx.test:core-ktx:${testCoreKtx}"
     androidTestImplementation "androidx.test.ext:junit:${testJunit}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${espresso}"

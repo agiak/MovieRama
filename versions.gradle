@@ -54,4 +54,5 @@ ext {
     testJunit = "1.1.5"
     espresso = "3.5.1"
     truth = "1.1.4"
+    mockito = "5.3.0"
 }

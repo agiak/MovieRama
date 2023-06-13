@@ -38,7 +38,6 @@ class MoviesViewModel @Inject constructor(
                 allMovies.clear()
                 totalPages = 1
                 currentPage = 1
-                _homeState.value = UIState.Result(allMovies.toList())
             }
             try {
                 val movies = repository.getPopularMovies(currentPage)

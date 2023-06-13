@@ -20,7 +20,11 @@ class MoviesViewModel @Inject constructor(
     private val _homeState = MutableStateFlow<UIState<List<Movie>>>(UIState.IDLE)
     val homeState: StateFlow<UIState<List<Movie>>> = _homeState
 
+    // Set to store all movies
+
     private var allMovies: MutableSet<Movie> = mutableSetOf()
+
+    // MovieFilter object to hold search filter parameters
 
     var searchFilter = MovieFilter()
 
@@ -31,10 +35,15 @@ class MoviesViewModel @Inject constructor(
         loadPopularMovies()
     }
 
-    fun loadPopularMovies(isRefresh: Boolean = false) {
+    /**
+     * Function to load popular movies.
+     * Uses viewModelScope to launch a coroutine and updates the homeState accordingly.
+     * Handles pagination and exception cases.
+     */
+    private fun loadPopularMovies(isRefresh: Boolean = false) {
         viewModelScope.launch {
             _homeState.value = UIState.InProgress
-            if (isRefresh){
+            if (isRefresh) {
                 allMovies.clear()
                 totalPages = 1
                 currentPage = 1
@@ -48,6 +57,11 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Function to search movies based on the provided MovieFilter input.
+     * Updates the searchFilter property and loads popular movies if the search filter is empty.
+     * Otherwise, performs a search query using the repository and updates the homeState.
+     */
     fun searchMovies(input: MovieFilter) {
         searchFilter = input
         if (searchFilter.isEmpty()) {
@@ -72,6 +86,10 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Function to load more movies when pagination is available.
+     * Increments the currentPage and loads popular movies or performs a search query.
+     */
     fun loadMoreMovies() {
         if (currentPage < totalPages) {
             currentPage++
@@ -103,22 +121,37 @@ class MoviesViewModel @Inject constructor(
         _homeState.value = UIState.Result(allMovies.toList())
     }
 
+    /**
+    * Function to handle the change in "isFavourite" status of a movie.
+    * Calls the repository to update the "isFavourite" status of the movie.
+    */
     fun onFavouriteChanged(movieId: Long) {
         repository.onFavouriteChange(movieId)
     }
 
-    // updates isFavourite state of each movie element of the list
+    /**
+     * Extension function to update the "isFavourite" state of each movie element in the list.
+     * Iterates through each movie and calls the repository to check if it is a favourite.
+     */
     private fun List<Movie>.setIsFavouriteToMovies() {
         forEach {
             it.isFavourite = repository.isMovieFavourite(it.id)
         }
     }
 
+    /**
+     * Function to refresh the movie list by loading popular movies again.
+     * Clears the allMovies set and resets the pagination parameters.
+     */
     fun refresh() {
         loadPopularMovies(isRefresh = true)
     }
 }
 
+/**
+ * Data class representing the movie filter parameters. Contains optional properties for
+ * movieName and year. Provides a function to check if the filter is empty.
+ * */
 data class MovieFilter(
     val movieName: String? = null,
     val year: String? = null

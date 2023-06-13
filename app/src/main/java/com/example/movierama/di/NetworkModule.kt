@@ -2,7 +2,7 @@ package com.example.movierama.di
 
 import com.example.movierama.network.NetworkInterceptor
 import com.example.movierama.BuildConfig
-import com.example.movierama.data.network.MoviesService
+import com.example.movierama.network.MoviesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

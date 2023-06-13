@@ -1,6 +1,6 @@
 package com.example.movierama.domain.movies
 
-import com.example.movierama.data.network.MoviesService
+import com.example.movierama.network.MoviesService
 import com.example.movierama.data.network.credits.CreditsResponse
 import com.example.movierama.data.network.movies.MovieDetailsResponse
 import com.example.movierama.data.network.movies.MoviesResponse

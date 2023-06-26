@@ -48,6 +48,9 @@ ext {
     roomVersion = "2.5.0"
     hawkVersion = '2.0.1'
 
+    // Logging
+    timberVersion = "4.7.1"
+
     // Testing
     jUnit = "4.13.2"
     testCoreKtx = "1.5.0"

@@ -6,25 +6,24 @@ import com.example.movierama.data.Movie
 import com.example.movierama.data.network.movies.MoviesResponse
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.ui.UIState
+import com.example.movierama.ui.utils.DebounceUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
+    private val debounceUtil: DebounceUtil
 ) : ViewModel() {
 
     private val _homeState = MutableStateFlow<UIState<List<Movie>>>(UIState.IDLE)
     val homeState: StateFlow<UIState<List<Movie>>> = _homeState
 
-    // Set to store all movies
-
     private var allMovies: MutableSet<Movie> = mutableSetOf()
-
-    // MovieFilter object to hold search filter parameters
 
     var searchFilter = MovieFilter()
 
@@ -35,20 +34,17 @@ class MoviesViewModel @Inject constructor(
         loadPopularMovies()
     }
 
-    /**
-     * Function to load popular movies.
-     * Uses viewModelScope to launch a coroutine and updates the homeState accordingly.
-     * Handles pagination and exception cases.
-     */
-    private fun loadPopularMovies(isRefresh: Boolean = false) {
+    fun loadPopularMovies(isRefresh: Boolean = false) {
         viewModelScope.launch {
             _homeState.value = UIState.InProgress
-            if (isRefresh) {
+            Timber.d("loadPopularMovies was called and isRefresh $isRefresh")
+            if (isRefresh){
                 allMovies.clear()
                 totalPages = 1
                 currentPage = 1
             }
             try {
+                Timber.d("loadPopularMovies with page $currentPage")
                 val movies = repository.getPopularMovies(currentPage)
                 handleMovieResponse(movies)
             } catch (ex: Exception) {
@@ -57,47 +53,59 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Function to search movies based on the provided MovieFilter input.
-     * Updates the searchFilter property and loads popular movies if the search filter is empty.
-     * Otherwise, performs a search query using the repository and updates the homeState.
-     */
+    fun loadMorePopularMovies() {
+        viewModelScope.launch {
+            _homeState.value = UIState.LoadingMore
+            try {
+                Timber.d("loadMorePopularMovies for page $currentPage")
+                val movies = repository.getPopularMovies(currentPage)
+                handleMovieResponse(movies)
+            } catch (ex: Exception) {
+                _homeState.value = UIState.Error(ex)
+            }
+        }
+    }
+
     fun searchMovies(input: MovieFilter) {
-        searchFilter = input
-        if (searchFilter.isEmpty()) {
-            allMovies.clear()
-            loadPopularMovies()
-        } else {
-            currentPage = 1
-            viewModelScope.launch {
-                _homeState.value = UIState.InProgress
-                try {
-                    val response = repository.searchMovies(
-                        page = currentPage,
-                        movieName = searchFilter.movieName,
-                        year = searchFilter.year
-                    )
-                    allMovies.clear()
-                    handleMovieResponse(response)
-                } catch (ex: Exception) {
-                    _homeState.value = UIState.Error(ex)
+        _homeState.value = UIState.InProgress
+        debounceUtil.debounce {
+            searchFilter = input
+            if (searchFilter.isEmpty()) {
+                allMovies.clear()
+                loadPopularMovies()
+            } else {
+                currentPage = 1
+                viewModelScope.launch {
+                    try {
+                        Timber.d("search with movie name '${searchFilter.movieName}' and page $currentPage")
+                        val response = repository.searchMovies(
+                            page = currentPage,
+                            movieName = searchFilter.movieName,
+                            year = searchFilter.year
+                        )
+                        allMovies.clear()
+                        handleMovieResponse(response)
+                    } catch (ex: Exception) {
+                        _homeState.value = UIState.Error(ex)
+                    }
                 }
             }
         }
     }
 
-    /**
-     * Function to load more movies when pagination is available.
-     * Increments the currentPage and loads popular movies or performs a search query.
-     */
     fun loadMoreMovies() {
+        Timber.d("Load more was called")
+        if (homeState.value is UIState.LoadingMore) {
+            Timber.d("Skip loading because currently loading...")
+            return
+        }
         if (currentPage < totalPages) {
             currentPage++
+            _homeState.value = UIState.LoadingMore
             if (searchFilter.isEmpty()) {
-                loadPopularMovies()
+                loadMorePopularMovies()
             } else {
                 viewModelScope.launch {
-                    _homeState.value = UIState.LoadingMore
                     try {
                         val movies = repository.searchMovies(
                             page = currentPage,
@@ -118,40 +126,27 @@ class MoviesViewModel @Inject constructor(
         allMovies.addAll(response.getUiMovies().also {
             it.setIsFavouriteToMovies()
         })
+        Timber.e("Finally retrieved ${response.moviesNetwork.size} network movies for page ${response.page}")
+        Timber.e("Submitted to UI ${allMovies.size} movies")
         _homeState.value = UIState.Result(allMovies.toList())
     }
 
-    /**
-    * Function to handle the change in "isFavourite" status of a movie.
-    * Calls the repository to update the "isFavourite" status of the movie.
-    */
     fun onFavouriteChanged(movieId: Long) {
         repository.onFavouriteChange(movieId)
     }
 
-    /**
-     * Extension function to update the "isFavourite" state of each movie element in the list.
-     * Iterates through each movie and calls the repository to check if it is a favourite.
-     */
+    // updates isFavourite state of each movie element of the list
     private fun List<Movie>.setIsFavouriteToMovies() {
         forEach {
             it.isFavourite = repository.isMovieFavourite(it.id)
         }
     }
 
-    /**
-     * Function to refresh the movie list by loading popular movies again.
-     * Clears the allMovies set and resets the pagination parameters.
-     */
     fun refresh() {
         loadPopularMovies(isRefresh = true)
     }
 }
 
-/**
- * Data class representing the movie filter parameters. Contains optional properties for
- * movieName and year. Provides a function to check if the filter is empty.
- * */
 data class MovieFilter(
     val movieName: String? = null,
     val year: String? = null

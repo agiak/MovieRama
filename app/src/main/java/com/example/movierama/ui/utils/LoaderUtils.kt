@@ -1,4 +1,4 @@
-package gr.baseapps.baselistapp.ui.utils
+package com.example.movierama.ui.utils
 
 import android.widget.ProgressBar
 import androidx.core.view.isVisible

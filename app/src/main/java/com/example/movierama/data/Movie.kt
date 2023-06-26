@@ -19,8 +19,3 @@ data class MovieDetails(
     var isFavourite: Boolean,
     val description: String
 )
-
-data class CreditsDetails(
-    val director: String = "",
-    val cast: String = ""
-)

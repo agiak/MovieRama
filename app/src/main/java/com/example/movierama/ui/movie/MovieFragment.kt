@@ -15,8 +15,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.movierama.R
-import com.example.movierama.data.CreditsDetails
 import com.example.movierama.databinding.FragmentMovieBinding
+import com.example.movierama.domain.useCases.CreditsDetails
+import com.example.movierama.domain.useCases.MovieDetailsState
+import com.example.movierama.domain.useCases.ReviewsState
+import com.example.movierama.domain.useCases.SimilarMoviesState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,18 +74,18 @@ class MovieFragment : Fragment() {
     private fun initSimilarMoviesViews() {
         binding.similarMoviesList.apply {
             adapter = similarMovieAdapter
-            addOnLoadMoreListener {
+            addOnLoadMoreListener(loadMoreAction = {
                 viewModel.getMoreSimilarMovies()
-            }
+            })
         }
     }
 
     private fun initReviewsViews() {
         binding.reviewsList.apply {
             adapter = reviewsAdapter
-            addOnLoadMoreListener {
+            addOnLoadMoreListener(loadMoreAction = {
                 viewModel.getMoreReviews()
-            }
+            })
         }
     }
     private fun initSubscriptions() {
@@ -134,13 +137,11 @@ class MovieFragment : Fragment() {
 
     private fun handleSimilarMovies(similarMoviesState: SimilarMoviesState) {
         binding.loaderSimilarMovies.isVisible = similarMoviesState.isLoading
-        binding.similarMoviesList.isVisible = similarMoviesState.isLoading.not()
         similarMovieAdapter.submitList(similarMoviesState.similarMovies)
     }
 
     private fun handleReviews(reviewsState: ReviewsState) {
         binding.loaderReviews.isVisible = reviewsState.isLoading
-        binding.reviewsList.isVisible = reviewsState.isLoading.not()
         reviewsAdapter.submitList(reviewsState.reviews)
     }
 

@@ -75,6 +75,8 @@ dependencies {
     implementation "com.google.android.material:material:${materialVersion}"
     implementation "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
     implementation "androidx.recyclerview:recyclerview:${recyclerViewVersion}"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
+
 
     // Lifecycle Components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
@@ -106,6 +108,9 @@ dependencies {
 
     // Location
     implementation "com.google.android.gms:play-services-location:${locationVersion}"
+
+    // Loging
+    implementation "com.jakewharton.timber:timber:${timberVersion}"
 
     // Test
     testImplementation "junit:junit:${jUnit}"

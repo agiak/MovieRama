@@ -1,7 +1,6 @@
 package com.example.movierama.ui.movies
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +17,14 @@ import com.example.movierama.databinding.FragmentMoviesBinding
 import com.example.movierama.ui.UIState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.addTitleElevationAnimation
+import com.example.movierama.ui.utils.hide
 import com.example.movierama.ui.utils.scrollToUp
+import com.example.movierama.ui.utils.show
 import com.example.movierama.ui.utils.showToast
 import com.example.movierama.ui.utils.showUpButtonListener
 import dagger.hilt.android.AndroidEntryPoint
-import gr.baseapps.baselistapp.ui.utils.hide
-import gr.baseapps.baselistapp.ui.utils.show
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
@@ -87,7 +87,9 @@ class MoviesFragment : Fragment() {
         binding.moviesList.apply {
             adapter = moviesAdapter
             addTitleElevationAnimation(binding.searchBar)
-            addOnLoadMoreListener { viewModel.loadMoreMovies() }
+            addOnLoadMoreListener(loadMoreAction = {
+                viewModel.loadMoreMovies()
+            })
             showUpButtonListener(binding.moveUpBtn)
         }
     }
@@ -105,11 +107,10 @@ class MoviesFragment : Fragment() {
                     when (it) {
                         is UIState.Result -> {
                             hideLoaders()
-                            Log.d("MoviesFragment", "Ui updated with ${it.data.size} movies")
+                            Timber.w( "Ui updated with ${it.data.size} movies")
                             moviesAdapter.submitList(it.data)
                             handleEmptyData(it.data.isEmpty())
                         }
-
                         is UIState.Error -> {
                             hideLoaders()
                             showToast(it.error.message.toString())

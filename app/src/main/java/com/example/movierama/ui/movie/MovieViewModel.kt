@@ -2,131 +2,74 @@ package com.example.movierama.ui.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movierama.data.CreditsDetails
-import com.example.movierama.data.MovieDetails
-import com.example.movierama.data.network.reviews.Review
-import com.example.movierama.data.network.reviews.ReviewNetwork
-import com.example.movierama.data.network.similar.SimilarMovie
-import com.example.movierama.data.network.similar.SimilarMovieNetwork
+import com.example.movierama.domain.dispatchers.IDispatchers
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.domain.useCases.CreditsDetails
+import com.example.movierama.domain.useCases.CreditsUseCase
+import com.example.movierama.domain.useCases.MovieDetailsState
+import com.example.movierama.domain.useCases.MovieDetailsUseCase
+import com.example.movierama.domain.useCases.ReviewsState
+import com.example.movierama.domain.useCases.ReviewsUseCase
+import com.example.movierama.domain.useCases.SimilarMoviesState
+import com.example.movierama.domain.useCases.SimilarMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
+    private val similarMoviesUseCase: SimilarMoviesUseCase,
+    private val reviewsUseCase: ReviewsUseCase,
+    private val movieDetailsUseCase: MovieDetailsUseCase,
+    private val creditsUseCase: CreditsUseCase,
+    dispatcher: IDispatchers
 ) : ViewModel() {
 
     var movieId: Long = 0L
 
-    private val _movieState = MutableStateFlow(
+    val movieState: StateFlow<MovieState> = combine(
+        similarMoviesUseCase.similarMoviesState,
+        reviewsUseCase.reviewsState,
+        creditsUseCase.creditsState,
+        movieDetailsUseCase.movieDetailsState
+    ) { similarMoviesState: SimilarMoviesState, reviewsState: ReviewsState, creditsDetails: CreditsDetails, movieDetailsState: MovieDetailsState ->
         MovieState(
-            movieDetailsState = MovieDetailsState(),
-            similarMoviesState = SimilarMoviesState(),
-            reviewsState = ReviewsState(),
-            creditsDetails = CreditsDetails()
+            similarMoviesState = similarMoviesState,
+            reviewsState = reviewsState,
+            movieDetailsState = movieDetailsState,
+            creditsDetails = creditsDetails
         )
-    )
-    val movieState: StateFlow<MovieState> = _movieState
+    }
+        .flowOn(dispatcher.defaultThread())
+        .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000L),
+                initialValue =  MovieState(
+                    movieDetailsState = MovieDetailsState(),
+                    similarMoviesState = SimilarMoviesState(),
+                    reviewsState = ReviewsState(),
+                    creditsDetails = CreditsDetails()
+                )
+        )
 
-    private val allReviews: MutableSet<Review> = mutableSetOf()
-    private var currentReviewsPage = 1
-    private var totalReviewsPages = 1
-
-    private val allSimilarMovies: MutableSet<SimilarMovie> = mutableSetOf()
-    private var currentSimilarMoviesPage = 1
-    private var totalSimilarMoviesPages = 1
 
     fun getData() {
-        getMovieDetails()
-        getReviews()
-        getSimilarMovies()
-        getCredits()
-    }
-
-    private fun getCredits() {
-        viewModelScope.launch {
-            _movieState.update {
-                it.copy(
-                    creditsDetails = try {
-                        val creditsResponse = repository.getMovieCredits(movieId)
-                        CreditsDetails(
-                            director = creditsResponse.getDirector(),
-                            cast = creditsResponse.getCast()
-                        )
-                    } catch (ex: Exception) {
-                        CreditsDetails()
-                    }
-                )
-            }
-        }
-    }
-
-    fun getReviews() {
-        viewModelScope.launch {
-            _movieState.update {
-                it.copy(
-                    reviewsState = try {
-                        val reviewsResponse =
-                            repository.getReviews(
-                                movieId = movieId,
-                                currentPage = currentReviewsPage
-                            )
-                        totalReviewsPages = reviewsResponse.totalPages
-                        allReviews.addAll(reviewsResponse.reviewNetworks.toReviewList())
-                        ReviewsState(
-                            reviews = allReviews.toList(),
-                            isLoading = false,
-                            errorMessage = ""
-                        )
-                    } catch (ex: Exception) {
-                        ex.printStackTrace()
-                        ReviewsState(
-                            reviews = emptyList(),
-                            isLoading = false,
-                            errorMessage = ex.message.toString()
-                        )
-                    }
-                )
-            }
-        }
-    }
-
-    fun getMoreReviews() {
-        if (currentReviewsPage < totalReviewsPages) {
-            currentReviewsPage++
-            getReviews()
-        }
-    }
-
-    fun getMovieDetails() {
-        viewModelScope.launch {
-            _movieState.update {
-                it.copy(
-                    movieDetailsState = try {
-                        val movieResponse =
-                            repository.getMovie(movieId = movieId)
-                        MovieDetailsState(
-                            movieDetails = movieResponse.toMovieDetails().also { movieDetails ->
-                                movieDetails.setIsFavouriteToMovieDetails()
-                            },
-                            isLoading = false,
-                            errorMessage = ""
-                        )
-                    } catch (ex: Exception) {
-                        ex.printStackTrace()
-                        MovieDetailsState(
-                            movieDetails = null,
-                            isLoading = false,
-                            errorMessage = ex.message.toString()
-                        )
-                    }
-                )
-            }
+        movieDetailsUseCase.movieId = this@MovieViewModel.movieId
+        reviewsUseCase.movieId = this@MovieViewModel.movieId
+        similarMoviesUseCase.movieId = this@MovieViewModel.movieId
+        creditsUseCase.movieId = this@MovieViewModel.movieId
+        viewModelScope.async {
+            movieDetailsUseCase.getMovieDetails()
+            creditsUseCase.getCredits()
+            reviewsUseCase.loadReviews()
+            similarMoviesUseCase.loadMovies()
         }
     }
 
@@ -134,60 +77,18 @@ class MovieViewModel @Inject constructor(
         repository.onFavouriteChange(movieId)
     }
 
-    private fun MovieDetails.setIsFavouriteToMovieDetails() {
-        isFavourite = repository.isMovieFavourite(id)
-    }
-
-    fun getSimilarMovies() {
-        viewModelScope.launch {
-            _movieState.update {
-                it.copy(
-                    similarMoviesState = try {
-                        val similarResponse =
-                            repository.getSimilarMovies(
-                                movieId = movieId,
-                                currentPage = currentSimilarMoviesPage
-                            )
-                        totalSimilarMoviesPages = similarResponse.totalPages
-                        allSimilarMovies.addAll(similarResponse.similarMovieNetworks.toSimilarMovieList())
-                        SimilarMoviesState(
-                            similarMovies = allSimilarMovies.toList(),
-                            isLoading = false,
-                            errorMessage = ""
-                        )
-                    } catch (ex: Exception) {
-                        ex.printStackTrace()
-                        SimilarMoviesState(
-                            similarMovies = emptyList(),
-                            isLoading = false,
-                            errorMessage = ex.message.toString()
-                        )
-                    }
-                )
-            }
-        }
-    }
-
     fun getMoreSimilarMovies() {
-        if (currentSimilarMoviesPage < totalSimilarMoviesPages) {
-            currentSimilarMoviesPage++
-            getSimilarMovies()
+        viewModelScope.launch {
+            similarMoviesUseCase.loadMore()
+        }
+    }
+
+    fun getMoreReviews() {
+        viewModelScope.launch {
+            reviewsUseCase.loadMore()
         }
     }
 }
-
-fun List<ReviewNetwork>.toReviewList(): List<Review> = ArrayList<Review>().apply {
-    this@toReviewList.forEach {
-        add(it.toUiReview())
-    }
-}
-
-fun List<SimilarMovieNetwork>.toSimilarMovieList(): List<SimilarMovie> =
-    ArrayList<SimilarMovie>().apply {
-        this@toSimilarMovieList.forEach {
-            add(it.toUiSimilarMovie())
-        }
-    }
 
 data class MovieState(
     val movieDetailsState: MovieDetailsState,
@@ -195,27 +96,3 @@ data class MovieState(
     val similarMoviesState: SimilarMoviesState,
     val reviewsState: ReviewsState
 )
-
-data class MovieDetailsState(
-    val movieDetails: MovieDetails? = null,
-    val isLoading: Boolean = true,
-    val errorMessage: String = ""
-) {
-    fun hasError() = errorMessage.isNotEmpty()
-}
-
-data class SimilarMoviesState(
-    val similarMovies: List<SimilarMovie> = emptyList(),
-    val isLoading: Boolean = true,
-    val errorMessage: String = ""
-) {
-    fun hasError() = errorMessage.isNotEmpty()
-}
-
-data class ReviewsState(
-    val reviews: List<Review> = emptyList(),
-    val isLoading: Boolean = true,
-    val errorMessage: String = ""
-) {
-    fun hasError() = errorMessage.isNotEmpty()
-}

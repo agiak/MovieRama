@@ -5,7 +5,6 @@ import android.widget.ScrollView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import timber.log.Timber
 
 fun ScrollView.addTitleElevation(title: View){
     setOnScrollChangeListener { scrollView, _, _, _, _ ->
@@ -52,8 +51,6 @@ fun RecyclerView.addOnLoadMoreListener(
 
             val needsToLoadMore = totalItemCount <= lastVisibleItemPosition + visibleThreshold
             if (needsToLoadMore) {
-                Timber.d("totalItemCount $totalItemCount lastVisibleItemPosition $lastVisibleItemPosition lastVisibleItemPosition + visibleThreshold = ${lastVisibleItemPosition + visibleThreshold}")
-                Timber.d("Ui says we need to load more...")
                 loadMoreAction.invoke()
             }
         }

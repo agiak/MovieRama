@@ -3,9 +3,9 @@ package com.example.movierama.ui.movie
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movierama.domain.dispatchers.IDispatchers
-import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.domain.useCases.CreditsDetails
 import com.example.movierama.domain.useCases.CreditsUseCase
+import com.example.movierama.domain.useCases.FavouriteUseCase
 import com.example.movierama.domain.useCases.MovieDetailsState
 import com.example.movierama.domain.useCases.MovieDetailsUseCase
 import com.example.movierama.domain.useCases.ReviewsState
@@ -24,21 +24,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val repository: MoviesRepository,
-    private val similarMoviesUseCase: SimilarMoviesUseCase,
-    private val reviewsUseCase: ReviewsUseCase,
-    private val movieDetailsUseCase: MovieDetailsUseCase,
-    private val creditsUseCase: CreditsUseCase,
+    private val movieUseCases: MovieUseCases,
     dispatcher: IDispatchers
 ) : ViewModel() {
 
     var movieId: Long = 0L
 
     val movieState: StateFlow<MovieState> = combine(
-        similarMoviesUseCase.similarMoviesState,
-        reviewsUseCase.reviewsState,
-        creditsUseCase.creditsState,
-        movieDetailsUseCase.movieDetailsState
+        movieUseCases.similarMoviesUseCase.similarMoviesState,
+        movieUseCases.reviewsUseCase.reviewsState,
+        movieUseCases.creditsUseCase.creditsState,
+        movieUseCases.movieDetailsUseCase.movieDetailsState
     ) { similarMoviesState: SimilarMoviesState, reviewsState: ReviewsState, creditsDetails: CreditsDetails, movieDetailsState: MovieDetailsState ->
         MovieState(
             similarMoviesState = similarMoviesState,
@@ -61,31 +57,28 @@ class MovieViewModel @Inject constructor(
 
 
     fun getData() {
-        movieDetailsUseCase.movieId = this@MovieViewModel.movieId
-        reviewsUseCase.movieId = this@MovieViewModel.movieId
-        similarMoviesUseCase.movieId = this@MovieViewModel.movieId
-        creditsUseCase.movieId = this@MovieViewModel.movieId
+        movieUseCases.setMovieIdToUseCases(movieId)
         viewModelScope.async {
-            movieDetailsUseCase.getMovieDetails()
-            creditsUseCase.getCredits()
-            reviewsUseCase.loadReviews()
-            similarMoviesUseCase.loadMovies()
+            movieUseCases.movieDetailsUseCase.getMovieDetails()
+            movieUseCases.creditsUseCase.getCredits()
+            movieUseCases.reviewsUseCase.loadReviews()
+            movieUseCases.similarMoviesUseCase.loadMovies()
         }
     }
 
     fun onFavouriteChanged() {
-        repository.onFavouriteChange(movieId)
+        movieUseCases.favouriteUseCase.onFavouriteChanged(movieId)
     }
 
     fun getMoreSimilarMovies() {
         viewModelScope.launch {
-            similarMoviesUseCase.loadMore()
+            movieUseCases.similarMoviesUseCase.loadMore()
         }
     }
 
     fun getMoreReviews() {
         viewModelScope.launch {
-            reviewsUseCase.loadMore()
+            movieUseCases.reviewsUseCase.loadMore()
         }
     }
 }
@@ -96,3 +89,18 @@ data class MovieState(
     val similarMoviesState: SimilarMoviesState,
     val reviewsState: ReviewsState
 )
+
+data class MovieUseCases(
+    val movieDetailsUseCase: MovieDetailsUseCase,
+    val similarMoviesUseCase: SimilarMoviesUseCase,
+    val reviewsUseCase: ReviewsUseCase,
+    val creditsUseCase: CreditsUseCase,
+    val favouriteUseCase: FavouriteUseCase
+) {
+    fun setMovieIdToUseCases(movieId: Long){
+        movieDetailsUseCase.movieId = movieId
+        reviewsUseCase.movieId = movieId
+        similarMoviesUseCase.movieId = movieId
+        creditsUseCase.movieId = movieId
+    }
+}

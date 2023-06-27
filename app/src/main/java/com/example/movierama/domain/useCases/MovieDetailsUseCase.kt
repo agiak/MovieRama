@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @ViewModelScoped
-class MovieDetailsUseCase@Inject constructor(
+class MovieDetailsUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
 

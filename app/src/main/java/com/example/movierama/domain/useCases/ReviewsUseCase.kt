@@ -33,7 +33,6 @@ class ReviewsUseCase @Inject constructor(
     }
 
     suspend fun loadMore() {
-        emitLoadingState()
         if (currentReviewsPage < totalReviewsPages && reviewsState.value.isLoading.not()) {
             currentReviewsPage++
             loadReviews()

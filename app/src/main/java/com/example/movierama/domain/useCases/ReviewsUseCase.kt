@@ -14,17 +14,19 @@ import javax.inject.Inject
 class ReviewsUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
-
+    // MutableStateFlow to hold the state of reviews
     private val _reviewsState = MutableStateFlow(ReviewsState())
     val reviewsState: StateFlow<ReviewsState> = _reviewsState.asStateFlow()
 
-    private val allReviews: MutableSet<Review> = mutableSetOf()
-    private var currentReviewsPage = 1
-    private var totalReviewsPages = 1
+    private val allReviews: MutableSet<Review> = mutableSetOf() // Set to store all reviews
+    var currentReviewsPage = 1 // Current page of reviews
+    var totalReviewsPages = 1 // Total number of review pages
 
-    var movieId: Long = 0
+    var movieId: Long = 0 // ID of the movie for which reviews are loaded
+
 
     private fun emitLoadingState() {
+        // Update the reviewsState with loading state
         _reviewsState.update {
             it.copy(
                 isLoading = true
@@ -32,13 +34,16 @@ class ReviewsUseCase @Inject constructor(
         }
     }
 
+    // Method to load more reviews
     suspend fun loadMore() {
+        // Check if there are more pages to load and not already loading
         if (currentReviewsPage < totalReviewsPages && reviewsState.value.isLoading.not()) {
             currentReviewsPage++
             loadReviews()
         }
     }
 
+    // Method to load reviews
     suspend fun loadReviews() {
         emitLoadingState()
         _reviewsState.update {
@@ -49,7 +54,7 @@ class ReviewsUseCase @Inject constructor(
                         currentPage = currentReviewsPage
                     )
                 totalReviewsPages = reviewsResponse.totalPages
-                allReviews.addAll(reviewsResponse.reviewNetworks.toReviewList())
+                allReviews.addAll(reviewsResponse.reviewNetworks.toReviewList()) // Add new reviews to the set
                 ReviewsState(
                     reviews = allReviews.toList(),
                     isLoading = false,
@@ -72,16 +77,18 @@ class ReviewsUseCase @Inject constructor(
     }
 }
 
+// Data class representing the state of reviews
 data class ReviewsState(
     val reviews: List<Review> = emptyList(),
     val isLoading: Boolean = true,
     val errorMessage: String = ""
 ) {
-    fun hasError() = errorMessage.isNotEmpty()
+    fun hasError() = errorMessage.isNotEmpty() // Method to check if there is an error message
 }
 
+// Extension function to convert List<ReviewNetwork> to List<Review>
 fun List<ReviewNetwork>.toReviewList(): List<Review> = ArrayList<Review>().apply {
     this@toReviewList.forEach {
-        add(it.toUiReview())
+        add(it.toUiReview()) // Convert each ReviewNetwork object to Review and add it to the list
     }
 }

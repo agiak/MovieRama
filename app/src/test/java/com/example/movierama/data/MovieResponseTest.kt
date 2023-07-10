@@ -2,14 +2,14 @@ package com.example.movierama.data
 
 import com.example.movierama.data.network.movies.MovieNetwork
 import com.example.movierama.data.network.movies.MoviesResponse
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class MovieResponseTest {
 
     @Test
     fun `test converting MovieNetwork object to Movie one`() {
-        // Give data
+        // Given
         val givenData = MovieNetwork(
             adult = false,
             backdrop_path = "http://image.tmdb.org/t/p/w500",
@@ -27,7 +27,7 @@ class MovieResponseTest {
             vote_count = 1200
         )
 
-        // Expected result
+        // When
         val expectedResult = Movie(
             id = 13579L,
             title = "Movie Title 5",
@@ -37,8 +37,8 @@ class MovieResponseTest {
             isFavourite = false
         )
 
-        // Assertions
-        Truth.assertThat(expectedResult).isEqualTo(givenData.toHomeMovie())
+        // Then
+        assertThat(expectedResult).isEqualTo(givenData.toHomeMovie())
     }
 
     @Test
@@ -84,7 +84,7 @@ class MovieResponseTest {
             totalResults = 2
         )
 
-        // Expected result
+        // When
         val expectedResult = listOf(
             Movie(
                 id = 13579L,
@@ -104,8 +104,8 @@ class MovieResponseTest {
             )
         )
 
-        // Assertions
-        Truth.assertThat(expectedResult).isEqualTo(givenResponse.getUiMovies())
+        // Then
+        assertThat(expectedResult).isEqualTo(givenResponse.getUiMovies())
     }
 
 }

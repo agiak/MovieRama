@@ -9,15 +9,15 @@ class FavouriteUseCaseTest {
 
     @Test
     fun `onFavouriteChanged should call repository's onFavouriteChange`() {
-        // Arrange
+        // Given
         val movieId = 123L
         val repository = mock<MoviesRepository>()
         val favouriteUseCase = FavouriteUseCase(repository)
 
-        // Act
+        // When
         favouriteUseCase.onFavouriteChanged(movieId)
 
-        // Assertion
+        // Then
         verify(repository).onFavouriteChange(movieId)
     }
 }

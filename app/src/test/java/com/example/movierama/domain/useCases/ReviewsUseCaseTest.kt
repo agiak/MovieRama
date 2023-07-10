@@ -25,17 +25,17 @@ class ReviewsUseCaseTest {
 
     @Test
     fun `loadReviews should update reviewsState with successful response`() = runBlocking {
-        // Given data
+        // Given
         val movieId = 123L
         val currentPage = 1
         val reviewsResponse = createMockReviewsResponse() // Create a mock reviews response
         `when`(repository.getReviews(movieId, currentPage)).thenReturn(reviewsResponse)
 
-        // Expected
+        // Then
         useCase.movieId = movieId
         useCase.loadReviews()
 
-        // Assertions
+        // Then
         val reviewsState = useCase.reviewsState.first()
         assertThat(reviewsState.reviews).isEqualTo(reviewsResponse.reviewNetworks.toReviewList())
         assertThat(reviewsState.isLoading).isFalse()
@@ -44,18 +44,18 @@ class ReviewsUseCaseTest {
 
     @Test
     fun `loadReviews should update reviewsState with error response`() = runBlocking {
-        // Arrange
+        // Given
         val movieId = 123L
         val currentPage = 1
         val errorMessage = "Error loading reviews"
         val exception = RuntimeException(errorMessage)
         `when`(repository.getReviews(movieId, currentPage)).thenThrow(exception)
 
-        // Act
+        // When
         useCase.movieId = movieId
         useCase.loadReviews()
 
-        // Assert
+        // Then
         val reviewsState = useCase.reviewsState.first()
         assertThat(reviewsState.reviews).isEmpty()
         assertThat(reviewsState.isLoading).isFalse()
@@ -64,17 +64,17 @@ class ReviewsUseCaseTest {
 
     @Test
     fun `loadReviews should handle empty review list`() = runBlocking {
-        // Arrange
+        // Given
         val movieId = 123L
         val currentPage = 1
         val reviewsResponse = ReviewsResponse(emptyList(), page = 1, totalPages = 1, totalResults = 0)
         `when`(repository.getReviews(movieId, currentPage)).thenReturn(reviewsResponse)
 
-        // Act
+        // When
         useCase.movieId = movieId
         useCase.loadReviews()
 
-        // Assert
+        // Then
         val reviewsState = useCase.reviewsState.first()
         assertThat(reviewsState.reviews).isEmpty()
         assertThat(reviewsState.isLoading).isFalse()

@@ -27,7 +27,7 @@ class MovieDetailsUseCaseTest {
 
     @Test
     fun `getMovieDetails should update movieDetailsState with the correct values`() = runBlocking {
-        // Given data
+        // Given
         val movieId = 123L
         val movieResponse = MovieDetailsResponse(
             id = movieId,
@@ -77,12 +77,12 @@ class MovieDetailsUseCaseTest {
 
         `when`(repository.getMovie(movieId)).thenReturn(movieResponse)
 
-        // Expected data
+        // When
         movieDetailsUseCase.movieId = movieId
         movieDetailsUseCase.getMovieDetails()
         val movieDetailsState = movieDetailsUseCase.movieDetailsState.first()
 
-        // Assertions
+        // Then
         assertThat(movieDetailsState.movieDetails?.id).isEqualTo(movieId)
         assertThat(movieDetailsState.movieDetails?.title).isEqualTo("Title")
         assertThat(movieDetailsState.movieDetails?.type).isEqualTo("Action, Adventure")
@@ -98,16 +98,16 @@ class MovieDetailsUseCaseTest {
     @Test
     fun `getMovieDetails should update movieDetailsState with empty values when an exception occurs`() =
         runBlocking {
-            // Given Data
+            // Given
             val movieId = 123L
             `when`(repository.getMovie(movieId)).thenThrow(RuntimeException("Error fetching movie details"))
 
-            // Expected data
+            // When
             movieDetailsUseCase.movieId = movieId
             movieDetailsUseCase.getMovieDetails()
             val movieDetailsState = movieDetailsUseCase.movieDetailsState.first()
 
-            // Assertions
+            // Then
             assertThat(movieDetailsState.movieDetails).isNull()
             assertThat(movieDetailsState.isLoading).isFalse()
             assertThat(movieDetailsState.errorMessage).isEqualTo("Error fetching movie details")

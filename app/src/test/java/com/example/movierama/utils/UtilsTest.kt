@@ -9,23 +9,23 @@ class UtilsTest {
 
     @Test
     fun `test mapToDate function`() {
-        // Given data
+        // Given
         val givenDate = "2000-03-25"
 
-        // Expected data
+        // When
         val expectedResult = "25 March 00"
 
-        // Assertions
+        // Then
         assertThat(expectedResult).isEqualTo(givenDate.mapToDate())
     }
 
     @Test
     fun `test isNumber check function`() {
-        // Given data
+        // Given
         val numberInput = "24"
         val stringInput = "abc"
 
-        // Assertions
+        // Then
         assertThat(numberInput.isNumber()).isTrue()
         assertThat(stringInput.isNumber()).isFalse()
     }

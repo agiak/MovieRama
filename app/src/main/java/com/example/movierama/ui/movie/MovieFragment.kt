@@ -21,6 +21,8 @@ import com.example.movierama.domain.useCases.MovieDetailsState
 import com.example.movierama.domain.useCases.ReviewsState
 import com.example.movierama.domain.useCases.SimilarMoviesState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
+import com.example.movierama.ui.utils.disableFullScreenTheme
+import com.example.movierama.ui.utils.enableFullScreenTheme
 import com.example.movierama.ui.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -44,6 +46,7 @@ class MovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
+        enableFullScreenTheme()
         return binding.root
     }
 
@@ -147,6 +150,7 @@ class MovieFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        disableFullScreenTheme()
         _binding = null
     }
 }

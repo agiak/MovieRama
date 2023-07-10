@@ -34,7 +34,7 @@ class MoviesViewModel @Inject constructor(
         loadPopularMovies()
     }
 
-    fun loadPopularMovies(isRefresh: Boolean = false) {
+    private fun loadPopularMovies(isRefresh: Boolean = false) {
         viewModelScope.launch {
             _homeState.value = UIState.InProgress
             Timber.d("loadPopularMovies was called and isRefresh $isRefresh")
@@ -53,7 +53,7 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun loadMorePopularMovies() {
+    private fun loadMorePopularMovies() {
         viewModelScope.launch {
             _homeState.value = UIState.LoadingMore
             try {

@@ -9,7 +9,7 @@ class ReviewNetworkTest {
 
     @Test
     fun `toUiReview should convert ReviewNetwork to Review with rounded rating`() {
-        // Given data
+        // Given
         val reviewNetwork = ReviewNetwork(
             id = "123",
             author = "John Doe",
@@ -25,10 +25,10 @@ class ReviewNetworkTest {
             url = "https://www.example.com/review/123"
         )
 
-        // Expected data
+        // When
         val review = reviewNetwork.toUiReview()
 
-        // Assertions
+        // Then
         assertThat(review.id).isEqualTo("123")
         assertThat(review.author).isEqualTo("John Doe")
         assertThat(review.content).isEqualTo("This movie is amazing!")

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="main_vector_size">24dp</dimen>
+    <dimen name="main_vector_size_small">12dp</dimen>
+    <dimen name="main_vector_size_medium">24dp</dimen>
+    <dimen name="main_vector_size_pre_large">36dp</dimen>
+    <dimen name="main_vector_size_large">36dp</dimen>
     <dimen name="toolbar_height">84dp</dimen>
 
     <!-- Buttons -->

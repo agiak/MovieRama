@@ -28,7 +28,7 @@ class CreditsUseCaseTest {
 
     @Test
     fun `getCredits should update creditsState with the correct values`() = runBlocking {
-        // Given data
+        // Given
         val movieId = 123L
         val crew = listOf(
             Crew(
@@ -93,28 +93,28 @@ class CreditsUseCaseTest {
         val creditsResponse = CreditsResponse(cast, crew, movieId.toInt())
         `when`(repository.getMovieCredits(movieId)).thenReturn(creditsResponse)
 
-        // Expected data
+        // When
         creditsUseCase.movieId = movieId
         creditsUseCase.getCredits()
         val creditsState = creditsUseCase.creditsState.first()
 
-        // Assertions
+        // Then
         assertThat(creditsState.director).isEqualTo("Name 4")
         assertThat(creditsState.cast).isEqualTo("Name 1")
     }
 
     @Test
     fun `getCredits should update creditsState with empty values when an exception occurs`() = runBlocking {
-        // Given Data
+        // Given
         val movieId = 123L
         `when`(repository.getMovieCredits(movieId)).thenThrow(RuntimeException())
 
-        // Expected data
+        // When
         creditsUseCase.movieId = movieId
         creditsUseCase.getCredits()
         val creditsState = creditsUseCase.creditsState.first()
 
-        // Assertions
+        // Then
         assertThat(creditsState.director).isEmpty()
         assertThat(creditsState.cast).isEmpty()
     }

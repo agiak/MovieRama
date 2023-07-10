@@ -12,33 +12,33 @@ class CreditsResponseTest {
 
     @Test
     fun `test get Director method`() {
-        // Give data
+        // Given
         val response = CreditsResponse(
             id = 1,
             castList = getFakeCastList(),
             crewList = getFakeCrewList()
         )
 
-        // Expected result
+        // When
         val expectedResult = "Name 1, Name 2, Name 3"
 
-        // Assertions
+        // When
         assertThat(expectedResult).isEqualTo(response.getDirector())
     }
 
     @Test
     fun `test get Cast method`() {
-        // Give data
+        // Given
         val response = CreditsResponse(
             id = 1,
             castList = getFakeCastList(),
             crewList = getFakeCrewList()
         )
 
-        // Expected result
+        // When
         val expectedResult = "Name 1, Name 2, Name 3"
 
-        // Assertions
+        // When
         assertThat(expectedResult).isEqualTo(response.getCast())
     }
 

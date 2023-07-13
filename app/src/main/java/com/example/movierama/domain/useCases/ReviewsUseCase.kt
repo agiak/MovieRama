@@ -1,7 +1,7 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.data.network.reviews.Review
-import com.example.movierama.data.network.reviews.ReviewNetwork
+import com.example.movierama.model.remote.reviews.Review
+import com.example.movierama.model.remote.reviews.ReviewNetwork
 import com.example.movierama.domain.movies.MoviesRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,6 @@ class ReviewsUseCase @Inject constructor(
     var totalReviewsPages = 1 // Total number of review pages
 
     var movieId: Long = 0 // ID of the movie for which reviews are loaded
-
 
     private fun emitLoadingState() {
         // Update the reviewsState with loading state

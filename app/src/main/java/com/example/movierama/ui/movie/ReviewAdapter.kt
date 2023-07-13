@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movierama.data.network.reviews.Review
+import com.example.movierama.model.remote.reviews.Review
 import com.example.movierama.databinding.ItemReviewBinding
 
 class ReviewAdapter: ListAdapter<Review, ReviewAdapter.ReviewViewHolder>(ReviewDiffCallback()) {

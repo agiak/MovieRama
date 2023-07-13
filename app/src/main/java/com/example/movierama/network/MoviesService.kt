@@ -1,10 +1,10 @@
 package com.example.movierama.network
 
-import com.example.movierama.data.network.credits.CreditsResponse
-import com.example.movierama.data.network.movies.MovieDetailsResponse
-import com.example.movierama.data.network.movies.MoviesResponse
-import com.example.movierama.data.network.reviews.ReviewsResponse
-import com.example.movierama.data.network.similar.SimilarResponse
+import com.example.movierama.model.remote.credits.CreditsResponse
+import com.example.movierama.model.remote.movies.MovieDetailsResponse
+import com.example.movierama.model.remote.movies.MoviesResponse
+import com.example.movierama.model.remote.reviews.ReviewsResponse
+import com.example.movierama.model.remote.similar.SimilarResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.example.movierama.data.network.credits
+package com.example.movierama.model.remote.credits
 
 import com.google.gson.annotations.SerializedName
 

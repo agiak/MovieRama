@@ -1,11 +1,11 @@
 package com.example.movierama.domain.movies
 
 import com.example.movierama.network.MoviesService
-import com.example.movierama.data.network.credits.CreditsResponse
-import com.example.movierama.data.network.movies.MovieDetailsResponse
-import com.example.movierama.data.network.movies.MoviesResponse
-import com.example.movierama.data.network.reviews.ReviewsResponse
-import com.example.movierama.data.network.similar.SimilarResponse
+import com.example.movierama.model.remote.credits.CreditsResponse
+import com.example.movierama.model.remote.movies.MovieDetailsResponse
+import com.example.movierama.model.remote.movies.MoviesResponse
+import com.example.movierama.model.remote.reviews.ReviewsResponse
+import com.example.movierama.model.remote.similar.SimilarResponse
 import com.example.movierama.domain.dispatchers.IDispatchers
 import com.example.movierama.storage.PreferenceManager
 import kotlinx.coroutines.withContext

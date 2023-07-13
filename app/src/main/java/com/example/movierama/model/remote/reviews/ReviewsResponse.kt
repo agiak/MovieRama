@@ -1,4 +1,4 @@
-package com.example.movierama.data.network.reviews
+package com.example.movierama.model.remote.reviews
 
 import com.google.gson.annotations.SerializedName
 
@@ -39,3 +39,4 @@ data class Review(
     val content: String,
     val rating: Double
 )
+

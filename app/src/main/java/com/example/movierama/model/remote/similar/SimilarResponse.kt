@@ -1,4 +1,4 @@
-package com.example.movierama.data.network.similar
+package com.example.movierama.model.remote.similar
 
 import com.example.movierama.ui.URL_POSTER
 import com.google.gson.annotations.SerializedName

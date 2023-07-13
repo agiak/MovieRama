@@ -1,7 +1,7 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.data.MovieDetails
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.model.MovieDetails
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

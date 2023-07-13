@@ -1,8 +1,8 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.data.network.similar.SimilarMovieNetwork
-import com.example.movierama.data.network.similar.SimilarResponse
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.model.remote.similar.SimilarMovieNetwork
+import com.example.movierama.model.remote.similar.SimilarResponse
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -49,7 +49,7 @@ class SimilarMoviesUseCaseTest {
     }
 
     @Test
-    fun `loadMore should not make a call when currentSimilarMoviesPage is equal to totalSimilarMoviesPages`(): MoviesRepository =
+    fun `loadMore should not make a call when currentSimilarMoviesPage is equal to totalSimilarMoviesPages`(): Unit =
         runBlocking {
             // Given
             similarMoviesUseCase.movieId = 123L

@@ -1,9 +1,9 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.data.network.reviews.AuthorDetails
-import com.example.movierama.data.network.reviews.ReviewNetwork
-import com.example.movierama.data.network.reviews.ReviewsResponse
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.model.remote.reviews.AuthorDetails
+import com.example.movierama.model.remote.reviews.ReviewNetwork
+import com.example.movierama.model.remote.reviews.ReviewsResponse
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

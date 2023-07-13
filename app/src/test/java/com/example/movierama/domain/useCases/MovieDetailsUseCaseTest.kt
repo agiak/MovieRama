@@ -1,11 +1,11 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.data.network.movies.Genre
-import com.example.movierama.data.network.movies.MovieDetailsResponse
-import com.example.movierama.data.network.movies.ProductionCompany
-import com.example.movierama.data.network.movies.ProductionCountry
-import com.example.movierama.data.network.movies.SpokenLanguage
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.model.remote.movies.Genre
+import com.example.movierama.model.remote.movies.MovieDetailsResponse
+import com.example.movierama.model.remote.movies.ProductionCompany
+import com.example.movierama.model.remote.movies.ProductionCountry
+import com.example.movierama.model.remote.movies.SpokenLanguage
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

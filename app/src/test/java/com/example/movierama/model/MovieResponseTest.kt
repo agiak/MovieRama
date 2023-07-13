@@ -1,7 +1,7 @@
-package com.example.movierama.data
+package com.example.movierama.model
 
-import com.example.movierama.data.network.movies.MovieNetwork
-import com.example.movierama.data.network.movies.MoviesResponse
+import com.example.movierama.model.remote.movies.MovieNetwork
+import com.example.movierama.model.remote.movies.MoviesResponse
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

@@ -1,6 +1,6 @@
-package com.example.movierama.data.network.movies
+package com.example.movierama.model.remote.movies
 
-import com.example.movierama.data.Movie
+import com.example.movierama.model.Movie
 import com.example.movierama.ui.URL_POSTER
 import com.example.movierama.ui.utils.mapToDate
 import com.google.gson.annotations.SerializedName

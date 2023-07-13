@@ -2,9 +2,9 @@ package com.example.movierama.ui.movies
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movierama.data.Movie
-import com.example.movierama.data.network.movies.MoviesResponse
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.model.Movie
+import com.example.movierama.model.remote.movies.MoviesResponse
 import com.example.movierama.ui.UIState
 import com.example.movierama.ui.utils.DebounceUtil
 import dagger.hilt.android.lifecycle.HiltViewModel

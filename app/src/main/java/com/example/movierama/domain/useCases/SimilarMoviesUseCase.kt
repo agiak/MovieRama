@@ -1,8 +1,8 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.data.network.similar.SimilarMovie
-import com.example.movierama.data.network.similar.SimilarMovieNetwork
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.model.remote.similar.SimilarMovie
+import com.example.movierama.model.remote.similar.SimilarMovieNetwork
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

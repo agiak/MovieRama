@@ -1,4 +1,4 @@
-package com.example.movierama.data
+package com.example.movierama.model
 
 data class Movie(
     val id: Long,

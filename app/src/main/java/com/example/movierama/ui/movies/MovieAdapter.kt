@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movierama.R
-import com.example.movierama.data.Movie
+import com.example.movierama.model.Movie
 import com.example.movierama.databinding.ItemMovieBinding
 
 class MovieAdapter (

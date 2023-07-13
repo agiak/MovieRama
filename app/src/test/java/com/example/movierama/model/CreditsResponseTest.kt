@@ -1,8 +1,8 @@
-package com.example.movierama.data
+package com.example.movierama.model
 
-import com.example.movierama.data.network.credits.Cast
-import com.example.movierama.data.network.credits.CreditsResponse
-import com.example.movierama.data.network.credits.Crew
+import com.example.movierama.model.remote.credits.Cast
+import com.example.movierama.model.remote.credits.CreditsResponse
+import com.example.movierama.model.remote.credits.Crew
 import com.google.common.truth.Truth.assertThat
 
 import org.junit.Test

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <com.example.movierama.ui.customviews.DebounceEditText
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -20,6 +20,7 @@
         android:paddingEnd="48dp"
         android:stateListAnimator="@animator/elevation_title"
         android:textColor="@color/black"
+        app:debounceTime="1000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

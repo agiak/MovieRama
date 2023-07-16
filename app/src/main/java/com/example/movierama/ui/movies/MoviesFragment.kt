@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -67,12 +66,17 @@ class MoviesFragment : Fragment() {
             doOnTextChanged { text, _, _, _ ->
                 binding.clearTextBtn.isVisible = text.isNullOrEmpty().not()
             }
-            doAfterTextChanged {
-                viewModel.searchMovies(getSearchValue(it.toString()))
-            }
+            setActions(
+                doBeforeDebounce = {
+                    binding.loader.show()
+                },
+                doAfterDebounce = {
+                    viewModel.searchMovies(getSearchValue(it))
+                }
+            )
         }
         binding.clearTextBtn.setOnClickListener {
-            binding.searchBar.text.clear()
+            binding.searchBar.text?.clear()
         }
     }
 
@@ -107,20 +111,24 @@ class MoviesFragment : Fragment() {
                     when (it) {
                         is UIState.Result -> {
                             hideLoaders()
-                            Timber.w( "Ui updated with ${it.data.size} movies")
+                            Timber.w("Ui updated with ${it.data.size} movies")
                             moviesAdapter.submitList(it.data)
                             handleEmptyData(it.data.isEmpty())
                         }
+
                         is UIState.Error -> {
                             hideLoaders()
                             showToast(it.error.message.toString())
                         }
+
                         UIState.LoadingMore -> {
                             binding.moreLoader.show()
                         }
+
                         UIState.InProgress -> {
                             binding.loader.show()
                         }
+
                         else -> {
                             hideLoaders()
                         }

@@ -6,7 +6,6 @@ import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.model.Movie
 import com.example.movierama.model.remote.movies.MoviesResponse
 import com.example.movierama.ui.UIState
-import com.example.movierama.ui.utils.DebounceUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val repository: MoviesRepository,
-    private val debounceUtil: DebounceUtil
+    private val repository: MoviesRepository
 ) : ViewModel() {
 
     private val _homeState = MutableStateFlow<UIState<List<Movie>>>(UIState.IDLE)
@@ -38,7 +36,7 @@ class MoviesViewModel @Inject constructor(
         viewModelScope.launch {
             _homeState.value = UIState.InProgress
             Timber.d("loadPopularMovies was called and isRefresh $isRefresh")
-            if (isRefresh){
+            if (isRefresh) {
                 allMovies.clear()
                 totalPages = 1
                 currentPage = 1
@@ -68,26 +66,24 @@ class MoviesViewModel @Inject constructor(
 
     fun searchMovies(input: MovieFilter) {
         _homeState.value = UIState.InProgress
-        debounceUtil.debounce {
-            searchFilter = input
-            if (searchFilter.isEmpty()) {
-                allMovies.clear()
-                loadPopularMovies()
-            } else {
-                currentPage = 1
-                viewModelScope.launch {
-                    try {
-                        Timber.d("search with movie name '${searchFilter.movieName}' and page $currentPage")
-                        val response = repository.searchMovies(
-                            page = currentPage,
-                            movieName = searchFilter.movieName,
-                            year = searchFilter.year
-                        )
-                        allMovies.clear()
-                        handleMovieResponse(response)
-                    } catch (ex: Exception) {
-                        _homeState.value = UIState.Error(ex)
-                    }
+        searchFilter = input
+        if (searchFilter.isEmpty()) {
+            allMovies.clear()
+            loadPopularMovies()
+        } else {
+            currentPage = 1
+            viewModelScope.launch {
+                try {
+                    Timber.d("search with movie name '${searchFilter.movieName}' and page $currentPage")
+                    val response = repository.searchMovies(
+                        page = currentPage,
+                        movieName = searchFilter.movieName,
+                        year = searchFilter.year
+                    )
+                    allMovies.clear()
+                    handleMovieResponse(response)
+                } catch (ex: Exception) {
+                    _homeState.value = UIState.Error(ex)
                 }
             }
         }

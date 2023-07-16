@@ -1,5 +1,6 @@
 package com.example.movierama.domain.useCases
 
+import com.example.movierama.domain.error_hadling.ErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.model.remote.similar.SimilarMovie
 import com.example.movierama.model.remote.similar.SimilarMovieNetwork
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class SimilarMoviesUseCase @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
+    private val errorHandler: ErrorHandler
 ) {
     // StateFlow to hold the similar movies state
     private val _similarMoviesState = MutableStateFlow(SimilarMoviesState())
@@ -71,7 +73,7 @@ class SimilarMoviesUseCase @Inject constructor(
                 SimilarMoviesState(
                     similarMovies = emptyList(),
                     isLoading = false,
-                    errorMessage = ex.message.toString()
+                    errorMessage = errorHandler.getErrorMessage(ex)
                 )
             }
             // Update the similarMoviesState with the fetched movies and error state

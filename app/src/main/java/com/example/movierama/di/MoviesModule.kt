@@ -1,5 +1,6 @@
 package com.example.movierama.di
 
+import com.example.movierama.domain.error_hadling.ErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.domain.useCases.CreditsUseCase
 import com.example.movierama.domain.useCases.FavouriteUseCase
@@ -19,19 +20,23 @@ class MoviesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideSimilarMoviesUseCase(repository: MoviesRepository) = SimilarMoviesUseCase(repository)
+    fun provideSimilarMoviesUseCase(repository: MoviesRepository, errorHandler: ErrorHandler)
+        = SimilarMoviesUseCase(repository, errorHandler)
 
     @Provides
     @ViewModelScoped
-    fun provideReviewsUseCase(repository: MoviesRepository) = ReviewsUseCase(repository)
+    fun provideReviewsUseCase(repository: MoviesRepository, errorHandler: ErrorHandler)
+        = ReviewsUseCase(repository, errorHandler)
 
     @Provides
     @ViewModelScoped
-    fun provideMovieDetailsUseCase(repository: MoviesRepository) = MovieDetailsUseCase(repository)
+    fun provideMovieDetailsUseCase(repository: MoviesRepository, errorHandler: ErrorHandler)
+        = MovieDetailsUseCase(repository, errorHandler)
 
     @Provides
     @ViewModelScoped
-    fun provideCreditsUseCase(repository: MoviesRepository) = CreditsUseCase(repository)
+    fun provideCreditsUseCase(repository: MoviesRepository)
+        = CreditsUseCase(repository)
 
     @Provides
     @ViewModelScoped

@@ -1,5 +1,6 @@
 package com.example.movierama.domain.useCases
 
+import com.example.movierama.domain.error_hadling.ErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.model.MovieDetails
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class MovieDetailsUseCase @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
+    private val errorHandler: ErrorHandler
 ) {
 
     private val _movieDetailsState = MutableStateFlow(MovieDetailsState())
@@ -44,7 +46,7 @@ class MovieDetailsUseCase @Inject constructor(
             MovieDetailsState(
                 movieDetails = null,
                 isLoading = false,
-                errorMessage = ex.message.toString()
+                errorMessage = errorHandler.getErrorMessage(ex)
             )
         }
         _movieDetailsState.update {

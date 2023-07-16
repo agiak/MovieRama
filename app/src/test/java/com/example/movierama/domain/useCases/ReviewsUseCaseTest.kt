@@ -1,5 +1,6 @@
 package com.example.movierama.domain.useCases
 
+import com.example.movierama.domain.error_handling.FakeErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.model.remote.reviews.AuthorDetails
 import com.example.movierama.model.remote.reviews.ReviewNetwork
@@ -20,7 +21,7 @@ class ReviewsUseCaseTest {
     @Before
     fun setup() {
         repository = Mockito.mock()
-        useCase = ReviewsUseCase(repository)
+        useCase = ReviewsUseCase(repository, errorHandler = FakeErrorHandler())
     }
 
     @Test

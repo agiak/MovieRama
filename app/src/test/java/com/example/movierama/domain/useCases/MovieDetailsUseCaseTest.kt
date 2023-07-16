@@ -1,5 +1,6 @@
 package com.example.movierama.domain.useCases
 
+import com.example.movierama.domain.error_handling.FakeErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.model.remote.movies.Genre
 import com.example.movierama.model.remote.movies.MovieDetailsResponse
@@ -22,7 +23,7 @@ class MovieDetailsUseCaseTest {
     @Before
     fun setup() {
         repository = mock()
-        movieDetailsUseCase = MovieDetailsUseCase(repository)
+        movieDetailsUseCase = MovieDetailsUseCase(repository, errorHandler = FakeErrorHandler())
     }
 
     @Test

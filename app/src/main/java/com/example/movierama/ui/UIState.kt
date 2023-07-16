@@ -18,7 +18,7 @@ sealed class UIState<out T> {
     /**
      * Failed state, containing the error as well.
      */
-    data class Error(val error: Throwable): UIState<Nothing>()
+    data class Error(val error: Exception): UIState<Nothing>()
 
     /**
      * Successful state that doesn't contain any data, when there was supposed to.

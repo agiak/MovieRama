@@ -1,8 +1,9 @@
 package com.example.movierama.domain.useCases
 
+import com.example.movierama.domain.error_hadling.ErrorHandler
+import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.model.remote.reviews.Review
 import com.example.movierama.model.remote.reviews.ReviewNetwork
-import com.example.movierama.domain.movies.MoviesRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class ReviewsUseCase @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
+    private val errorHandler: ErrorHandler
 ) {
     // MutableStateFlow to hold the state of reviews
     private val _reviewsState = MutableStateFlow(ReviewsState())
@@ -64,7 +66,7 @@ class ReviewsUseCase @Inject constructor(
                 ReviewsState(
                     reviews = emptyList(),
                     isLoading = false,
-                    errorMessage = ex.message.toString()
+                    errorMessage = errorHandler.getErrorMessage(ex)
                 )
             }
             it.copy(

@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.movierama.databinding.FragmentMoviesBinding
+import com.example.movierama.domain.error_hadling.getErrorMessageResource
 import com.example.movierama.ui.UIState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.addTitleElevationAnimation
@@ -118,7 +119,7 @@ class MoviesFragment : Fragment() {
 
                         is UIState.Error -> {
                             hideLoaders()
-                            showToast(it.error.message.toString())
+                            showToast(getString(it.error.getErrorMessageResource()))
                         }
 
                         UIState.LoadingMore -> {

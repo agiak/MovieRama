@@ -45,14 +45,14 @@ class MovieViewModel @Inject constructor(
     }
         .flowOn(dispatcher.defaultThread())
         .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000L),
-                initialValue =  MovieState(
-                    movieDetailsState = MovieDetailsState(),
-                    similarMoviesState = SimilarMoviesState(),
-                    reviewsState = ReviewsState(),
-                    creditsDetails = CreditsDetails()
-                )
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = MovieState(
+                movieDetailsState = MovieDetailsState(),
+                similarMoviesState = SimilarMoviesState(),
+                reviewsState = ReviewsState(),
+                creditsDetails = CreditsDetails()
+            )
         )
 
 
@@ -97,7 +97,7 @@ data class MovieUseCases(
     val creditsUseCase: CreditsUseCase,
     val favouriteUseCase: FavouriteUseCase
 ) {
-    fun setMovieIdToUseCases(movieId: Long){
+    fun setMovieIdToUseCases(movieId: Long) {
         movieDetailsUseCase.movieId = movieId
         reviewsUseCase.movieId = movieId
         similarMoviesUseCase.movieId = movieId

@@ -90,7 +90,7 @@ class CreditsUseCaseTest {
         )
 
         // Mock repository response
-        val creditsResponse = CreditsResponse(cast, crew, movieId.toInt())
+        val creditsResponse = CreditsResponse(cast, crew, movieId)
         `when`(repository.getMovieCredits(movieId)).thenReturn(creditsResponse)
 
         // When

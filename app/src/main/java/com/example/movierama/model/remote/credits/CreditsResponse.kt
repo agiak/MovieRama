@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class CreditsResponse(
     @SerializedName("cast") val castList: List<Cast>,
     @SerializedName("crew") val crewList: List<Crew>,
-    @SerializedName("id") val id: Int
+    @SerializedName("id") val id: Long
 ) {
     fun getDirector(): String {
         return crewList

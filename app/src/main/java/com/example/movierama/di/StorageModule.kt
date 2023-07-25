@@ -2,6 +2,7 @@ package com.example.movierama.di
 
 import android.content.Context
 import com.example.movierama.storage.PreferenceManager
+import com.example.movierama.storage.PreferenceManagerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,5 +16,7 @@ class StorageModule {
 
     @Singleton
     @Provides
-    fun providePreferenceManager(@ApplicationContext context: Context) = PreferenceManager(context)
+    fun providePreferenceManager(@ApplicationContext context: Context): PreferenceManager
+        = PreferenceManagerImpl(context)
+
 }

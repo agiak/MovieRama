@@ -23,7 +23,7 @@ class MoviesViewModel @Inject constructor(
 
     private var allMovies: MutableSet<Movie> = mutableSetOf()
 
-    var searchFilter = MovieFilter()
+    private var searchFilter = MovieFilter()
 
     private var totalPages = 1
     private var currentPage = 1

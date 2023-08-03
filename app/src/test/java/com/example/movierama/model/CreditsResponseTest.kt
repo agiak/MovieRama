@@ -113,7 +113,6 @@ class CreditsResponseTest {
             )
         )
 
-
     private fun getFakeCrewList() =
         listOf(
             Crew(

@@ -15,6 +15,8 @@ import com.example.movierama.storage.FakePreferenceManager
 import com.example.movierama.storage.PreferenceManager
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -38,7 +40,7 @@ class MoviesRepositoryTest {
     }
 
     @Test
-    fun `test get popular movies with page 1 and empty list`() = runBlocking {
+    fun `test get popular movies with page 1 and empty list`() = runTest(UnconfinedTestDispatcher()) {
         // Given
         val page = 1
         `when`(service.getMovies(page = page)).thenReturn(

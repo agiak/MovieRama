@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Icon sizes -->
+    <dimen name="main_vector_size">24dp</dimen>
+    <dimen name="main_vector_size_small">12dp</dimen>
+    <dimen name="main_vector_size_medium">24dp</dimen>
+    <dimen name="main_vector_size_pre_large">36dp</dimen>
+    <dimen name="main_vector_size_large">36dp</dimen>
+
+    <dimen name="toolbar_height">84dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="back_button_backgrounded">42dp</dimen>
+
+    <!-- Dimensions -->
+    <dimen name="main_margin_horizontal">24dp</dimen>
+    <dimen name="main_margin_vertical">24dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="main_radius">8dp</dimen>
+    <dimen name="main_stroke_width">2dp</dimen>
+
+    <!-- Labels -->
+    <dimen name="screen_title_size">20sp</dimen>
+    <dimen name="subtitle_size">14sp</dimen>
+
+</resources>

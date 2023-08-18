@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="status_bar_color">#FFFFFFFF</color>
+
+    <color name="primary">#00756A</color>
+    <color name="primary_light">#00A595</color>
+    <color name="primary_dark">#00635A</color>
+
+    <color name="secondary">#40C4FF</color>
+    <color name="secondary_light">#80D8FF</color>
+    <color name="secondary_dark">#00B0FF</color>
+
+    <color name="alternative">#FFAB40</color>
+    <color name="alternative_light">#FFD180</color>
+    <color name="alternative_dark">#FF9100</color>
+
+    <color name="main_grey">#F3E5F5</color>
+
+    <!-- TextViews - Labels -->
+    <color name="label_title">#202c44</color>
+    <color name="label_subtitle">#cbd0d8</color>
+
+</resources>

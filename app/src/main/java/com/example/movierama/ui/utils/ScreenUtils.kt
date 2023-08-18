@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.movierama.R
 
 
 fun Fragment.showToast(message: String, duration: Int= Toast.LENGTH_LONG){
@@ -23,7 +22,7 @@ fun AppCompatActivity.showToast(message: String, duration: Int= Toast.LENGTH_LON
 @Suppress("DEPRECATION")
 fun Fragment.enableFullScreenTheme() {
     requireActivity().window.apply {
-        statusBarColor = ContextCompat.getColor(requireContext(), R.color.transparent)
+        statusBarColor = ContextCompat.getColor(requireContext(), com.example.myresources.R.color.transparent)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             setDecorFitsSystemWindows(false)
         } else {
@@ -35,7 +34,7 @@ fun Fragment.enableFullScreenTheme() {
 @Suppress("DEPRECATION")
 fun Fragment.disableFullScreenTheme() {
     requireActivity().window.apply {
-        statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+        statusBarColor = ContextCompat.getColor(requireContext(), com.example.myresources.R.color.white)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             setDecorFitsSystemWindows(true)
         } else {

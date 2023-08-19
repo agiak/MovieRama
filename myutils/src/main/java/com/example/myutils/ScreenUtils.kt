@@ -1,4 +1,4 @@
-package com.example.movierama.ui.utils
+package com.example.myutils
 
 import android.os.Build
 import android.view.View

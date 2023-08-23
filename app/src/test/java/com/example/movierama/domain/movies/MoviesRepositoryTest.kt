@@ -41,7 +41,7 @@ class MoviesRepositoryTest {
     fun `test get popular movies with page 1 and empty list`() = runBlocking {
         // Given
         val page = 1
-        `when`(service.getMovies(page = page)).thenReturn(
+        `when`(service.getPopularMovies(page = page)).thenReturn(
             MoviesResponse(
                 page = 1,
                 moviesNetwork = emptyList(),
@@ -62,7 +62,7 @@ class MoviesRepositoryTest {
     fun `test get popular movies with page 1 and total pages 100`() = runBlocking {
         // Given
         val page = 1
-        `when`(service.getMovies(page = page)).thenReturn(
+        `when`(service.getPopularMovies(page = page)).thenReturn(
             MoviesResponse(
                 page = 1,
                 moviesNetwork = emptyList(),

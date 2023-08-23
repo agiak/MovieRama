@@ -24,12 +24,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/movies_type_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/main_margin_horizontal"
+        android:paddingVertical="@dimen/space_large"
+        android:stateListAnimator="@animator/elevation_title"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        tools:listitem="@layout/item_movies_type" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/clear_text_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:padding="8dp"
+        android:layout_marginEnd="@dimen/space_large"
+        android:padding="@dimen/space_medium"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/search_bar"
         app:layout_constraintEnd_toEndOf="@+id/search_bar"
@@ -42,15 +56,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/moreLoader"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar">
+        app:layout_constraintTop_toBottomOf="@+id/movies_type_list">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="24dp"
+            android:paddingHorizontal="@dimen/main_margin_horizontal"
+            android:paddingVertical="@dimen/main_margin_horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_movie"
             tools:visibility="visible" />
@@ -99,8 +113,8 @@
         android:id="@+id/move_up_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="@dimen/main_margin_horizontal"
+        android:layout_marginBottom="@dimen/main_margin_vertical"
         android:backgroundTint="@color/white"
         android:clickable="true"
         android:visibility="gone"

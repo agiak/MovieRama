@@ -23,8 +23,24 @@ class MoviesRepositoryImpl @Inject constructor(
 
     override suspend fun getPopularMovies(currentPage: Int): MoviesResponse =
         withContext(dispatchersImpl.backgroundThread()) {
-            service.getMovies(page = currentPage)
+            service.getPopularMovies(page = currentPage)
         }
+
+    override suspend fun getTopRatedMovies(currentPage: Int): MoviesResponse =
+        withContext(dispatchersImpl.backgroundThread()) {
+            service.getTopRatedMovies(page = currentPage)
+        }
+
+    override suspend fun getUpcomingMovies(currentPage: Int): MoviesResponse =
+        withContext(dispatchersImpl.backgroundThread()) {
+            service.getUpcomingMovies(page = currentPage)
+        }
+
+    override suspend fun getNowPlayingMovies(currentPage: Int): MoviesResponse =
+        withContext(dispatchersImpl.backgroundThread()) {
+            service.getNowPlayingMovies(page = currentPage)
+        }
+
 
     override suspend fun searchMovies(
         page: Int,

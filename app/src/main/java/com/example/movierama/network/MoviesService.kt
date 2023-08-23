@@ -12,7 +12,25 @@ import retrofit2.http.Query
 interface MoviesService {
 
     @GET("movie/popular")
-    suspend fun getMovies(
+    suspend fun getPopularMovies(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int
+    ): MoviesResponse
+
+    @GET("movie/now_playing")
+    suspend fun getNowPlayingMovies(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int
+    ): MoviesResponse
+
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int
+    ): MoviesResponse
+
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
         @Query("language") language: String = "en-US",
         @Query("page") page: Int
     ): MoviesResponse
@@ -26,13 +44,11 @@ interface MoviesService {
         @Query("year") year: String? = null
     ): MoviesResponse
 
-
     @GET("movie/{movie_id}/credits")
     suspend fun getMovieCredits(
         @Path("movie_id") movieId: Long,
         @Query("language") language: String = "en-US",
     ): CreditsResponse
-
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(

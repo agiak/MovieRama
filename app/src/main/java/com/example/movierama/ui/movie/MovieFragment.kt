@@ -8,9 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -21,11 +18,13 @@ import com.example.movierama.domain.useCases.MovieDetailsState
 import com.example.movierama.domain.useCases.ReviewsState
 import com.example.movierama.domain.useCases.SimilarMoviesState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
+import com.example.movierama.ui.utils.collectInViewScope
+import com.example.myutils.addScrollListener
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.enableFullScreenTheme
+import com.example.myutils.setLightStatusBars
 import com.example.myutils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieFragment : Fragment() {
@@ -47,6 +46,7 @@ class MovieFragment : Fragment() {
     ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         enableFullScreenTheme()
+        setLightStatusBars(true)
         return binding.root
     }
 
@@ -70,6 +70,16 @@ class MovieFragment : Fragment() {
             }
         }
 
+        binding.appBar.addScrollListener(
+            onCollapse = {
+                setLightStatusBars(false)
+            }, onAlmostExpand = {
+                setLightStatusBars(false)
+            }, onHalfExpand = {
+                setLightStatusBars(true)
+            }
+        )
+
         initSimilarMoviesViews()
         initReviewsViews()
     }
@@ -91,21 +101,18 @@ class MovieFragment : Fragment() {
             })
         }
     }
+
     private fun initSubscriptions() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.movieState.collect {
-                    handleMovieDetails(it.movieDetailsState)
-                    handleReviews(it.reviewsState)
-                    handleSimilarMovies(it.similarMoviesState)
-                    handleMovieCredits(it.creditsDetails)
-                }
-            }
+        viewModel.movieState.collectInViewScope(viewLifecycleOwner) {
+            handleMovieDetails(it.movieDetailsState)
+            handleReviews(it.reviewsState)
+            handleSimilarMovies(it.similarMoviesState)
+            handleMovieCredits(it.creditsDetails)
         }
     }
 
     private fun handleMovieCredits(creditsDetails: CreditsDetails) {
-        with(creditsDetails){
+        with(creditsDetails) {
             binding.castField.text = cast
             binding.directorField.text = director
         }
@@ -151,6 +158,7 @@ class MovieFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         disableFullScreenTheme()
+        setLightStatusBars(true)
         _binding = null
     }
 }

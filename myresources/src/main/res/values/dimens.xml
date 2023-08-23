@@ -10,15 +10,29 @@
 
     <dimen name="toolbar_height">84dp</dimen>
 
+    <!-- Space -->
+    <dimen name="space_xsmall">4dp</dimen>
+    <dimen name="space_small">6dp</dimen>
+    <dimen name="space_medium">8dp</dimen>
+    <dimen name="space_large">12dp</dimen>
+    <dimen name="space_xlarge">16dp</dimen>
+    <dimen name="space_xxlarge">24dp</dimen>
+    <dimen name="space_pre_huge">28dp</dimen>
+    <dimen name="space_huge">32dp</dimen>
+
     <!-- Buttons -->
     <dimen name="back_button_backgrounded">42dp</dimen>
 
     <!-- Dimensions -->
-    <dimen name="main_margin_horizontal">24dp</dimen>
-    <dimen name="main_margin_vertical">24dp</dimen>
+    <dimen name="main_margin_horizontal">@dimen/space_xxlarge</dimen>
+    <dimen name="main_margin_vertical">@dimen/space_xxlarge</dimen>
 
-    <!-- Buttons -->
-    <dimen name="main_radius">8dp</dimen>
+    <!-- Radius -->
+    <dimen name="radius_main">8dp</dimen>
+    <dimen name="radius_small">6dp</dimen>
+    <dimen name="radius_normal">12dp</dimen>
+    <dimen name="radius_large">16dp</dimen>
+
     <dimen name="main_stroke_width">2dp</dimen>
 
     <!-- Labels -->

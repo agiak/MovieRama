@@ -17,6 +17,30 @@ interface MoviesRepository {
     suspend fun getPopularMovies(currentPage: Int): MoviesResponse
 
     /**
+     * Retrieves a list of now playing movies from the server.
+     *
+     * @param currentPage The current page number.
+     * @return The response containing the list of popular movies.
+     */
+    suspend fun getNowPlayingMovies(currentPage: Int): MoviesResponse
+
+    /**
+     * Retrieves a list of upcoming movies from the server.
+     *
+     * @param currentPage The current page number.
+     * @return The response containing the list of popular movies.
+     */
+    suspend fun getUpcomingMovies(currentPage: Int): MoviesResponse
+
+    /**
+     * Retrieves a list of top rated movies from the server.
+     *
+     * @param currentPage The current page number.
+     * @return The response containing the list of popular movies.
+     */
+    suspend fun getTopRatedMovies(currentPage: Int): MoviesResponse
+
+    /**
      * Searches for movies based on the provided criteria.
      *
      * @param page The page number.

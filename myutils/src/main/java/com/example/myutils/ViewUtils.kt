@@ -9,11 +9,13 @@ import android.view.animation.TranslateAnimation
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 
+private const val ANIM_FAST = 400L
+private const val ANIM_NORMAL = 1000L
 
 // To animate view slide out from left to right
 fun View.slideToRight() {
     val animate = TranslateAnimation(0F, width.toFloat(), 0F, 0F)
-    animate.duration = getDimension(R.dimen.animation_slow)
+    animate.duration = ANIM_NORMAL
     animate.fillAfter = true
     startAnimation(animate)
     isVisible = true
@@ -22,7 +24,7 @@ fun View.slideToRight() {
 // To animate view slide out from right to left
 fun View.slideToLeft() {
     val animate = TranslateAnimation(0F, -width.toFloat(), 0F, 0F)
-    animate.duration = getDimension(R.dimen.animation_slow)
+    animate.duration = ANIM_NORMAL
     animate.fillAfter = true
     startAnimation(animate)
     isVisible = true
@@ -32,7 +34,7 @@ fun View.slideToLeft() {
 fun View.slideToRightShow(){
     val transition = Slide(Gravity.END)
     transition.apply {
-        duration = getDimension(R.dimen.animation_fast)
+        duration = ANIM_FAST
         addTarget(this@slideToRightShow)
     }
     TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
@@ -42,7 +44,7 @@ fun View.slideToRightShow(){
 fun View.slideToLeftShow(){
     val transition = Slide(Gravity.START)
     transition.apply {
-        duration = getDimension(R.dimen.animation_fast)
+        duration = ANIM_FAST
         addTarget(this@slideToLeftShow)
     }
     TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
@@ -52,7 +54,7 @@ fun View.slideToLeftShow(){
 fun View.slideFromBottom(){
     val transition = Slide(Gravity.BOTTOM)
     transition.apply {
-        duration = getDimension(R.dimen.animation_fast)
+        duration = ANIM_FAST
         addTarget(this@slideFromBottom)
     }
     TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
@@ -103,4 +105,25 @@ fun View.setMarginHorizontal(margin: Int) {
         leftMargin = margin
         rightMargin = margin
     }
+}
+
+// Extension function to apply fade-in animation to a View
+fun View.fadeIn(duration: Long = ANIM_FAST, onAnimationEnd: () -> Unit = {}) {
+    alpha = 0f
+    visibility = View.VISIBLE
+    animate()
+        .alpha(1f)
+        .setDuration(duration)
+        .withEndAction(onAnimationEnd)
+}
+
+// Extension function to apply fade-out animation to a View
+fun View.fadeOut(duration: Long = ANIM_FAST, onAnimationEnd: () -> Unit = {}) {
+    animate()
+        .alpha(0f)
+        .setDuration(duration)
+        .withEndAction {
+            visibility = View.GONE
+            onAnimationEnd()
+        }
 }

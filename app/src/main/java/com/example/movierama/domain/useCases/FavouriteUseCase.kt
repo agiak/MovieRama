@@ -13,4 +13,6 @@ class FavouriteUseCase @Inject constructor(
         repository.onFavouriteChange(movieId)
     }
 
+    fun isMovieFavourite(movieId: Long) = repository.isMovieFavourite(movieId)
+
 }

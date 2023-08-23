@@ -8,14 +8,13 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.lists.MyItemDecoration
 import com.example.movierama.databinding.FragmentMoviesBinding
 import com.example.movierama.domain.error_hadling.getErrorMessageResource
 import com.example.movierama.ui.UIState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
+import com.example.movierama.ui.utils.collectInViewScope
 import com.example.myutils.addTitleElevationAnimation
 import com.example.myutils.hide
 import com.example.myutils.scrollToUp
@@ -23,7 +22,6 @@ import com.example.myutils.show
 import com.example.myutils.showToast
 import com.example.myutils.showUpButtonListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -35,6 +33,7 @@ class MoviesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var moviesAdapter: MovieAdapter
+    private lateinit var moviesTypeAdapter: MoviesTypeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,12 +52,25 @@ class MoviesFragment : Fragment() {
 
     private fun initViews() {
         initMoviesListView()
+        initMoviesTypeList()
         initSearchBar()
         binding.moveUpBtn.setOnClickListener {
             binding.moviesList.scrollToUp()
         }
         binding.refreshLayout.setOnRefreshListener {
             viewModel.refresh()
+        }
+    }
+
+    private fun initMoviesTypeList() {
+        moviesTypeAdapter = MoviesTypeAdapter {
+            viewModel.onMovieTypeSelected(it)
+        }
+        binding.moviesTypeList.apply {
+            adapter = moviesTypeAdapter
+            addItemDecoration(
+                MyItemDecoration(resources.getDimensionPixelSize(com.example.myresources.R.dimen.space_small))
+            )
         }
     }
 
@@ -81,7 +93,7 @@ class MoviesFragment : Fragment() {
         }
     }
 
-    private fun getSearchValue(input: String): MovieFilter = MovieFilter(movieName = input)
+    private fun getSearchValue(input: String): SearchFilter = SearchFilter(movieName = input)
 
     private fun initMoviesListView() {
         moviesAdapter = MovieAdapter(onClick = {
@@ -92,8 +104,9 @@ class MoviesFragment : Fragment() {
         binding.moviesList.apply {
             adapter = moviesAdapter
             addTitleElevationAnimation(binding.searchBar)
+            addTitleElevationAnimation(binding.moviesTypeList)
             addOnLoadMoreListener(loadMoreAction = {
-                viewModel.loadMoreMovies()
+                viewModel.fetchMoreMovies()
             })
             showUpButtonListener(binding.moveUpBtn)
         }
@@ -106,34 +119,30 @@ class MoviesFragment : Fragment() {
     }
 
     private fun initSubscriptions() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.homeState.collect {
-                    when (it) {
-                        is UIState.Result -> {
-                            hideLoaders()
-                            Timber.w("Ui updated with ${it.data.size} movies")
-                            moviesAdapter.submitList(it.data)
-                            handleEmptyData(it.data.isEmpty())
-                        }
+        viewModel.homeState.collectInViewScope(viewLifecycleOwner){ state ->
+            when (state) {
+                is UIState.Result -> {
+                    hideLoaders()
+                    Timber.w("Ui updated with ${state.data.size} movies")
+                    moviesAdapter.submitList(state.data)
+                    handleEmptyData(state.data.isEmpty())
+                }
 
-                        is UIState.Error -> {
-                            hideLoaders()
-                            showToast(getString(it.error.getErrorMessageResource()))
-                        }
+                is UIState.Error -> {
+                    hideLoaders()
+                    showToast(getString(state.error.getErrorMessageResource()))
+                }
 
-                        UIState.LoadingMore -> {
-                            binding.moreLoader.show()
-                        }
+                UIState.LoadingMore -> {
+                    binding.moreLoader.show()
+                }
 
-                        UIState.InProgress -> {
-                            binding.loader.show()
-                        }
+                UIState.InProgress -> {
+                    binding.loader.show()
+                }
 
-                        else -> {
-                            hideLoaders()
-                        }
-                    }
+                else -> {
+                    hideLoaders()
                 }
             }
         }

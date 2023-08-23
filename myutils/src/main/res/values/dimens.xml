@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <dimen name="animation_fast">400</dimen>
-    <dimen name="animation_slow">1000</dimen>
-
-</resources>

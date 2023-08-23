@@ -6,6 +6,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Disables scroll to a recyclerView
+ * */
 fun RecyclerView.disableScroll(context: Context){
     val lm = object : LinearLayoutManager(context) {
         override fun canScrollVertically(): Boolean {
@@ -31,7 +34,33 @@ fun RecyclerView.scrollToUp() = this.layoutManager?.smoothScrollToPosition(this,
 fun RecyclerView.showUpButtonListener(moveUpButton: View) {
     addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            moveUpButton.isVisible = recyclerView.canScrollVertically(-1)
+            if(recyclerView.canScrollVertically(-1)) {
+                // in case button is already visible we don't want to trigger the animation again
+                if (moveUpButton.isVisible) return
+                moveUpButton.fadeIn()
+            } else {
+                // in case button is already hidden we don't want to trigger the animation again
+                if (moveUpButton.isVisible.not()) return
+                moveUpButton.fadeOut()
+            }
         }
     })
 }
+
+
+/**
+ * When RecyclerView is scrolled up adds elevation to the given titleView
+ *
+ * @param titleView = represents the title view
+ *
+ * Note that you need to set stateListAnimator with @animator/elevation_title and a background to your
+ * titleView
+ * */
+fun RecyclerView.addTitleElevationAnimation(titleView: View) {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            titleView.isSelected = recyclerView.canScrollVertically(-1)
+        }
+    })
+}
+

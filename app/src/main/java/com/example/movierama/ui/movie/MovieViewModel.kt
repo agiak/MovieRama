@@ -35,7 +35,11 @@ class MovieViewModel @Inject constructor(
         movieUseCases.reviewsUseCase.reviewsState,
         movieUseCases.creditsUseCase.creditsState,
         movieUseCases.movieDetailsUseCase.movieDetailsState
-    ) { similarMoviesState: SimilarMoviesState, reviewsState: ReviewsState, creditsDetails: CreditsDetails, movieDetailsState: MovieDetailsState ->
+    ) { similarMoviesState: SimilarMoviesState,
+        reviewsState: ReviewsState,
+        creditsDetails: CreditsDetails,
+        movieDetailsState: MovieDetailsState ->
+
         MovieState(
             similarMoviesState = similarMoviesState,
             reviewsState = reviewsState,

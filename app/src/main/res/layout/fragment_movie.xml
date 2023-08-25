@@ -46,11 +46,11 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadingEdge="none"
-        android:fillViewport="true"
+        android:layout_marginTop="-4dp"
         android:background="@drawable/bg_top_rounded"
         android:elevation="8dp"
-        android:layout_marginTop="-4dp"
+        android:fadingEdge="none"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo">
@@ -99,7 +99,7 @@
                 app:layout_constraintTop_toTopOf="@+id/release_date"
                 app:srcCompat="@drawable/bg_favourite" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/description_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/type" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/description_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="description_label,description_field" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/director_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_field" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/director_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="director_label,director_field" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/cast_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,13 +164,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/director_field" />
 
-            <TextView
+            <com.example.movierama.ui.customviews.ExpandableTextView
                 android:id="@+id/cast_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cast_label"
+                app:maxLinesCollapsed="5"
                 tools:maxLines="5"
                 tools:text="Chris Pratt, Bryce Dallas Howard, Rafe Spall" />
 
@@ -180,7 +181,7 @@
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="cast_label,cast_field" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/similar_movies_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -222,7 +223,7 @@
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="similar_movies_label,similar_movies_list, loader_similar_movies" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/reviews_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

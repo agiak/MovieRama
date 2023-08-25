@@ -71,6 +71,7 @@ class MoviesViewModel @Inject constructor(
         // If we have search filter we need to call search endpoint
         // Otherwise we need to fetch more movies by the same type
         if (searchFilter.isEmpty().not()) {
+            Timber.d("Search filter is not empty fetch more movies with that filter")
             searchMovies(searchFilter, isLoadingMore = true)
         } else {
             Timber.d("fetch more movies with page $currentPage")
@@ -90,20 +91,26 @@ class MoviesViewModel @Inject constructor(
     }
 
     private fun resetMoviesAndPages() {
+        Timber.d("resetMoviesAndPages was called")
         allMovies.clear()
         totalPages = 1
         currentPage = 1
     }
 
     fun searchMovies(input: SearchFilter, isLoadingMore: Boolean = false) {
-        _homeState.value = if (isLoadingMore) UIState.LoadingMore else UIState.InProgress
+        Timber.d("searchMovies was called with filter ${input.movieName} and isLoadingMore: $isLoadingMore")
         searchFilter = input
-        resetMoviesAndPages()
         if (searchFilter.isEmpty()) {
-            // if search filter is empty reset list and pages and just retrieve movies for the last
-            // selected type
+            resetMoviesAndPages()
             fetchMovies()
         } else {
+            _homeState.value = if (isLoadingMore) {
+                UIState.LoadingMore
+            } else {
+                resetMoviesAndPages()
+                UIState.InProgress
+            }
+
             viewModelScope.launch {
                 try {
                     Timber.d("search with movie name '${searchFilter.movieName}' and page $currentPage")

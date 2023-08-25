@@ -113,7 +113,7 @@ class MovieFragment : Fragment() {
 
     private fun handleMovieCredits(creditsDetails: CreditsDetails) {
         with(creditsDetails) {
-            binding.castField.text = cast
+            binding.castField.setFullText(cast)
             binding.directorField.text = director
         }
     }

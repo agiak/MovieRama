@@ -103,8 +103,8 @@ class MoviesFragment : Fragment() {
         })
         binding.moviesList.apply {
             adapter = moviesAdapter
-            addTitleElevationAnimation(binding.searchBar)
-            addTitleElevationAnimation(binding.moviesTypeList)
+            addTitleElevationAnimation(binding.searchBar) // add elevation with scrolling at search bar
+            addTitleElevationAnimation(binding.moviesTypeList) // add elevation with scrolling at movies type list
             addOnLoadMoreListener(loadMoreAction = {
                 viewModel.fetchMoreMovies()
             })

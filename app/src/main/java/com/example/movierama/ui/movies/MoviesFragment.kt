@@ -16,8 +16,10 @@ import com.example.movierama.ui.UIState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.collectInViewScope
 import com.example.myutils.addTitleElevationAnimation
+import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.hide
 import com.example.myutils.scrollToUp
+import com.example.myutils.setLightStatusBars
 import com.example.myutils.show
 import com.example.myutils.showToast
 import com.example.myutils.showUpButtonListener
@@ -46,6 +48,8 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        disableFullScreenTheme()
+        setLightStatusBars(true)
         initViews()
         initSubscriptions()
     }

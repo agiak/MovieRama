@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
+import timber.log.Timber
 
 
 fun Fragment.showToast(message: String, duration: Int = Toast.LENGTH_LONG) {
@@ -23,6 +24,7 @@ fun AppCompatActivity.showToast(message: String, duration: Int = Toast.LENGTH_LO
 @Suppress("DEPRECATION")
 fun Fragment.enableFullScreenTheme() {
     requireActivity().window.apply {
+        Timber.d("enable full screen was called")
         statusBarColor =
             ContextCompat.getColor(requireContext(), com.example.myresources.R.color.transparent)
 
@@ -45,6 +47,7 @@ fun Fragment.enableFullScreenTheme() {
 @Suppress("DEPRECATION")
 fun Fragment.disableFullScreenTheme() {
     requireActivity().window.apply {
+        Timber.d("disable full screen was called")
         statusBarColor =
             ContextCompat.getColor(requireContext(), com.example.myresources.R.color.status_bar_color)
 

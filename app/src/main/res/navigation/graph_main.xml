@@ -7,12 +7,19 @@
 
     <fragment
         android:id="@+id/nav_movie"
-        android:name="com.example.movierama.ui.movie.MovieFragment"
+        android:name="com.example.movierama.ui.movie.MovieDetailsFragment"
         android:label="@string/nav_label_movie"
-        tools:layout="@layout/fragment_movie" >
+        tools:layout="@layout/fragment_movie_details" >
         <argument
             android:name="movieId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_nav_movie_self"
+            app:destination="@id/nav_movie"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment

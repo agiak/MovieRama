@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.movierama.R
-import com.example.movierama.databinding.FragmentMovieBinding
+import com.example.movierama.databinding.FragmentMovieDetailsBinding
 import com.example.movierama.domain.useCases.CreditsDetails
 import com.example.movierama.domain.useCases.MovieDetailsState
 import com.example.movierama.domain.useCases.ReviewsState
@@ -20,31 +20,35 @@ import com.example.movierama.domain.useCases.SimilarMoviesState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.collectInViewScope
 import com.example.myutils.addScrollListener
-import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.enableFullScreenTheme
 import com.example.myutils.setLightStatusBars
 import com.example.myutils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class MovieFragment : Fragment() {
+class MovieDetailsFragment : Fragment() {
 
-    private var _binding: FragmentMovieBinding? = null
+    private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MovieViewModel by viewModels()
+    private val viewModel: MovieDetailsViewModel by viewModels()
 
-    private val args: MovieFragmentArgs by navArgs()
+    private val args: MovieDetailsFragmentArgs by navArgs()
 
     private val reviewsAdapter = ReviewAdapter()
-    private val similarMovieAdapter = SimilarMovieAdapter()
+    private val similarMovieAdapter = SimilarMovieAdapter(
+        onClick = { movieId ->
+            findNavController().navigate(MovieDetailsFragmentDirections.actionNavMovieSelf(movieId))
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         enableFullScreenTheme()
         setLightStatusBars(true)
         return binding.root
@@ -52,6 +56,7 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.d("args movieId: ${args.movieId}")
         viewModel.movieId = args.movieId
         initViews()
         initSubscriptions()
@@ -135,6 +140,7 @@ class MovieFragment : Fragment() {
                         )
                     )
                     .into(binding.logo)
+
                 binding.collapsingLayout.title = title
                 binding.type.text = type
                 binding.favouriteBtn.isSelected = isFavourite
@@ -157,8 +163,6 @@ class MovieFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disableFullScreenTheme()
-        setLightStatusBars(true)
         _binding = null
     }
 }

@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movierama.R
-import com.example.movierama.model.remote.similar.SimilarMovie
 import com.example.movierama.databinding.ItemSimilarMovieBinding
+import com.example.movierama.model.remote.similar.SimilarMovie
 
-class SimilarMovieAdapter :
-    ListAdapter<SimilarMovie, SimilarMovieAdapter.SimilarMovieViewHolder>(SimilarMovieDiffCallback()) {
+class SimilarMovieAdapter(
+    private val onClick: (movieId: Long) -> Unit = {},
+) : ListAdapter<SimilarMovie, SimilarMovieAdapter.SimilarMovieViewHolder>(SimilarMovieDiffCallback()) {
 
     private lateinit var context: Context
 
@@ -33,16 +34,14 @@ class SimilarMovieAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(similarMovie: SimilarMovie) {
-            with(similarMovie) {
-                Glide.with(context)
-                    .load(similarMovie.poster)
-                    .placeholder(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.ic_movie_placeholder
-                        )
+            Glide.with(context).load(similarMovie.poster).placeholder(
+                    ContextCompat.getDrawable(
+                        context, R.drawable.ic_movie_placeholder
                     )
-                    .into(binding.poster)
+                ).into(binding.poster)
+
+            binding.root.setOnClickListener {
+                onClick(similarMovie.id)
             }
         }
     }

@@ -47,6 +47,12 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${recyclerViewVersion}"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${navigationVersion}"
+
+    // Loging
+    implementation "com.jakewharton.timber:timber:${timberVersion}"
+
     // Test
     testImplementation "junit:junit:${jUnit}"
     testImplementation "com.google.truth:truth:${truth}"

@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(
+class MovieDetailsViewModel @Inject constructor(
     private val movieUseCases: MovieUseCases,
     dispatcher: IDispatchers
 ) : ViewModel() {

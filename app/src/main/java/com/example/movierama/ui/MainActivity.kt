@@ -10,6 +10,7 @@ import com.example.movierama.R
 import com.example.movierama.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.movierama.ui.splash.SplashViewModel
+import com.example.myutils.addPrintingBackstack
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -33,5 +34,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
+
+        navController.addPrintingBackstack()
     }
 }

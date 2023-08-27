@@ -2,7 +2,7 @@
     <string name="app_name">MovieRama</string>
 
     <!-- Navigation labels -->
-    <string name="nav_label_movie">Movie</string>
+    <string name="nav_label_movie">Movie Details</string>
     <string name="nav_label_movies">Movies</string>
 
     <!-- Movies screen -->

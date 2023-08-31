@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import timber.log.Timber
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -40,6 +41,7 @@ class SimilarMoviesUseCase @Inject constructor(
 
     // Function to load more similar movies by incrementing the page number
     suspend fun loadMore() {
+        Timber.d("try to load more similar movies, stateLoading: ${similarMoviesState.value.isLoading}")
         // Check if there are more pages to load and not already loading
         if (currentSimilarMoviesPage < totalSimilarMoviesPages && similarMoviesState.value.isLoading.not()) {
             currentSimilarMoviesPage++

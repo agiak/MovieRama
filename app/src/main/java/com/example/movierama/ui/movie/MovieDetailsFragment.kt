@@ -157,6 +157,10 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun handleReviews(reviewsState: ReviewsState) {
+        if (reviewsState.reviews.isEmpty()) {
+            binding.reviewsGroup.isVisible = false
+            return
+        }
         binding.loaderReviews.isVisible = reviewsState.isLoading
         reviewsAdapter.submitList(reviewsState.reviews)
     }

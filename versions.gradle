@@ -21,7 +21,7 @@ ext {
     constraintLayoutVersion = '2.1.4'
     materialVersion = '1.8.0'
     glideVersion = '4.13.1'
-    splashVersion = '1.0.0-alpha02'
+    splashVersion = '1.0.0'
 
     // Lifecycle Components
     lifecycleVersion = '2.5.1'

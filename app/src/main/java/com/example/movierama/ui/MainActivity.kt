@@ -8,9 +8,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.movierama.R
 import com.example.movierama.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
 import com.example.movierama.ui.splash.SplashViewModel
 import com.example.myutils.addPrintingBackstack
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         installSplashScreen().apply {
-            setKeepVisibleCondition {
+            setKeepOnScreenCondition {
                 viewModel.showSplash.value
             }
         }

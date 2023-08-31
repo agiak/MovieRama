@@ -12,8 +12,11 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.example.myutils.fadeIn
 import com.example.myutils.fadeOut
 
+// TODO fix a bug when expanded text is not expanded all
 class ExpandableTextView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     private var maxLinesCollapsed: Int = 3
@@ -21,8 +24,6 @@ class ExpandableTextView @JvmOverloads constructor(
     private var isCollapsed: Boolean = true
     private var moreText = " More"
     private var lessText = " Less"
-
-    private val fadeDuration: Long = 200
 
     private val moreButton: Button
 

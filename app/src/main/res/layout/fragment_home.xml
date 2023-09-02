@@ -117,6 +117,7 @@
         android:layout_marginBottom="@dimen/main_margin_vertical"
         android:backgroundTint="@color/white"
         android:clickable="true"
+        android:importantForAccessibility="no"
         android:visibility="gone"
         app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

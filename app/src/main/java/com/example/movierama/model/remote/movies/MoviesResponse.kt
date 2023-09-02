@@ -3,6 +3,7 @@ package com.example.movierama.model.remote.movies
 import com.example.movierama.model.Movie
 import com.example.movierama.ui.URL_POSTER
 import com.example.movierama.ui.utils.mapToDate
+import com.example.myutils.roundToTwoDecimal
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
@@ -38,7 +39,7 @@ data class MovieNetwork(
     fun toHomeMovie() = Movie(
         id = this.id,
         title = title,
-        rating = vote_average / 2.0F, // round the rating to a 5 stars scale
+        rating = (vote_average / 2.0F).roundToTwoDecimal(), // round the rating to a 5 stars scale
         releaseDate = release_date.mapToDate(),
         poster = URL_POSTER + poster_path, // add base image url because server returns only the prefix
         isFavourite = false // by default is false

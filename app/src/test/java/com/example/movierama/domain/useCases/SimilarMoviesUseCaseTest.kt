@@ -2,6 +2,7 @@ package com.example.movierama.domain.useCases
 
 import com.example.movierama.domain.error_handling.FakeErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesUseCase
 import com.example.movierama.model.remote.similar.SimilarMovieNetwork
 import com.example.movierama.model.remote.similar.SimilarResponse
 import com.google.common.truth.Truth.assertThat

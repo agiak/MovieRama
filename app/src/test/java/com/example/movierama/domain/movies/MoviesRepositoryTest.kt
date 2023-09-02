@@ -12,7 +12,7 @@ import com.example.movierama.model.remote.similar.SimilarMovieNetwork
 import com.example.movierama.model.remote.similar.SimilarResponse
 import com.example.movierama.network.MoviesService
 import com.example.movierama.storage.FakePreferenceManager
-import com.example.movierama.storage.PreferenceManager
+import com.example.movierama.storage.sharedpreferences.PreferenceManager
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

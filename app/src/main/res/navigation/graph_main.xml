@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_movies">
+    app:startDestination="@+id/nav_home">
 
     <fragment
         android:id="@+id/nav_movie"
-        android:name="com.example.movierama.ui.movie.MovieDetailsFragment"
-        android:label="@string/nav_label_movie"
-        tools:layout="@layout/fragment_movie_details" >
+        android:name="com.example.movierama.ui.features.movie.MovieDetailsFragment"
+        android:label="@string/nav_label_movie_details"
+        tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="movieId"
             app:argType="long" />
@@ -19,21 +19,37 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_movies"
-        android:name="com.example.movierama.ui.movies.MoviesFragment"
-        android:label="@string/nav_label_movies"
-        tools:layout="@layout/fragment_movies">
+        android:id="@+id/nav_home"
+        android:name="com.example.movierama.ui.features.home.HomeFragment"
+        android:label="@string/nav_label_home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_movies_to_nav_movie"
             app:destination="@id/nav_movie"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.movierama.ui.features.settings.SettingsFragment"
+        android:label="@string/nav_label_settings"
+        tools:layout="@layout/fragment_settings"></fragment>
+
+    <fragment
+        android:id="@+id/nav_favourites"
+        android:name="com.example.movierama.ui.features.favourites.FavouritesFragment"
+        android:label="@string/nav_label_favourites"
+        tools:layout="@layout/fragment_favourites">
+        <action
+            android:id="@+id/action_nav_favourites_to_nav_movie"
+            app:destination="@id/nav_movie" />
     </fragment>
 
 </navigation>

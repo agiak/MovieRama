@@ -3,6 +3,7 @@ package com.example.movierama.model.remote.movies
 import com.example.movierama.model.MovieDetails
 import com.example.movierama.ui.URL_POSTER
 import com.example.movierama.ui.utils.mapToDate
+import com.example.myutils.roundToTwoDecimal
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailsResponse(
@@ -37,13 +38,13 @@ data class MovieDetailsResponse(
         title = title,
         type = getType(),
         releaseDate = releaseDate.mapToDate(),
-        rating = rating / 2.0F,
+        rating = (rating / 2.0F).roundToTwoDecimal(),
         poster = URL_POSTER + posterPath,
         isFavourite = false,
         description = overview
     )
 
-    fun getType(): String {
+    private fun getType(): String {
         return genres.joinToString(", ") { it.name }
     }
 }

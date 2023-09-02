@@ -1,4 +1,4 @@
-package com.example.movierama.ui.movies
+package com.example.movierama.ui.features.home
 
 import android.content.Context
 import android.view.LayoutInflater

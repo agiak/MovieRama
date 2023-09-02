@@ -1,4 +1,4 @@
-package com.example.movierama.ui.movies
+package com.example.movierama.ui.features.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.lists.MyItemDecoration
-import com.example.movierama.databinding.FragmentMoviesBinding
+import com.example.movierama.databinding.FragmentHomeBinding
 import com.example.movierama.domain.error_hadling.getErrorMessageResource
 import com.example.movierama.ui.UIState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
@@ -27,11 +27,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class MoviesFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     private val viewModel: MoviesViewModel by viewModels()
 
-    private var _binding: FragmentMoviesBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var moviesAdapter: MovieAdapter
@@ -42,7 +42,7 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -101,7 +101,7 @@ class MoviesFragment : Fragment() {
 
     private fun initMoviesListView() {
         moviesAdapter = MovieAdapter(onClick = {
-            findNavController().navigate(MoviesFragmentDirections.actionNavMoviesToNavMovie(it.id))
+            findNavController().navigate(HomeFragmentDirections.actionNavMoviesToNavMovie(it.id))
         }, onFavouriteClick = {
             viewModel.onFavouriteChanged(it)
         })

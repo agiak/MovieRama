@@ -1,12 +1,13 @@
-package com.example.movierama.ui.movies
+package com.example.movierama.ui.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movierama.domain.useCases.FavouriteUseCase
 import com.example.movierama.domain.useCases.FetchMoviesUseCase
 import com.example.movierama.domain.useCases.SearchMovieUseCase
+import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
 import com.example.movierama.model.Movie
 import com.example.movierama.model.remote.movies.MoviesResponse
+import com.example.movierama.model.toFavouriteMovie
 import com.example.movierama.ui.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -125,21 +126,25 @@ class MoviesViewModel @Inject constructor(
     }
 
     private fun handleMovieResponse(response: MoviesResponse) {
-        totalPages = response.totalPages
-        allMovies.addAll(response.getUiMovies().also {
-            it.setIsFavouriteToMovies()
-        })
-        Timber.e("Finally retrieved ${response.moviesNetwork.size} network movies for page ${response.page}")
-        Timber.e("Submitted to UI ${allMovies.size} movies")
-        _homeState.value = UIState.Result(allMovies.toList())
+        viewModelScope.launch {
+            totalPages = response.totalPages
+            allMovies.addAll(response.getUiMovies().also {
+                it.setIsFavouriteToMovies()
+            })
+            Timber.e("Finally retrieved ${response.moviesNetwork.size} network movies for page ${response.page}")
+            Timber.e("Submitted to UI ${allMovies.size} movies")
+            _homeState.value = UIState.Result(allMovies.toList())
+        }
     }
 
-    fun onFavouriteChanged(movieId: Long) {
-        useCases.favouriteUseCase.onFavouriteChanged(movieId)
+    fun onFavouriteChanged(movie: Movie) {
+        viewModelScope.launch {
+            useCases.favouriteUseCase.onFavouriteChanged(movie.toFavouriteMovie())
+        }
     }
 
     // updates isFavourite state of each movie element of the list
-    private fun List<Movie>.setIsFavouriteToMovies() {
+    private suspend fun List<Movie>.setIsFavouriteToMovies() {
         forEach { movie ->
             movie.isFavourite = useCases.favouriteUseCase.isMovieFavourite(movie.id)
         }

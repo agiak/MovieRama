@@ -1,4 +1,4 @@
-package com.example.movierama.ui.movie
+package com.example.movierama.ui.features.movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,10 +13,10 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.movierama.R
 import com.example.movierama.databinding.FragmentMovieDetailsBinding
-import com.example.movierama.domain.useCases.CreditsDetails
-import com.example.movierama.domain.useCases.MovieDetailsState
-import com.example.movierama.domain.useCases.ReviewsState
-import com.example.movierama.domain.useCases.SimilarMoviesState
+import com.example.movierama.domain.useCases.moviedetails.CreditsDetails
+import com.example.movierama.domain.useCases.moviedetails.MovieDetailsState
+import com.example.movierama.domain.useCases.moviedetails.ReviewsState
+import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.collectInViewScope
 import com.example.myutils.addScrollListener

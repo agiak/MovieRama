@@ -1,4 +1,4 @@
-package com.example.movierama.ui.movies
+package com.example.movierama.ui.features.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movierama.R
-import com.example.movierama.model.Movie
 import com.example.movierama.databinding.ItemMovieBinding
+import com.example.movierama.model.Movie
 
 class MovieAdapter (
     private val onClick: (movie: Movie) -> Unit,
-    private val onFavouriteClick: (movieId: Long) -> Unit
+    private val onFavouriteClick: (movie: Movie) -> Unit
 ) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
     private lateinit var context: Context
@@ -52,7 +52,7 @@ class MovieAdapter (
                         with(binding.favouriteBtn){
                             isSelected = isSelected.not()
                         }
-                        onFavouriteClick(this@with.id)
+                        onFavouriteClick(movie)
                     }
                     isSelected = isFavourite
                 }

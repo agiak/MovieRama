@@ -1,4 +1,4 @@
-package com.example.movierama.domain.useCases
+package com.example.movierama.domain.useCases.moviedetails
 
 import com.example.movierama.domain.movies.MoviesRepository
 import dagger.hilt.android.scopes.ViewModelScoped

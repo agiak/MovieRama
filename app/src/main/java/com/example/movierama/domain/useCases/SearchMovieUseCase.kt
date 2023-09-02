@@ -2,7 +2,7 @@ package com.example.movierama.domain.useCases
 
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.model.remote.movies.MoviesResponse
-import com.example.movierama.ui.movies.SearchFilter
+import com.example.movierama.ui.features.home.SearchFilter
 import javax.inject.Inject
 
 class SearchMovieUseCase @Inject constructor(

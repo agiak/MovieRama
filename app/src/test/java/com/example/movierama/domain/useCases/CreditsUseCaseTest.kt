@@ -1,6 +1,7 @@
 package com.example.movierama.domain.useCases
 
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.domain.useCases.moviedetails.CreditsUseCase
 import com.example.movierama.model.remote.credits.Cast
 import com.example.movierama.model.remote.credits.CreditsResponse
 import com.example.movierama.model.remote.credits.Crew

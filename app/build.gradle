@@ -60,11 +60,9 @@ android {
 
 dependencies {
 
-    // Implement custom resource module
+    // Implement custom modules
     implementation project(':myresources')
-
-    // Implement custom utils module
-    implementation project(':myutils')
+    implementation project(':myutils') // includes many
 
     implementation "androidx.core:core-ktx:${coreKTXVersion}"
 
@@ -82,7 +80,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
     implementation "androidx.recyclerview:recyclerview:${recyclerViewVersion}"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
-
 
     // Lifecycle Components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
@@ -105,6 +102,12 @@ dependencies {
     // Dependency Injection - Hilt
     implementation "com.google.dagger:hilt-android:${hiltVersion}"
     kapt "com.google.dagger:hilt-android-compiler:${hiltVersion}"
+
+    // Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 
     // Legacy
     implementation "androidx.legacy:legacy-support-v4:${androidXLegacyVersion}"

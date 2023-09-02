@@ -1,16 +1,18 @@
 package com.example.movierama.di
 
+import com.example.movierama.domain.dispatchers.IDispatchers
 import com.example.movierama.domain.error_hadling.ErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
-import com.example.movierama.domain.useCases.CreditsUseCase
-import com.example.movierama.domain.useCases.FavouriteUseCase
 import com.example.movierama.domain.useCases.FetchMoviesUseCase
-import com.example.movierama.domain.useCases.MovieDetailsUseCase
-import com.example.movierama.domain.useCases.ReviewsUseCase
 import com.example.movierama.domain.useCases.SearchMovieUseCase
-import com.example.movierama.domain.useCases.SimilarMoviesUseCase
-import com.example.movierama.ui.movie.MovieUseCases
-import com.example.movierama.ui.movies.MoviesUseCases
+import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
+import com.example.movierama.domain.useCases.moviedetails.CreditsUseCase
+import com.example.movierama.domain.useCases.moviedetails.MovieDetailsUseCase
+import com.example.movierama.domain.useCases.moviedetails.ReviewsUseCase
+import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesUseCase
+import com.example.movierama.storage.localdb.FavouriteMovieDao
+import com.example.movierama.ui.features.home.MoviesUseCases
+import com.example.movierama.ui.features.movie.MovieUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,18 +25,22 @@ class MoviesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideSimilarMoviesUseCase(repository: MoviesRepository, errorHandler: ErrorHandler)
-        = SimilarMoviesUseCase(repository, errorHandler)
+    fun provideSimilarMoviesUseCase(repository: MoviesRepository, errorHandler: ErrorHandler) =
+        SimilarMoviesUseCase(repository, errorHandler)
 
     @Provides
     @ViewModelScoped
-    fun provideReviewsUseCase(repository: MoviesRepository, errorHandler: ErrorHandler)
-        = ReviewsUseCase(repository, errorHandler)
+    fun provideReviewsUseCase(repository: MoviesRepository, errorHandler: ErrorHandler) =
+        ReviewsUseCase(repository, errorHandler)
 
     @Provides
     @ViewModelScoped
-    fun provideMovieDetailsUseCase(repository: MoviesRepository, errorHandler: ErrorHandler)
-        = MovieDetailsUseCase(repository, errorHandler)
+    fun provideMovieDetailsUseCase(
+        favouriteUseCase: FavouriteUseCase,
+        repository: MoviesRepository,
+        errorHandler: ErrorHandler
+    ) =
+        MovieDetailsUseCase(favouriteUseCase, repository, errorHandler)
 
     @Provides
     @ViewModelScoped
@@ -42,7 +48,10 @@ class MoviesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideFavouriteUseCase(repository: MoviesRepository) = FavouriteUseCase(repository)
+    fun provideFavouriteUseCase(
+        favouriteMovieDao: FavouriteMovieDao,
+        dispatchers: IDispatchers
+    ) = FavouriteUseCase(favouriteMovieDao, dispatchers)
 
     @Provides
     @ViewModelScoped

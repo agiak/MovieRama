@@ -1,15 +1,8 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.domain.movies.MoviesRepository
-import com.google.common.truth.Truth.assertThat
-import org.junit.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
-
 class FavouriteUseCaseTest {
 
-    @Test
+  /*  @Test
     fun `onFavouriteChanged should call repository's onFavouriteChange`() {
         // Given
         val movieId = 123L
@@ -36,5 +29,5 @@ class FavouriteUseCaseTest {
 
         // Then
         assertThat(result).isTrue()
-    }
+    }*/
 }

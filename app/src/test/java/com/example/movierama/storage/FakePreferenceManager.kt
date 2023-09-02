@@ -1,5 +1,7 @@
 package com.example.movierama.storage
 
+import com.example.movierama.storage.sharedpreferences.PreferenceManager
+
 class FakePreferenceManager<G>: PreferenceManager {
 
     companion object {

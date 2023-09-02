@@ -13,6 +13,6 @@ import dagger.hilt.components.SingletonComponent
 class ErrorModule {
 
     @Provides
-    fun providesCoroutineDispatcherIO(context: Context): ErrorHandler =
+    fun providesErrorHandler(context: Context): ErrorHandler =
         ErrorHandlerImpl(context)
 }

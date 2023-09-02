@@ -1,7 +1,8 @@
-package com.example.movierama.domain.useCases
+package com.example.movierama.domain.useCases.moviedetails
 
 import com.example.movierama.domain.error_hadling.ErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
 import com.example.movierama.model.MovieDetails
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class MovieDetailsUseCase @Inject constructor(
+    private val favouriteUseCase: FavouriteUseCase,
     private val repository: MoviesRepository,
     private val errorHandler: ErrorHandler
 ) {
@@ -58,8 +60,8 @@ class MovieDetailsUseCase @Inject constructor(
         }
     }
 
-    private fun MovieDetails.setIsFavouriteToMovieDetails() {
-        isFavourite = repository.isMovieFavourite(id)
+    private suspend fun MovieDetails.setIsFavouriteToMovieDetails() {
+        isFavourite = favouriteUseCase.isMovieFavourite(id)
     }
 }
 

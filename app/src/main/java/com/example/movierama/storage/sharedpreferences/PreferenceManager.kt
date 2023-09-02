@@ -1,4 +1,4 @@
-package com.example.movierama.storage
+package com.example.movierama.storage.sharedpreferences
 
 interface PreferenceManager {
 

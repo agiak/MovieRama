@@ -7,8 +7,6 @@ import com.example.movierama.model.remote.movies.MoviesResponse
 import com.example.movierama.model.remote.reviews.ReviewsResponse
 import com.example.movierama.model.remote.similar.SimilarResponse
 import com.example.movierama.network.MoviesService
-import com.example.movierama.storage.PreferenceManager
-import com.example.movierama.storage.PreferenceManagerImpl
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -17,9 +15,8 @@ import javax.inject.Inject
  */
 class MoviesRepositoryImpl @Inject constructor(
     private val dispatchersImpl: IDispatchers,
-    private val service: MoviesService,
-    private val preferenceManager: PreferenceManager
-): MoviesRepository {
+    private val service: MoviesService
+) : MoviesRepository {
 
     override suspend fun getPopularMovies(currentPage: Int): MoviesResponse =
         withContext(dispatchersImpl.backgroundThread()) {
@@ -40,7 +37,6 @@ class MoviesRepositoryImpl @Inject constructor(
         withContext(dispatchersImpl.backgroundThread()) {
             service.getNowPlayingMovies(page = currentPage)
         }
-
 
     override suspend fun searchMovies(
         page: Int,
@@ -69,27 +65,4 @@ class MoviesRepositoryImpl @Inject constructor(
         withContext(dispatchersImpl.backgroundThread()) {
             service.getMovieCredits(movieId = movieId)
         }
-
-    override fun onFavouriteChange(movieId: Long) {
-        // Retrieve the set of favourite movies from the preference manager, defaulting to an empty set
-        val favouriteMovies = preferenceManager.get(
-            PreferenceManagerImpl.FAVOURITE_MOVIES_KEY, emptySet<Long>()
-        ).toMutableSet()
-
-        // if movie is contained remove it otherwise add to the set
-        if (favouriteMovies.contains(movieId)) {
-            favouriteMovies.remove(movieId)
-        } else {
-            favouriteMovies.add(movieId)
-        }
-
-        // Update the favourite movies set in the preference manager
-        preferenceManager.put(PreferenceManagerImpl.FAVOURITE_MOVIES_KEY, favouriteMovies)
-    }
-
-    override fun isMovieFavourite(movieId: Long): Boolean {
-        val favouriteSet =
-            preferenceManager.get(PreferenceManagerImpl.FAVOURITE_MOVIES_KEY, emptySet<Long>())
-        return favouriteSet.contains(movieId)
-    }
 }

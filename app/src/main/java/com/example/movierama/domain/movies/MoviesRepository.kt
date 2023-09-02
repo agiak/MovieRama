@@ -87,19 +87,4 @@ interface MoviesRepository {
      * @return The response containing the movie credits.
      */
     suspend fun getMovieCredits(movieId: Long): CreditsResponse
-
-    /**
-     * Handles the change in favorite status for a movie.
-     *
-     * @param movieId The ID of the movie.
-     */
-    fun onFavouriteChange(movieId: Long)
-
-    /**
-     * Checks if a movie is marked as a favorite.
-     *
-     * @param movieId The ID of the movie.
-     * @return `true` if the movie is marked as a favorite, `false` otherwise.
-     */
-    fun isMovieFavourite(movieId: Long): Boolean
 }

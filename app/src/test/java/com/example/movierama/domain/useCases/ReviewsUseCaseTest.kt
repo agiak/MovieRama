@@ -2,6 +2,8 @@ package com.example.movierama.domain.useCases
 
 import com.example.movierama.domain.error_handling.FakeErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.domain.useCases.moviedetails.ReviewsUseCase
+import com.example.movierama.domain.useCases.moviedetails.toReviewList
 import com.example.movierama.model.remote.reviews.AuthorDetails
 import com.example.movierama.model.remote.reviews.ReviewNetwork
 import com.example.movierama.model.remote.reviews.ReviewsResponse

@@ -1,17 +1,18 @@
-package com.example.movierama.ui.movie
+package com.example.movierama.ui.features.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movierama.domain.dispatchers.IDispatchers
-import com.example.movierama.domain.useCases.CreditsDetails
-import com.example.movierama.domain.useCases.CreditsUseCase
-import com.example.movierama.domain.useCases.FavouriteUseCase
-import com.example.movierama.domain.useCases.MovieDetailsState
-import com.example.movierama.domain.useCases.MovieDetailsUseCase
-import com.example.movierama.domain.useCases.ReviewsState
-import com.example.movierama.domain.useCases.ReviewsUseCase
-import com.example.movierama.domain.useCases.SimilarMoviesState
-import com.example.movierama.domain.useCases.SimilarMoviesUseCase
+import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
+import com.example.movierama.domain.useCases.moviedetails.CreditsDetails
+import com.example.movierama.domain.useCases.moviedetails.CreditsUseCase
+import com.example.movierama.domain.useCases.moviedetails.MovieDetailsState
+import com.example.movierama.domain.useCases.moviedetails.MovieDetailsUseCase
+import com.example.movierama.domain.useCases.moviedetails.ReviewsState
+import com.example.movierama.domain.useCases.moviedetails.ReviewsUseCase
+import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesState
+import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesUseCase
+import com.example.movierama.model.toFavouriteMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.SharingStarted
@@ -71,7 +72,11 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     fun onFavouriteChanged() {
-        movieUseCases.favouriteUseCase.onFavouriteChanged(movieId)
+        viewModelScope.launch {
+            movieState.value.movieDetailsState.movieDetails?.let { movieDetails ->
+                movieUseCases.favouriteUseCase.onFavouriteChanged(movieDetails.toFavouriteMovie())
+            }
+        }
     }
 
     fun getMoreSimilarMovies() {

@@ -2,6 +2,7 @@ package com.example.movierama.domain.useCases
 
 import com.example.movierama.domain.error_handling.FakeErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
 import com.example.movierama.domain.useCases.moviedetails.MovieDetailsUseCase
 import com.example.movierama.model.remote.movies.Genre
 import com.example.movierama.model.remote.movies.MovieDetailsResponse
@@ -20,11 +21,17 @@ class MovieDetailsUseCaseTest {
 
     private lateinit var repository: MoviesRepository
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
+    private lateinit var favouriteUseCase: FavouriteUseCase
 
     @Before
     fun setup() {
         repository = mock()
-        movieDetailsUseCase = MovieDetailsUseCase(repository, errorHandler = FakeErrorHandler())
+        favouriteUseCase = mock()
+        movieDetailsUseCase = MovieDetailsUseCase(
+            favouriteUseCase = favouriteUseCase,
+            repository = repository,
+            errorHandler = FakeErrorHandler()
+        )
     }
 
     @Test

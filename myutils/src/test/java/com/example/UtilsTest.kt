@@ -1,7 +1,8 @@
 package com.example
 
 import com.example.myutils.isNumber
-import com.google.common.truth.Truth
+import com.example.myutils.roundToTwoDecimal
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class UtilsTest {
@@ -13,7 +14,32 @@ class UtilsTest {
         val stringInput = "abc"
 
         // Then
-        Truth.assertThat(numberInput.isNumber()).isTrue()
-        Truth.assertThat(stringInput.isNumber()).isFalse()
+        assertThat(numberInput.isNumber()).isTrue()
+        assertThat(stringInput.isNumber()).isFalse()
     }
+
+    @Test
+    fun `test round to 2 decimals function`() {
+        // Given
+        val float = 2.463593F
+
+        // When
+        val result = float.roundToTwoDecimal()
+
+        // Then
+        assertThat(result).isEqualTo(2.46F)
+    }
+
+    @Test
+    fun `test round to 2 decimals function with not decimals`() {
+        // Given
+        val float = 2F
+
+        // When
+        val result = float.roundToTwoDecimal()
+
+        // Then
+        assertThat(result).isEqualTo(2)
+    }
+
 }

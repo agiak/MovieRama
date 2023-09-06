@@ -11,8 +11,6 @@ import com.example.movierama.model.remote.reviews.ReviewsResponse
 import com.example.movierama.model.remote.similar.SimilarMovieNetwork
 import com.example.movierama.model.remote.similar.SimilarResponse
 import com.example.movierama.network.MoviesService
-import com.example.movierama.storage.FakePreferenceManager
-import com.example.movierama.storage.sharedpreferences.PreferenceManager
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -24,7 +22,6 @@ import org.mockito.Mockito.`when`
 class MoviesRepositoryTest {
 
     private val service: MoviesService = mock()
-    private val preferenceManager: PreferenceManager = FakePreferenceManager<Set<Long>>()
 
     private lateinit var repository: MoviesRepository
 
@@ -32,8 +29,7 @@ class MoviesRepositoryTest {
     fun setUp() {
         repository = MoviesRepositoryImpl(
             dispatchersImpl = FakeDispatcherImpl(),
-            service = service,
-            preferenceManager = preferenceManager
+            service = service
         )
     }
 
@@ -56,6 +52,72 @@ class MoviesRepositoryTest {
         // Then
         assertThat(result.page).isEqualTo(1)
         assertThat(result.moviesNetwork).isEmpty()
+    }
+
+    @Test
+    fun `test get top rated movies with page 1`() = runBlocking {
+        // Given
+        val page = 1
+        `when`(service.getTopRatedMovies(page = page)).thenReturn(
+            MoviesResponse(
+                page = 1,
+                moviesNetwork = emptyList(),
+                totalPages = 100,
+                totalResults = 2
+            )
+        )
+
+        // When
+        val result = repository.getTopRatedMovies(currentPage = page)
+
+        // Then
+        assertThat(result.page).isEqualTo(1)
+        assertThat(result.moviesNetwork).isEmpty()
+        assertThat(result.totalPages).isEqualTo(100)
+    }
+
+    @Test
+    fun `test get upcoming movies with page 1`() = runBlocking {
+        // Given
+        val page = 1
+        `when`(service.getUpcomingMovies(page = page)).thenReturn(
+            MoviesResponse(
+                page = 1,
+                moviesNetwork = emptyList(),
+                totalPages = 100,
+                totalResults = 2
+            )
+        )
+
+        // When
+        val result = repository.getUpcomingMovies(currentPage = page)
+
+        // Then
+        assertThat(result.page).isEqualTo(1)
+        assertThat(result.moviesNetwork).isEmpty()
+        assertThat(result.totalPages).isEqualTo(100)
+    }
+
+    @Test
+    fun `test get now playing movies with page 1`() = runBlocking {
+        // Given
+        val page = 1
+        `when`(service.getNowPlayingMovies(page = page)).thenReturn(
+            MoviesResponse(
+                page = 1,
+                moviesNetwork = emptyList(),
+                totalPages = 100,
+                totalResults = 2
+            )
+        )
+
+        // When
+        val result = repository.getNowPlayingMovies(currentPage = page)
+
+        // Then
+        assertThat(result.page).isEqualTo(1)
+        assertThat(result.moviesNetwork).isEmpty()
+        assertThat(result.totalPages).isEqualTo(100)
     }
 
     @Test
@@ -284,66 +346,5 @@ class MoviesRepositoryTest {
             )
         )
 
-    @Test
-    fun `test is favourite method when movie is favourite`() {
-        // Given
-        val movieId = 1L
-        preferenceManager.put(FakePreferenceManager.FAVOURITE_MOVIES_KEY, setOf(1L, 2L))
 
-        // When
-        val result = repository.isMovieFavourite(movieId = movieId)
-
-        // Then
-        assertThat(result).isTrue()
-    }
-
-    @Test
-    fun `test is favourite method when movie is not favourite`() {
-        // Given
-        val movieId = 1L
-        preferenceManager.put(FakePreferenceManager.FAVOURITE_MOVIES_KEY, emptySet<Long>())
-
-        // When
-        val result = repository.isMovieFavourite(movieId = movieId)
-
-        // Then
-        assertThat(result).isFalse()
-    }
-
-    @Test
-    fun `test favourite state change from false to true`() {
-        // Given
-        val movieId = 1L
-
-        // When
-        repository.onFavouriteChange(movieId = movieId)
-
-        // Then
-        assertThat(
-            preferenceManager.get(
-                FakePreferenceManager.FAVOURITE_MOVIES_KEY,
-                emptySet<Long>()
-            )
-        ).isEqualTo(
-            setOf(1L)
-        )
-    }
-
-    @Test
-    fun `test favourite state change from true to false`() {
-        // Given
-        val movieId = 1L
-        preferenceManager.put(FakePreferenceManager.FAVOURITE_MOVIES_KEY, setOf(movieId))
-
-        // When
-        repository.onFavouriteChange(movieId = movieId)
-
-        // Then
-        assertThat(
-            preferenceManager.get(
-                FakePreferenceManager.FAVOURITE_MOVIES_KEY,
-                emptySet<Long>()
-            )
-        ).isEmpty()
-    }
 }

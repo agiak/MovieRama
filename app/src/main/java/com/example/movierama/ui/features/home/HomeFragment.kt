@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +12,8 @@ import com.example.lists.MyItemDecoration
 import com.example.movierama.databinding.FragmentHomeBinding
 import com.example.movierama.domain.error_hadling.getErrorMessageResource
 import com.example.movierama.ui.UIState
+import com.example.movierama.ui.base.MenuScreen
+import com.example.movierama.ui.customviews.DebounceViewActions
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.collectInViewScope
 import com.example.myutils.addTitleElevationAnimation
@@ -51,13 +52,18 @@ class HomeFragment : Fragment() {
         disableFullScreenTheme()
         setLightStatusBars(true)
         initViews()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initToolbar()
         initSubscriptions()
     }
 
     private fun initViews() {
         initMoviesListView()
         initMoviesTypeList()
-        initSearchBar()
+
         binding.moveUpBtn.setOnClickListener {
             binding.moviesList.scrollToUp()
         }
@@ -78,22 +84,18 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initSearchBar() {
-        binding.searchBar.apply {
-            doOnTextChanged { text, _, _, _ ->
-                binding.clearTextBtn.isVisible = text.isNullOrEmpty().not()
-            }
-            setActions(
-                doBeforeDebounce = {
+    private fun initToolbar() {
+        binding.toolbar.apply {
+            setSearchViewActions(object : DebounceViewActions {
+                override fun doBeforeDebounce(text: String) {
                     binding.loader.show()
-                },
-                doAfterDebounce = {
-                    viewModel.searchMovies(getSearchValue(it))
                 }
-            )
-        }
-        binding.clearTextBtn.setOnClickListener {
-            binding.searchBar.text?.clear()
+
+                override fun doAfterDebounce(text: String) {
+                    viewModel.searchMovies(getSearchValue(text))
+                }
+            })
+            (requireActivity() as? MenuScreen)?.let { setMenuListener(it.getSideMenu()) }
         }
     }
 
@@ -107,7 +109,7 @@ class HomeFragment : Fragment() {
         })
         binding.moviesList.apply {
             adapter = moviesAdapter
-            addTitleElevationAnimation(binding.searchBar) // add elevation with scrolling at search bar
+            addTitleElevationAnimation(binding.toolbar) // add elevation with scrolling at search bar
             addTitleElevationAnimation(binding.moviesTypeList) // add elevation with scrolling at movies type list
             addOnLoadMoreListener(loadMoreAction = {
                 viewModel.fetchMoreMovies()
@@ -123,7 +125,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initSubscriptions() {
-        viewModel.homeState.collectInViewScope(viewLifecycleOwner){ state ->
+        viewModel.homeState.collectInViewScope(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Result -> {
                     hideLoaders()

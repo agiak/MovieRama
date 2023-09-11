@@ -1,6 +1,6 @@
 package com.example.movierama.network
 
-interface RequestHeader {
+fun interface RequestHeader {
 
     fun getBasicAuthentication(): String
 }

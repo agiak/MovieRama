@@ -5,24 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.movierama.ui.customviews.DebounceEditText
-        android:id="@+id/search_bar"
+    <com.example.movierama.ui.customviews.CustomHomeToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/white"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="8dp"
-        android:ellipsize="end"
-        android:hint="@string/movies_search_hint"
-        android:inputType="text"
-        android:maxLines="1"
-        android:paddingStart="24dp"
-        android:paddingEnd="48dp"
+        android:layout_height="wrap_content"
         android:stateListAnimator="@animator/elevation_title"
-        android:textColor="@color/black"
-        app:debounceTime="1000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:screenTitle="@string/side_menu_home"
+        app:searchDebounceTime="800"
+        app:showMenuButton="true"
+        app:supportsSearchView="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movies_type_list"
@@ -35,21 +27,8 @@
         android:stateListAnimator="@animator/elevation_title"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:listitem="@layout/item_movies_type" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/clear_text_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/space_large"
-        android:padding="@dimen/space_medium"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/search_bar"
-        app:layout_constraintEnd_toEndOf="@+id/search_bar"
-        app:layout_constraintTop_toTopOf="@+id/search_bar"
-        app:srcCompat="@drawable/ic_clear_text"
-        tools:visibility="visible" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"

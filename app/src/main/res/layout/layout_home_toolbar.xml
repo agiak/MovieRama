@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_root"
+    android:layout_width="match_parent"
+    android:layout_height="84dp"
+    android:background="@color/white"
+    android:paddingVertical="@dimen/main_margin_vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menu_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_xlarge"
+        android:padding="@dimen/space_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu" />
+
+    <TextView
+        android:id="@+id/screen_title"
+        style="@style/ScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_small"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/search_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/menu_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Home screen" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/search_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_xlarge"
+        android:padding="@dimen/space_medium"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search"
+        tools:visibility="visible" />
+
+    <com.example.movierama.ui.customviews.DebounceEditText
+        android:id="@+id/search_bar"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:ellipsize="end"
+        android:focusable="true"
+        android:hint="@string/movies_search_hint"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_medium"
+        android:visibility="gone"
+        app:debounceTime="1000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/search_btn"
+        app:layout_constraintStart_toEndOf="@+id/menu_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/clear_text_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_large"
+        android:padding="@dimen/space_medium"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/search_bar"
+        app:layout_constraintEnd_toEndOf="@+id/search_bar"
+        app:layout_constraintTop_toTopOf="@+id/search_bar"
+        app:srcCompat="@drawable/ic_clear_text"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/search_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="search_bar, clear_text_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

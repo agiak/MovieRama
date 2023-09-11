@@ -1,6 +1,8 @@
 package com.example.myutils
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -72,3 +74,31 @@ fun Fragment.setLightStatusBars(isLightStatusBar: Boolean) {
     WindowCompat.getInsetsController(requireActivity().window, requireActivity().window.decorView)
         .isAppearanceLightStatusBars = isLightStatusBar
 }
+
+/**
+ * Extension function to hide the soft keyboard.
+ *
+ * @param view The [View] that currently has focus and is showing the keyboard.
+ */
+fun View.hideKeyboard() {
+    // Create an InputMethodManager instance
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+    // Hide the soft keyboard for the specified view
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
+/**
+ * Extension function to open the soft keyboard for a given view.
+ *
+ */
+fun View.showKeyboard() {
+    // Create an InputMethodManager instance
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+    // Show the soft keyboard for the specified view
+    inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+

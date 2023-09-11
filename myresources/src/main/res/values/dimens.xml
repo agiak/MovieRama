@@ -36,7 +36,17 @@
     <dimen name="main_stroke_width">2dp</dimen>
 
     <!-- Labels -->
-    <dimen name="screen_title_size">20sp</dimen>
-    <dimen name="subtitle_size">14sp</dimen>
+    <dimen name="text_xsmall">6sp</dimen>
+    <dimen name="text_small">10sp</dimen>
+    <dimen name="text_pre_medium">12sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_large">16sp</dimen>
+    <dimen name="text_xlarge">18sp</dimen>
+    <dimen name="text_xxlarge">24sp</dimen>
+    <dimen name="text_pre_huge">28sp</dimen>
+    <dimen name="text_huge">32sp</dimen>
+
+    <dimen name="screen_title_size">@dimen/text_xlarge</dimen>
+    <dimen name="subtitle_size">@dimen/text_medium</dimen>
 
 </resources>

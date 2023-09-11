@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <declare-styleable name="CustomHomeToolbar">
+        <attr name="showMenuButton" format="boolean" />
+        <attr name="screenTitle" format="string" />
+        <attr name="supportsSearchView" format="boolean" />
+        <attr name="searchDebounceTime" format="integer" />
+    </declare-styleable>
+
     <declare-styleable name="DebounceEditText">
         <attr name="debounceTime" format="integer" />
     </declare-styleable>

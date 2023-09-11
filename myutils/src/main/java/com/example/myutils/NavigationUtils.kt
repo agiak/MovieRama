@@ -10,7 +10,7 @@ fun NavController.printBackstackQueue() {
 }
 
 fun NavController.addPrintingBackstack() {
-    addOnDestinationChangedListener { controller, destination, arguments ->
+    addOnDestinationChangedListener { _, _, _ ->
         Timber.d("--------------------------------------")
         printBackstackQueue()
     }

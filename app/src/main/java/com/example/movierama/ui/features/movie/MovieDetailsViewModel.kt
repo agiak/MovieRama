@@ -61,6 +61,7 @@ class MovieDetailsViewModel @Inject constructor(
         )
 
 
+    @Suppress("DeferredResultUnused")
     fun getData() {
         movieUseCases.setMovieIdToUseCases(movieId)
         viewModelScope.async {

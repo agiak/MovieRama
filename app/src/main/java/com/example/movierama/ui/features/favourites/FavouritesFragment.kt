@@ -10,7 +10,9 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.example.movierama.databinding.FragmentFavouritesBinding
 import com.example.movierama.model.toUiMovieList
+import com.example.movierama.ui.base.MenuScreen
 import com.example.movierama.ui.features.home.MovieAdapter
+import com.example.myutils.addTitleElevationAnimation
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.setLightStatusBars
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +39,18 @@ class FavouritesFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        initSubscriptions()
+        initToolbar()
+    }
+
+    private fun initToolbar() {
+        binding.toolbar.apply {
+            (requireActivity() as? MenuScreen)?.let { setMenuListener(it.getSideMenu()) }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
@@ -53,7 +67,10 @@ class FavouritesFragment : Fragment() {
         }, onFavouriteClick = {
             viewModel.onFavouriteChanged(it)
         })
-        binding.moviesList.adapter = moviesAdapter
+        binding.moviesList.apply {
+            adapter = moviesAdapter
+            addTitleElevationAnimation(binding.toolbar)
+        }
     }
 
     private fun initSubscriptions() {

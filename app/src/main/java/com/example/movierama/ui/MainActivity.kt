@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,13 +13,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.example.movierama.R
 import com.example.movierama.databinding.ActivityMainBinding
+import com.example.movierama.ui.base.MenuScreen
 import com.example.movierama.ui.splash.SplashViewModel
 import com.example.myutils.addPrintingBackstack
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MenuScreen {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -27,12 +29,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         setUpSplashScreenApi()
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         setUpNavController()
@@ -71,5 +75,9 @@ class MainActivity : AppCompatActivity() {
         return findNavController(R.id.nav_host_fragment_activity_main).navigateUp(
             appBarConfiguration
         )
+    }
+
+    override fun getSideMenu(): DrawerLayout {
+        return binding.drawerLayout
     }
 }

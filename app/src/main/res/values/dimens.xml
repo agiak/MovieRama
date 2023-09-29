@@ -6,4 +6,7 @@
     <!-- Side menu -->
     <dimen name="side_menu_header_height">200dp</dimen>
 
+    <!-- BottomSheets -->
+    <dimen name="bottom_sheet_cancel_button_size">64dp</dimen>
+
 </resources>

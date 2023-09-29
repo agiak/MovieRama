@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), MenuScreen {
             setOf(
                 R.id.nav_home,
                 R.id.nav_favourites,
-                R.id.nav_settings
+                R.id.graph_settings
             ),
             binding.drawerLayout
         )

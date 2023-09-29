@@ -12,7 +12,7 @@
             android:icon="@drawable/ic_menu_favourites"
             android:title="@string/side_menu_favourites" />
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/graph_settings"
             android:icon="@drawable/ic_menu_settings"
             android:title="@string/side_menu_settings" />
     </group>

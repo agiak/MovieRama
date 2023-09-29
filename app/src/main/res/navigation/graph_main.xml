@@ -37,12 +37,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.example.movierama.ui.features.settings.SettingsFragment"
-        android:label="@string/nav_label_settings"
-        tools:layout="@layout/fragment_settings"></fragment>
-
-    <fragment
         android:id="@+id/nav_favourites"
         android:name="com.example.movierama.ui.features.favourites.FavouritesFragment"
         android:label="@string/nav_label_favourites"
@@ -51,5 +45,7 @@
             android:id="@+id/action_nav_favourites_to_nav_movie"
             app:destination="@id/nav_movie" />
     </fragment>
+
+    <include app:graph="@navigation/graph_settings" />
 
 </navigation>

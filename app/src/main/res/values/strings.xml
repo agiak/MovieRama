@@ -7,6 +7,11 @@
     <string name="nav_label_settings">Settings</string>
     <string name="nav_label_favourites">Favourite Movies</string>
 
+    <!-- Settings Nav labels -->
+    <string name="nav_label_settings_language">Settings Language</string>
+    <string name="nav_label_settings_orientation">Settings Orientation</string>
+    <string name="nav_label_settings_theme">Settings theme</string>
+
     <!-- Side menu -->
     <string name="side_menu_home">Home</string>
     <string name="side_menu_favourites">Favourites</string>
@@ -22,5 +27,19 @@
     <string name="movie_cast_label">Cast</string>
     <string name="movie_similar_movies_label">Similar movies</string>
     <string name="movie_reviews_label">Reviews</string>
+
+    <!-- Settings -->
+    <string name="setting_title_language">Language</string>
+    <string name="setting_title_orientation">Orientation</string>
+    <string name="setting_title_theming">Theme</string>
+
+    <string name="settings_landscape_portrait">Portrait</string>
+    <string name="settings_landscape_landscape">Landscape</string>
+
+    <string name="settings_language_greek">Greek (GR)</string>
+    <string name="settings_language_english">English (EN)</string>
+
+    <string name="settings_dark_theme">Dark</string>
+    <string name="settings_light_theme">Light</string>
 
 </resources>

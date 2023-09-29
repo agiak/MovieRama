@@ -19,7 +19,8 @@
     <color name="alternative_light">#FFD180</color>
     <color name="alternative_dark">#FF9100</color>
 
-    <color name="main_grey">#F3E5F5</color>
+    <color name="grey_main">#F3E5F5</color>
+    <color name="grey_secondary">#C6C6C6</color>
 
     <!-- TextViews - Labels -->
     <color name="label_title">#202c44</color>

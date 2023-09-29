@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_settings"
+    app:startDestination="@id/nav_settings">
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.movierama.ui.features.settings.SettingsFragment"
+        android:label="@string/nav_label_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_nav_settings_to_nav_language"
+            app:destination="@id/nav_language" />
+        <action
+            android:id="@+id/action_nav_settings_to_nav_orientation"
+            app:destination="@id/nav_orientation" />
+        <action
+            android:id="@+id/action_nav_settings_to_nav_theme"
+            app:destination="@id/nav_theme" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/nav_language"
+        android:name="com.example.movierama.ui.features.settings.language.LanguageBottomSheet"
+        android:label="@string/nav_label_settings_language"
+        tools:layout="@layout/bottom_sheet_language" />
+
+    <dialog
+        android:id="@+id/nav_orientation"
+        android:name="com.example.movierama.ui.features.settings.orientation.OrientationBottomSheet"
+        android:label="@string/nav_label_settings_orientation"
+        tools:layout="@layout/bottom_sheet_language" />
+
+    <dialog
+        android:id="@+id/nav_theme"
+        android:name="com.example.movierama.ui.features.settings.theme.ThemeBottomSheet"
+        android:label="@string/nav_label_settings_theme"
+        tools:layout="@layout/bottom_sheet_language" />
+
+</navigation>

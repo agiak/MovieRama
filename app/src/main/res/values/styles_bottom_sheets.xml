@@ -13,4 +13,11 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="BottomSheetSettingsCancelButton">
+        <item name="tint">@color/primary</item>
+        <item name="srcCompat">@drawable/ic_cancel</item>
+        <item name="rippleColor">@color/primary_light</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
 </resources>

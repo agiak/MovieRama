@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Side menu -->
+    <string name="side_menu_home">Αρχική</string>
+    <string name="side_menu_favourites">Αγαπημένα</string>
+    <string name="side_menu_settings">Ρυθμίσεις</string>
+
+    <!-- Movies screen -->
+    <string name="movies_no_results_found">Δεν βρέθηκαν αποτελέσματα</string>
+
+    <!-- Movie screen -->
+    <string name="movies_search_hint">Αναζητήστε την ταινία με το όνομά της</string>
+    <string name="movie_description_label">Περιγραφή</string>
+    <string name="movie_director_label">Σκηνοθέτης</string>
+    <string name="movie_cast_label">Πρωταγωνιστές</string>
+    <string name="movie_similar_movies_label">Παρόμοιες ταινίες</string>
+    <string name="movie_reviews_label">Κριτικές</string>
+
+    <!-- Settings -->
+    <string name="setting_title_language">Γλώσσα</string>
+    <string name="setting_title_orientation">Προσανατολισμός</string>
+    <string name="setting_title_theming">Θέμα</string>
+
+    <string name="settings_landscape_portrait">Κάθετος</string>
+    <string name="settings_landscape_landscape">Οριζόντιος</string>
+
+    <string name="settings_language_greek">Ελληνικά (GR)</string>
+    <string name="settings_language_english">Αγγλικά (EN)</string>
+
+    <string name="settings_dark_theme">Σκοτεινό</string>
+    <string name="settings_light_theme">Φωτεινό</string>
+
+</resources>

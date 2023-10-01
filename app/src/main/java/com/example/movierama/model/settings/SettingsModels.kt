@@ -4,8 +4,8 @@ import com.example.movierama.R
 import com.example.movierama.ui.features.settings.SettingItem
 
 enum class Language(val displayedNameId: Int, val code: String) {
-    Greek(R.string.settings_language_greek, "GR"),
-    English(R.string.settings_language_english, "EN")
+    Greek(R.string.settings_language_greek, "el"),
+    English(R.string.settings_language_english, "en")
 }
 
 fun Language.mapToSettingItem() = SettingItem.SettingItemLanguage(item = this)

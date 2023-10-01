@@ -102,6 +102,7 @@ dependencies {
     // Dependency Injection - Hilt
     implementation "com.google.dagger:hilt-android:${hiltVersion}"
     kapt "com.google.dagger:hilt-android-compiler:${hiltVersion}"
+    implementation "androidx.hilt:hilt-navigation-fragment:${hiltNavVersion}"
 
     // Room
     implementation "androidx.room:room-runtime:$roomVersion"

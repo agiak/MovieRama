@@ -1,25 +1,26 @@
 package com.example.movierama.ui.features.settings.language
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.coroutineScope
-import androidx.navigation.navGraphViewModels
 import com.example.movierama.R
 import com.example.movierama.databinding.BottomSheetLanguageBinding
 import com.example.movierama.model.settings.Language
 import com.example.movierama.ui.features.settings.SettingsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.util.Locale
 
 class LanguageBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetLanguageBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: SettingsViewModel by navGraphViewModels(R.id.graph_settings)
+    private val viewModel: SettingsViewModel by hiltNavGraphViewModels(R.id.graph_settings)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,15 +47,18 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
 
     private fun initViews() {
         binding.cancelButton.setOnClickListener { dismiss() }
-        binding.languageChoiceGroup.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.language_en -> {
-                    viewModel.onLanguageChanged(Language.English)
-                }
+    }
 
-                R.id.language_gr -> {
-                    viewModel.onLanguageChanged(Language.Greek)
-                }
+    private fun setLanguageGroupListener() {
+        binding.languageChoiceGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.language_en -> Language.English
+                R.id.language_gr -> Language.Greek
+                else -> Language.English
+            }.apply {
+                requireContext().setAppLocale(this)
+                viewModel.onLanguageChanged(this)
+                dismiss()
             }
         }
     }
@@ -62,8 +66,8 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
     private fun initObservations() {
         lifecycle.coroutineScope.launch {
             viewModel.settingsState.collect {
-                Timber.d("selected language ${it.selectedLanguage}")
                 setSelectedLanguage(it.selectedLanguage)
+                setLanguageGroupListener()
             }
         }
     }
@@ -75,4 +79,12 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    private fun Context.setAppLocale(language: Language) {
+        val locale = Locale(language.code)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+        createConfigurationContext(config)
+    }
 }

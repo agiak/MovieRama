@@ -45,7 +45,7 @@ class ThemeBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun initObservations() {
-
+        // implement your logic
     }
 
 }

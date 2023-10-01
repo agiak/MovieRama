@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">MovieRama</string>
+    <string name="app_name" translatable="false">MovieRama</string>
 
     <!-- Navigation labels -->
-    <string name="nav_label_movie_details">Movie Details</string>
-    <string name="nav_label_home">Home</string>
-    <string name="nav_label_settings">Settings</string>
-    <string name="nav_label_favourites">Favourite Movies</string>
+    <string name="nav_label_movie_details" translatable="false">Movie Details</string>
+    <string name="nav_label_home" translatable="false">Home</string>
+    <string name="nav_label_settings" translatable="false">Settings</string>
+    <string name="nav_label_favourites" translatable="false">Favourite Movies</string>
 
     <!-- Settings Nav labels -->
-    <string name="nav_label_settings_language">Settings Language</string>
-    <string name="nav_label_settings_orientation">Settings Orientation</string>
-    <string name="nav_label_settings_theme">Settings theme</string>
+    <string name="nav_label_settings_language" translatable="false">Settings Language</string>
+    <string name="nav_label_settings_orientation" translatable="false">Settings Orientation</string>
+    <string name="nav_label_settings_theme" translatable="false">Settings theme</string>
 
     <!-- Side menu -->
     <string name="side_menu_home">Home</string>

@@ -40,6 +40,7 @@ ext {
     // Dependency Injection - Hilt
     hiltVersion = '2.42'
     hiltGradlePluginVersion = '2.38.1'
+    hiltNavVersion = '1.0.0'
 
     // Legacy
     androidXLegacyVersion = '1.0.0'

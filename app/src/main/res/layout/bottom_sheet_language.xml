@@ -5,14 +5,15 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/cancel_button"
+        style="@style/BottomSheetSettingsCancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_cancel_bottom_sheet" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -40,14 +41,17 @@
 
             <RadioButton
                 android:id="@+id/language_en"
+                style="@style/RadioButtonSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_language_english" />
 
             <RadioButton
                 android:id="@+id/language_gr"
+                style="@style/RadioButtonSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/primary"
                 android:text="@string/settings_language_greek" />
 
         </RadioGroup>

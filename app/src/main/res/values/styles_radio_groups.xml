@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RadioButtonSettings">
+        <item name="android:paddingHorizontal">@dimen/space_medium</item>
+        <item name="android:buttonTint">@color/primary</item>
+    </style>
+
+</resources>

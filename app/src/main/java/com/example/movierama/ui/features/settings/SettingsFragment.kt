@@ -6,16 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.lists.DividerItemDecoration
 import com.example.movierama.R
 import com.example.movierama.databinding.FragmentSettingsBinding
-import com.example.movierama.model.settings.Language
-import com.example.movierama.model.settings.Orientation
-import com.example.movierama.model.settings.Theme
-import com.example.movierama.model.settings.mapToSettingItem
 import com.example.movierama.ui.base.MenuScreen
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.setLightStatusBars
@@ -27,7 +23,7 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: SettingsViewModel by navGraphViewModels(R.id.graph_settings)
+    private val viewModel: SettingsViewModel by hiltNavGraphViewModels(R.id.graph_settings)
 
     private val settingsAdapter =
         SettingsAdapter { selectedItemSetting -> handleSettingItemClick(selectedItemSetting) }
@@ -87,24 +83,9 @@ class SettingsFragment : Fragment() {
     private fun initSubscriptions() {
         lifecycle.coroutineScope.launchWhenResumed {
             viewModel.settingsState.collect { settingsState ->
-                //settingsAdapter.submitList(settingsState.getSettingItemList())
-                handleLanguageState(settingsState.selectedLanguage)
-                handleOrientationState(settingsState.selectedOrientation)
-                handleThemeState(settingsState.selectedTheme)
+                settingsAdapter.submitList(settingsState.getSettingItemList())
             }
         }
-    }
-
-    private fun handleLanguageState(selectedLanguage: Language) {
-        settingsAdapter.updateSettingItem(selectedLanguage.mapToSettingItem())
-    }
-
-    private fun handleOrientationState(selectedOrientation: Orientation) {
-        settingsAdapter.updateSettingItem(selectedOrientation.mapToSettingItem())
-    }
-
-    private fun handleThemeState(selectedTheme: Theme) {
-        settingsAdapter.updateSettingItem(selectedTheme.mapToSettingItem())
     }
 
     override fun onDestroyView() {

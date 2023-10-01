@@ -45,7 +45,7 @@ class OrientationBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun initObservations() {
-
+        // implement your logic
     }
 
 }

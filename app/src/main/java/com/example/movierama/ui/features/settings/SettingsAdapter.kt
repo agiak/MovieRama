@@ -18,6 +18,8 @@ class SettingsAdapter(
 
     private lateinit var context: Context
 
+    var mutableSettingsList: MutableList<SettingItem> = mutableListOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSettingBinding.inflate(inflater, parent, false)
@@ -41,18 +43,6 @@ class SettingsAdapter(
                 binding.root.setOnClickListener { onClick(settingItem) }
             }
         }
-    }
-
-    inline fun <reified T : SettingItem> updateSettingItem(newSettingItem: T) {
-        val currentIndex = currentList.indexOfFirst { it is T }
-
-        if (currentIndex != -1) {
-            currentList.toMutableList().apply {
-                set(currentIndex, newSettingItem)
-            }
-            notifyItemChanged(currentIndex)
-        }
-
     }
 
     private class SettingItemDiffCallback : DiffUtil.ItemCallback<SettingItem>() {

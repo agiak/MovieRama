@@ -2,6 +2,7 @@ package com.example.movierama.ui.features.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movierama.domain.settings.SettingsRepository
 import com.example.movierama.model.settings.Language
 import com.example.movierama.model.settings.Orientation
 import com.example.movierama.model.settings.Theme
@@ -16,14 +17,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-
+    private val repository: SettingsRepository
 ) : ViewModel() {
 
     private val _settingsState: MutableStateFlow<SettingsState> = MutableStateFlow(SettingsState())
     val settingsState: StateFlow<SettingsState> = _settingsState.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            _settingsState.update { it.copy(selectedLanguage = repository.getPreferredLanguage()) }
+        }
+    }
+
     fun onLanguageChanged(newLanguage: Language) {
         viewModelScope.launch {
+            repository.savePreferredLanguage(newLanguage)
             _settingsState.update {
                 it.copy(selectedLanguage = newLanguage)
             }

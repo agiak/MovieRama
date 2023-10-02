@@ -1,12 +1,13 @@
-package com.example.movierama.network
+package com.example.movierama.network.interceptors
 
 import com.example.movierama.BuildConfig
+import com.example.movierama.network.RequestHeader
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import javax.inject.Inject
 
-class NetworkInterceptor @Inject constructor() : Interceptor, RequestHeader {
+class AuthInterceptor @Inject constructor() : Interceptor, RequestHeader {
 
     companion object {
         const val HEADER_AUTH = "Authorization"

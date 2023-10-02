@@ -37,7 +37,7 @@ class MoviesViewModel @Inject constructor(
         fetchMovies()
     }
 
-    private fun fetchMovies(isLoadingMore: Boolean = false) {
+    fun fetchMovies(isLoadingMore: Boolean = false) {
         viewModelScope.launch {
             _homeState.value = if (isLoadingMore) UIState.LoadingMore else UIState.InProgress
             Timber.d("fetchMovies was called")

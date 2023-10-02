@@ -3,7 +3,7 @@ package com.example.movierama.di
 import com.example.movierama.domain.dispatchers.IDispatchers
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.domain.movies.MoviesRepositoryImpl
-import com.example.movierama.network.MoviesService
+import com.example.movierama.network.services.MoviesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

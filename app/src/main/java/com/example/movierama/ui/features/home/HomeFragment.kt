@@ -10,19 +10,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.lists.MyItemDecoration
 import com.example.movierama.databinding.FragmentHomeBinding
-import com.example.movierama.domain.error_hadling.getErrorMessageResource
+import com.example.movierama.model.error_handling.ApiError
 import com.example.movierama.ui.UIState
 import com.example.movierama.ui.base.MenuScreen
 import com.example.movierama.ui.customviews.DebounceViewActions
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.collectInViewScope
+import com.example.movierama.ui.utils.handleApiError
 import com.example.myutils.addTitleElevationAnimation
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.hide
 import com.example.myutils.scrollToUp
 import com.example.myutils.setLightStatusBars
 import com.example.myutils.show
-import com.example.myutils.showToast
 import com.example.myutils.showUpButtonListener
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -118,39 +118,44 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun hideLoaders() {
+    private fun hideLoadersAndError() {
         binding.moreLoader.hide()
         binding.loader.hide()
         binding.refreshLayout.hide()
+        binding.errorLbl.isVisible = false
     }
 
     private fun initSubscriptions() {
         viewModel.homeState.collectInViewScope(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Result -> {
-                    hideLoaders()
+                    hideLoadersAndError()
                     Timber.w("Ui updated with ${state.data.size} movies")
                     moviesAdapter.submitList(state.data)
                     handleEmptyData(state.data.isEmpty())
                 }
 
                 is UIState.Error -> {
-                    hideLoaders()
-                    showToast(getString(state.error.getErrorMessageResource()))
+                    hideLoadersAndError()
+                    handleApiError(
+                        state.error,
+                        retryAction = { viewModel.fetchMovies() }
+                    ).apply { showErrorLayout(this) }
                 }
 
-                UIState.LoadingMore -> {
-                    binding.moreLoader.show()
-                }
-
-                UIState.InProgress -> {
-                    binding.loader.show()
-                }
-
-                else -> {
-                    hideLoaders()
-                }
+                UIState.LoadingMore -> binding.moreLoader.show()
+                UIState.InProgress -> binding.loader.show()
+                else -> hideLoadersAndError()
             }
+        }
+    }
+
+    private fun showErrorLayout(error: ApiError) {
+        binding.moviesList.isVisible = false
+        binding.errorLbl.apply {
+            isVisible = true
+            text = getString(error.messageId)
+            setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, error.drawableId)
         }
     }
 

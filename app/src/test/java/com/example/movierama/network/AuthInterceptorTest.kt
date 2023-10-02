@@ -1,6 +1,7 @@
 package com.example.movierama.network
 
 import com.example.movierama.BuildConfig
+import com.example.movierama.network.interceptors.AuthInterceptor
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -12,7 +13,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
-class NetworkInterceptorTest {
+class AuthInterceptorTest {
 
     @Mock
     private lateinit var chain: Interceptor.Chain
@@ -34,22 +35,34 @@ class NetworkInterceptorTest {
     @Test
     fun testIntercept() {
         val headers = Headers.Builder()
-            .add(NetworkInterceptor.HEADER_AUTH, "Bearer " + BuildConfig.BASE_API_KEY)
-            .add(NetworkInterceptor.ContentType, "application/json")
-            .add(NetworkInterceptor.ACCEPTANCE, "application/json")
+            .add(AuthInterceptor.HEADER_AUTH, "Bearer " + BuildConfig.BASE_API_KEY)
+            .add(AuthInterceptor.ContentType, "application/json")
+            .add(AuthInterceptor.ACCEPTANCE, "application/json")
             .build()
 
         `when`(request.newBuilder()).thenReturn(requestBuilder)
-        `when`(requestBuilder.addHeader(NetworkInterceptor.HEADER_AUTH, "Bearer " + BuildConfig.BASE_API_KEY)).thenReturn(requestBuilder)
-        `when`(requestBuilder.addHeader(NetworkInterceptor.ContentType, "application/json")).thenReturn(requestBuilder)
-        `when`(requestBuilder.addHeader(NetworkInterceptor.ACCEPTANCE, "application/json")).thenReturn(requestBuilder)
+        `when`(
+            requestBuilder.addHeader(
+                AuthInterceptor.HEADER_AUTH,
+                "Bearer " + BuildConfig.BASE_API_KEY
+            )
+        ).thenReturn(requestBuilder)
+        `when`(
+            requestBuilder.addHeader(
+                AuthInterceptor.ContentType,
+                "application/json"
+            )
+        ).thenReturn(requestBuilder)
+        `when`(requestBuilder.addHeader(AuthInterceptor.ACCEPTANCE, "application/json")).thenReturn(
+            requestBuilder
+        )
         `when`(requestBuilder.build()).thenReturn(request)
         `when`(chain.request()).thenReturn(request)
         `when`(chain.proceed(request)).thenReturn(response)
         `when`(response.request).thenReturn(request)
         `when`(response.request.headers).thenReturn(headers)
 
-        val interceptor = NetworkInterceptor()
+        val interceptor = AuthInterceptor()
         val interceptedResponse = interceptor.intercept(chain)
 
         assertEquals(request, interceptedResponse.request)
@@ -57,14 +70,17 @@ class NetworkInterceptorTest {
         val interceptedHeaders = interceptedResponse.request.headers
 
         assertEquals(3, interceptedHeaders.size)
-        assertEquals("Bearer " + BuildConfig.BASE_API_KEY, interceptedHeaders[NetworkInterceptor.HEADER_AUTH])
-        assertEquals("application/json", interceptedHeaders[NetworkInterceptor.ContentType])
-        assertEquals("application/json", interceptedHeaders[NetworkInterceptor.ACCEPTANCE])
+        assertEquals(
+            "Bearer " + BuildConfig.BASE_API_KEY,
+            interceptedHeaders[AuthInterceptor.HEADER_AUTH]
+        )
+        assertEquals("application/json", interceptedHeaders[AuthInterceptor.ContentType])
+        assertEquals("application/json", interceptedHeaders[AuthInterceptor.ACCEPTANCE])
     }
 
     @Test
     fun testGetBasicAuthentication() {
-        val interceptor = NetworkInterceptor()
+        val interceptor = AuthInterceptor()
         val expectedAuth = "Bearer " + BuildConfig.BASE_API_KEY
         val auth = interceptor.getBasicAuthentication()
         assertEquals(expectedAuth, auth)

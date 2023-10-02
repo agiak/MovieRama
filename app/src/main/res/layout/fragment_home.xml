@@ -55,14 +55,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableBottom="@drawable/ic_no_results"
-        android:drawablePadding="12dp"
+        android:drawablePadding="@dimen/space_large"
         android:gravity="center"
         android:text="@string/movies_no_results_found"
-        android:textSize="24sp"
+        android:textSize="@dimen/text_xxlarge"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintTop_toBottomOf="@+id/movies_type_list"
+        app:layout_constraintVertical_bias="0.25"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/error_lbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableBottom="@drawable/ic_generic_error"
+        android:drawablePadding="@dimen/space_large"
+        android:drawableTint="@color/main_error"
+        android:gravity="center"
+        android:textColor="@color/main_error"
+        android:textSize="@dimen/text_xxlarge"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movies_type_list"
+        app:layout_constraintVertical_bias="0.25"
+        tools:text="@string/error_generic"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/loader"

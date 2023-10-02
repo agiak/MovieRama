@@ -1,4 +1,4 @@
-package com.example.movierama.network
+package com.example.movierama.network.services
 
 import com.example.movierama.model.remote.credits.CreditsResponse
 import com.example.movierama.model.remote.movies.MovieDetailsResponse

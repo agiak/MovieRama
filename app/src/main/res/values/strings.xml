@@ -7,6 +7,11 @@
     <string name="nav_label_settings">Settings</string>
     <string name="nav_label_favourites">Favourite Movies</string>
 
+    <!-- Generic dialog messages -->
+    <string name="dialog_btn_ok">OK</string>
+    <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_try_again">Try again</string>
+
     <!-- Side menu -->
     <string name="side_menu_home">Home</string>
     <string name="side_menu_favourites">Favourites</string>

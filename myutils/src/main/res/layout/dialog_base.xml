@@ -21,12 +21,13 @@
         tools:text="@tools:sample/lorem"
         tools:visibility="visible" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/dialogImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        tools:src="@android:drawable/stat_notify_error" />
+        app:tint="@color/primary"
+        tools:srcCompat="@android:drawable/stat_notify_error" />
 
     <TextView
         android:id="@+id/dialogMessage"
@@ -65,6 +66,7 @@
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/optionalButton"

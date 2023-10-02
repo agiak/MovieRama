@@ -6,7 +6,7 @@ import com.example.movierama.model.remote.movies.MovieDetailsResponse
 import com.example.movierama.model.remote.movies.MoviesResponse
 import com.example.movierama.model.remote.reviews.ReviewsResponse
 import com.example.movierama.model.remote.similar.SimilarResponse
-import com.example.movierama.network.MoviesService
+import com.example.movierama.network.services.MoviesService
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

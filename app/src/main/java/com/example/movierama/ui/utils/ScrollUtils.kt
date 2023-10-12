@@ -1,5 +1,6 @@
 package com.example.movierama.ui.utils
 
+import android.widget.AbsListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -12,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
  * @param loadMoreAction = lambda function to me executed on loading state.
  * */
 fun RecyclerView.addOnLoadMoreListener(
-    visibleThreshold: Int = 2,
-    loadMoreAction: () -> Unit
+    visibleThreshold: Int = 4,
+    loadMoreAction: () -> Unit,
 ) {
     val layoutManager = layoutManager as? LinearLayoutManager ?: return
+    var isScrolling = false
 
     this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -23,10 +25,19 @@ fun RecyclerView.addOnLoadMoreListener(
 
             val totalItemCount = layoutManager.itemCount
             val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+            val isScrolledToTheEnd = totalItemCount <= lastVisibleItemPosition + visibleThreshold
 
-            val needsToLoadMore = totalItemCount <= lastVisibleItemPosition + visibleThreshold
+            val needsToLoadMore = isScrolledToTheEnd && isScrolling
             if (needsToLoadMore) {
                 loadMoreAction.invoke()
+                isScrolling = false
+            }
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                isScrolling = true
             }
         }
     })

@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.example.movierama.databinding.FragmentFavouritesBinding
-import com.example.movierama.model.toUiMovieList
 import com.example.movierama.ui.base.MenuScreen
 import com.example.movierama.ui.features.home.MovieAdapter
 import com.example.myutils.addTitleElevationAnimation
@@ -75,8 +74,8 @@ class FavouritesFragment : Fragment() {
 
     private fun initSubscriptions() {
         lifecycle.coroutineScope.launch {
-            viewModel.getFavouriteMovies().collect {
-                moviesAdapter.submitList(it.toUiMovieList())
+            viewModel.favouriteMovies.collect {
+                moviesAdapter.submitList(it)
             }
         }
     }

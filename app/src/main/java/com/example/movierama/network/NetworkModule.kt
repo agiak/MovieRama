@@ -1,9 +1,7 @@
-package com.example.movierama.di
+package com.example.movierama.network
 
 import android.content.Context
 import com.example.movierama.BuildConfig
-import com.example.movierama.network.ConnectionController
-import com.example.movierama.network.ConnectionControllerImpl
 import com.example.movierama.network.interceptors.AuthInterceptor
 import com.example.movierama.network.interceptors.ErrorHandlerInterceptor
 import com.example.movierama.network.services.MoviesService

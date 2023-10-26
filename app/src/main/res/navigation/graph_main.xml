@@ -34,13 +34,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_search_movie"
+            app:destination="@id/nav_search_movie"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.movierama.ui.features.settings.SettingsFragment"
         android:label="@string/nav_label_settings"
-        tools:layout="@layout/fragment_settings"></fragment>
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_favourites"
@@ -50,6 +57,20 @@
         <action
             android:id="@+id/action_nav_favourites_to_nav_movie"
             app:destination="@id/nav_movie" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_search_movie"
+        android:name="com.example.movierama.ui.features.search_movies.SearchMovieFragment"
+        android:label="@string/nav_label_search_movies"
+        tools:layout="@layout/fragment_search_movie">
+        <action
+            android:id="@+id/action_nav_search_movie_to_nav_movie"
+            app:destination="@id/nav_movie"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
 </navigation>

@@ -62,7 +62,7 @@ dependencies {
 
     // Implement custom modules
     implementation project(':myresources')
-    implementation project(':myutils') // includes many
+    implementation project(':myutils')
 
     implementation "androidx.core:core-ktx:${coreKTXVersion}"
 

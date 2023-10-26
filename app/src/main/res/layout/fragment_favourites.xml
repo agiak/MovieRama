@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.features.favourites.FavouritesFragment">
 
-    <com.example.movierama.ui.customviews.CustomHomeToolbar
+    <com.example.movierama.ui.customviews.CustomToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

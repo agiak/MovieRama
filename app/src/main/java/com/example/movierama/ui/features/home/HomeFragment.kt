@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.lists.MyItemDecoration
+import com.example.movierama.R
 import com.example.movierama.databinding.FragmentHomeBinding
 import com.example.movierama.model.error_handling.ApiError
-import com.example.movierama.ui.UIState
 import com.example.movierama.ui.base.MenuScreen
-import com.example.movierama.ui.customviews.DebounceViewActions
 import com.example.movierama.ui.utils.addOnLoadMoreListener
-import com.example.movierama.ui.utils.collectInViewScope
-import com.example.movierama.ui.utils.handleApiError
+import com.example.movierama.ui.utils.showConnectionErrorDialog
 import com.example.myutils.addTitleElevationAnimation
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.hide
@@ -25,7 +25,7 @@ import com.example.myutils.setLightStatusBars
 import com.example.myutils.show
 import com.example.myutils.showUpButtonListener
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -70,6 +70,9 @@ class HomeFragment : Fragment() {
         binding.refreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
+        binding.searchIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_home_to_nav_search_movie)
+        }
     }
 
     private fun initMoviesTypeList() {
@@ -79,27 +82,19 @@ class HomeFragment : Fragment() {
         binding.moviesTypeList.apply {
             adapter = moviesTypeAdapter
             addItemDecoration(
-                MyItemDecoration(resources.getDimensionPixelSize(com.example.myresources.R.dimen.space_small))
+                MyItemDecoration(
+                    spaceSize = resources.getDimensionPixelSize(com.example.myresources.R.dimen.space_small),
+                    spanCount = (layoutManager as? GridLayoutManager)?.spanCount ?: 1
+                )
             )
         }
     }
 
     private fun initToolbar() {
         binding.toolbar.apply {
-            setSearchViewActions(object : DebounceViewActions {
-                override fun doBeforeDebounce(text: String) {
-                    binding.loader.show()
-                }
-
-                override fun doAfterDebounce(text: String) {
-                    viewModel.searchMovies(getSearchValue(text))
-                }
-            })
             (requireActivity() as? MenuScreen)?.let { setMenuListener(it.getSideMenu()) }
         }
     }
-
-    private fun getSearchValue(input: String): SearchFilter = SearchFilter(movieName = input)
 
     private fun initMoviesListView() {
         moviesAdapter = MovieAdapter(onClick = {
@@ -109,16 +104,19 @@ class HomeFragment : Fragment() {
         })
         binding.moviesList.apply {
             adapter = moviesAdapter
-            addTitleElevationAnimation(binding.toolbar) // add elevation with scrolling at search bar
-            addTitleElevationAnimation(binding.moviesTypeList) // add elevation with scrolling at movies type list
-            addOnLoadMoreListener(loadMoreAction = {
-                viewModel.fetchMoreMovies()
-            })
+            addTitleElevationAnimation(
+                listOf(
+                    binding.searchIcon,
+                    binding.toolbar,
+                    binding.moviesTypeList
+                )
+            )
+            addOnLoadMoreListener(loadMoreAction = { viewModel.fetchMore() })
             showUpButtonListener(binding.moveUpBtn)
         }
     }
 
-    private fun hideLoadersAndError() {
+    private fun hideLoadersAndErrorLayout() {
         binding.moreLoader.hide()
         binding.loader.hide()
         binding.refreshLayout.hide()
@@ -126,28 +124,35 @@ class HomeFragment : Fragment() {
     }
 
     private fun initSubscriptions() {
-        viewModel.homeState.collectInViewScope(viewLifecycleOwner) { state ->
-            when (state) {
-                is UIState.Result -> {
-                    hideLoadersAndError()
-                    Timber.w("Ui updated with ${state.data.size} movies")
-                    moviesAdapter.submitList(state.data)
-                    handleEmptyData(state.data.isEmpty())
-                }
+        lifecycle.coroutineScope.launch {
+            viewModel.homeState.collect { state ->
+                when {
+                    state.isLoadingMore -> binding.moreLoader.show()
+                    state.isLoading -> {
+                        binding.loader.show()
+                        moviesAdapter.submitList(emptyList()) // clears the list when show the loader
+                    }
 
-                is UIState.Error -> {
-                    hideLoadersAndError()
-                    handleApiError(
-                        state.error,
-                        retryAction = { viewModel.fetchMovies() }
-                    ).apply { showErrorLayout(this) }
+                    state.error != null -> doOnError(state.error)
+                    else -> doOnFetchData(state)
                 }
-
-                UIState.LoadingMore -> binding.moreLoader.show()
-                UIState.InProgress -> binding.loader.show()
-                else -> hideLoadersAndError()
             }
         }
+    }
+
+    private fun doOnFetchData(state: HomeUiState) {
+        with(state) {
+            hideLoadersAndErrorLayout()
+            moviesAdapter.submitList(movies)
+            handleEmptyData(movies.isEmpty())
+            moviesTypeAdapter.setSelectedType(moviesType)
+        }
+    }
+
+    private fun doOnError(error: ApiError) {
+        hideLoadersAndErrorLayout()
+        showErrorLayout(error)
+        if (error == ApiError.NoInternetConnection) showConnectionErrorDialog()
     }
 
     private fun showErrorLayout(error: ApiError) {

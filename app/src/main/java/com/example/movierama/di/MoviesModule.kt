@@ -4,14 +4,12 @@ import com.example.movierama.domain.dispatchers.IDispatchers
 import com.example.movierama.domain.error_hadling.ErrorHandler
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.domain.useCases.FetchMoviesUseCase
-import com.example.movierama.domain.useCases.SearchMovieUseCase
 import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
 import com.example.movierama.domain.useCases.moviedetails.CreditsUseCase
 import com.example.movierama.domain.useCases.moviedetails.MovieDetailsUseCase
 import com.example.movierama.domain.useCases.moviedetails.ReviewsUseCase
 import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesUseCase
 import com.example.movierama.storage.localdb.FavouriteMovieDao
-import com.example.movierama.ui.features.home.MoviesUseCases
 import com.example.movierama.ui.features.movie.MovieUseCases
 import dagger.Module
 import dagger.Provides
@@ -59,34 +57,16 @@ class MoviesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideSearchMovieUseCase(repository: MoviesRepository) = SearchMovieUseCase(repository)
-
-    @Provides
-    @ViewModelScoped
-    fun provideMoviesUseCases(
-        fetchMoviesUseCase: FetchMoviesUseCase,
-        searchMovieUseCase: SearchMovieUseCase,
-        favouriteUseCase: FavouriteUseCase
-    ) = MoviesUseCases(
-        fetchMoviesUseCase = fetchMoviesUseCase,
-        searchMovieUseCase = searchMovieUseCase,
-        favouriteUseCase = favouriteUseCase
-    )
-
-    @Provides
-    @ViewModelScoped
     fun provideMovieUseCases(
         movieDetailsUseCase: MovieDetailsUseCase,
         similarMoviesUseCase: SimilarMoviesUseCase,
         reviewsUseCase: ReviewsUseCase,
         creditsUseCase: CreditsUseCase,
-        favouriteUseCase: FavouriteUseCase
     ) = MovieUseCases(
         movieDetailsUseCase = movieDetailsUseCase,
         similarMoviesUseCase = similarMoviesUseCase,
         reviewsUseCase = reviewsUseCase,
         creditsUseCase = creditsUseCase,
-        favouriteUseCase = favouriteUseCase
     )
 
 }

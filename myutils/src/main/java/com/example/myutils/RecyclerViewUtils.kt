@@ -64,3 +64,22 @@ fun RecyclerView.addTitleElevationAnimation(titleView: View) {
     })
 }
 
+/**
+ * When RecyclerView is scrolled up adds elevation to the given titleView
+ *
+ * @param titleView = represents the title view
+ *
+ * Note that you need to set stateListAnimator with @animator/elevation_title and a background to your
+ * titleView
+ * */
+fun RecyclerView.addTitleElevationAnimation(titleViews: List<View>) {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            val isScrolled = recyclerView.canScrollVertically(-1)
+            titleViews.forEach {
+                it.isSelected = isScrolled
+            }
+        }
+    })
+}
+

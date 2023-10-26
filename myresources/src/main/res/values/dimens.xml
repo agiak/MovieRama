@@ -14,6 +14,7 @@
     <dimen name="space_xsmall">4dp</dimen>
     <dimen name="space_small">6dp</dimen>
     <dimen name="space_medium">8dp</dimen>
+    <dimen name="space_pre_large">10dp</dimen>
     <dimen name="space_large">12dp</dimen>
     <dimen name="space_xlarge">16dp</dimen>
     <dimen name="space_xxlarge">24dp</dimen>

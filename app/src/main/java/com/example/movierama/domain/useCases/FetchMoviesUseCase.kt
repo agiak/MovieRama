@@ -1,8 +1,8 @@
 package com.example.movierama.domain.useCases
 
 import com.example.movierama.domain.movies.MoviesRepository
+import com.example.movierama.model.MoviesType
 import com.example.movierama.model.remote.movies.MoviesResponse
-import com.example.movierama.ui.features.home.MoviesType
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 

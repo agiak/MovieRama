@@ -3,7 +3,7 @@ package com.example.movierama.ui.features.movie
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movierama.domain.dispatchers.IDispatchers
-import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
+import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.domain.useCases.moviedetails.CreditsDetails
 import com.example.movierama.domain.useCases.moviedetails.CreditsUseCase
 import com.example.movierama.domain.useCases.moviedetails.MovieDetailsState
@@ -12,7 +12,7 @@ import com.example.movierama.domain.useCases.moviedetails.ReviewsState
 import com.example.movierama.domain.useCases.moviedetails.ReviewsUseCase
 import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesState
 import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesUseCase
-import com.example.movierama.model.toFavouriteMovie
+import com.example.movierama.model.toStoredFavouriteMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val movieUseCases: MovieUseCases,
-    dispatcher: IDispatchers
+    private val repository: MoviesRepository,
+    dispatcher: IDispatchers,
 ) : ViewModel() {
 
     var movieId: Long = 0L
@@ -75,7 +76,7 @@ class MovieDetailsViewModel @Inject constructor(
     fun onFavouriteChanged() {
         viewModelScope.launch {
             movieState.value.movieDetailsState.movieDetails?.let { movieDetails ->
-                movieUseCases.favouriteUseCase.onFavouriteChanged(movieDetails.toFavouriteMovie())
+                repository.onFavouriteStatusChanged(movieDetails.toStoredFavouriteMovie())
             }
         }
     }
@@ -105,7 +106,6 @@ data class MovieUseCases(
     val similarMoviesUseCase: SimilarMoviesUseCase,
     val reviewsUseCase: ReviewsUseCase,
     val creditsUseCase: CreditsUseCase,
-    val favouriteUseCase: FavouriteUseCase
 ) {
     fun setMovieIdToUseCases(movieId: Long) {
         movieDetailsUseCase.movieId = movieId

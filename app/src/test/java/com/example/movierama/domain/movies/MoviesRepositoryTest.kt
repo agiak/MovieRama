@@ -28,7 +28,7 @@ class MoviesRepositoryTest {
     @Before
     fun setUp() {
         repository = MoviesRepositoryImpl(
-            dispatchersImpl = FakeDispatcherImpl(),
+            dispatchers = FakeDispatcherImpl(),
             service = service
         )
     }

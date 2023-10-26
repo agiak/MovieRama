@@ -17,5 +17,7 @@ data class MovieDetails(
     val rating: Float,
     val poster: String,
     var isFavourite: Boolean,
-    val description: String
+    val description: String,
 )
+
+

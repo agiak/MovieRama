@@ -5,6 +5,8 @@ import com.example.movierama.model.remote.movies.MovieDetailsResponse
 import com.example.movierama.model.remote.movies.MoviesResponse
 import com.example.movierama.model.remote.reviews.ReviewsResponse
 import com.example.movierama.model.remote.similar.SimilarResponse
+import com.example.movierama.model.storage.StoredFavouriteMovie
+import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
 
@@ -87,4 +89,10 @@ interface MoviesRepository {
      * @return The response containing the movie credits.
      */
     suspend fun getMovieCredits(movieId: Long): CreditsResponse
+
+    suspend fun onFavouriteStatusChanged(movie: StoredFavouriteMovie)
+
+    suspend fun isMovieFavourite(movieId: Long): Boolean
+
+    fun fetchFavouriteMovies(): Flow<List<StoredFavouriteMovie>>
 }

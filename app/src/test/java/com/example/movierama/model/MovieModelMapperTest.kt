@@ -19,7 +19,7 @@ class MovieModelMapperTest {
         )
 
         // When
-        val result = movie.toFavouriteMovie()
+        val result = movie.toStoredFavouriteMovie()
 
         // Then
         assertThat(result.id).isEqualTo(13579L)
@@ -44,7 +44,7 @@ class MovieModelMapperTest {
         )
 
         // When
-        val result = movieDetails.toFavouriteMovie()
+        val result = movieDetails.toStoredFavouriteMovie()
 
         // Then
         assertThat(result.id).isEqualTo(13579L)

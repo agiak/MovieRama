@@ -1,9 +1,7 @@
 package com.example.movierama.model.remote.movies
 
 import com.example.movierama.model.Movie
-import com.example.movierama.ui.URL_POSTER
-import com.example.movierama.ui.utils.mapToDate
-import com.example.myutils.roundToTwoDecimal
+import com.example.movierama.model.toHomeMovie
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
@@ -34,14 +32,5 @@ data class MovieNetwork(
     @SerializedName("title") val title: String,
     @SerializedName("video") val video: Boolean,
     @SerializedName("vote_average") val vote_average: Float,
-    @SerializedName("vote_count") val vote_count: Int
-) {
-    fun toHomeMovie() = Movie(
-        id = this.id,
-        title = title,
-        rating = (vote_average / 2.0F).roundToTwoDecimal(), // round the rating to a 5 stars scale
-        releaseDate = release_date.mapToDate(),
-        poster = URL_POSTER + poster_path, // add base image url because server returns only the prefix
-        isFavourite = false // by default is false
-    )
-}
+    @SerializedName("vote_count") val vote_count: Int,
+)

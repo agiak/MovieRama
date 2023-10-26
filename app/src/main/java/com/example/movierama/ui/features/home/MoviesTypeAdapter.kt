@@ -5,21 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.databinding.ItemMoviesTypeBinding
+import com.example.movierama.model.MoviesType
+import com.example.movierama.model.SelectedType
+import com.example.movierama.model.mapMoviesTypeToSelectedTypeList
 
-/**
- * The MoviesTypeAdapter class is a RecyclerView adapter for displaying movie types.
- * It enables single selection behavior, allowing users to pick one item at a time.
- * The isActivated state is utilized to indicate the selected item, bypassing the elevation
- * animation conflict associated with isSelected.
- * */
 class MoviesTypeAdapter(
-    private val items: List<MoviesType> = MoviesType.values().toList(),
-    private val onClick: (movie: MoviesType) -> Unit // Callback to handle item click
-) :
-    RecyclerView.Adapter<MoviesTypeAdapter.MovieViewHolder>() {
+    private val items: List<SelectedType> = mapMoviesTypeToSelectedTypeList(),
+    private val onClick: (movie: MoviesType) -> Unit, // Callback to handle item click
+) : RecyclerView.Adapter<MoviesTypeAdapter.MovieViewHolder>() {
 
     private lateinit var context: Context
-    private var selectedPosition = 0 // By default first type is selected
 
     // Inflate the item view layout and initialize the view holder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -28,15 +23,14 @@ class MoviesTypeAdapter(
             inflater,
             parent,
             false
-        ) // Replace with actual binding initialization
+        )
         context = parent.context
         return MovieViewHolder(binding)
     }
 
-    // Bind data to the view holder
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val moviesType = items[position]
-        holder.bind(moviesType, position)
+        holder.bind(moviesType)
     }
 
     override fun getItemCount(): Int = items.size
@@ -45,22 +39,34 @@ class MoviesTypeAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         // Bind data to the view holder's views
-        fun bind(type: MoviesType, position: Int) {
-            binding.typeDescription.text = type.description
-
-            // Handle item click
-            binding.root.setOnClickListener {
-                onClick(type) // Invoke the provided callback with the clicked item
-
-                // Update selected item and notify data changes
-                val previousSelectedPosition = selectedPosition
-                selectedPosition = position
-                notifyItemChanged(previousSelectedPosition)
-                notifyItemChanged(selectedPosition)
-            }
+        fun bind(type: SelectedType) {
+            binding.typeDescription.text = type.type.description
 
             // Highlight the selected item by setting its activated state
-            binding.root.isActivated = position == selectedPosition
+            binding.root.isActivated = type.isSelected
+
+
+            binding.root.setOnClickListener {
+                onClick(type.type) // Invoke the provided callback with the clicked item, this will eventually trigger setSelectedType
+            }
+        }
+    }
+
+    // Use this method to set the selected type explicitly
+    // Iterates items and selects the new selectedType and unselects the previous one
+    fun setSelectedType(newSelectedType: MoviesType) {
+        items.forEachIndexed { index, selectedType ->
+            when {
+                selectedType.type == newSelectedType -> {
+                    selectedType.isSelected = true
+                    notifyItemChanged(index)
+                }
+
+                selectedType.isSelected -> {
+                    selectedType.isSelected = false
+                    notifyItemChanged(index)
+                }
+            }
         }
     }
 }

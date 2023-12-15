@@ -11,6 +11,7 @@ interface SearchRepository {
 }
 
 const val searchHistoryKey = "searchHistoryKey"
+const val maxSavedSuggestions = 5
 
 class SearchRepositoryImpl(
     private val dispatchers: IDispatchers,
@@ -18,16 +19,20 @@ class SearchRepositoryImpl(
 ) : SearchRepository {
     override suspend fun fetchSearchHistory(): List<StoredSearchSuggestion> =
         withContext(dispatchers.backgroundThread()) {
-            dataSource.get(searchHistoryKey, emptyList())
+            getSavedHistory()
         }
 
     override suspend fun saveSearch(query: StoredSearchSuggestion) {
         withContext(dispatchers.backgroundThread()) {
             val currentList: MutableList<StoredSearchSuggestion> =
-                dataSource.get(searchHistoryKey, mutableListOf())
-            if (currentList.size == 5) currentList.removeAt(4)
+                getSavedHistory().toMutableList()
+            if (currentList.size == maxSavedSuggestions) currentList.removeAt(maxSavedSuggestions - 1)
             currentList.add(query)
             dataSource.put(searchHistoryKey, currentList)
         }
     }
+
+    private fun getSavedHistory() =
+        dataSource.get<List<StoredSearchSuggestion>>(searchHistoryKey, emptyList())
+            .sortedByDescending { it.time }
 }

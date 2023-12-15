@@ -28,5 +28,6 @@
     <string name="movie_cast_label">Cast</string>
     <string name="movie_similar_movies_label">Similar movies</string>
     <string name="movie_reviews_label">Reviews</string>
+    <string name="search_suggestions_label">Recent</string>
 
 </resources>

@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.databinding.FragmentSearchMovieBinding
 import com.example.movierama.model.error_handling.ApiError
-import com.example.movierama.model.search_movie.SearchSuggestion
 import com.example.movierama.ui.customviews.DebounceViewActions
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.showConnectionErrorDialog
@@ -36,7 +35,6 @@ class SearchMovieFragment : Fragment() {
 
     private val suggestionAdapter = SearchMovieSuggestionAdapter(onClick = {
         binding.searchBar.setText(it.query)
-        //viewModel.onSearchTyped(it.query)
     })
 
     private val movieAdapter = SearchedMoviesAdapter {
@@ -96,10 +94,12 @@ class SearchMovieFragment : Fragment() {
             setActions(object : DebounceViewActions {
                 override fun doBeforeDebounce(text: String) {
                     binding.loader.show()
+                    binding.suggestionsGroup.isVisible = false
                 }
 
-                override fun doAfterDebounce(query: String) {
-                    viewModel.onSearchTyped(query)
+                override fun doAfterDebounce(text: String) {
+                    viewModel.onSearchTyped(text)
+                    binding.suggestionsGroup.isVisible = text.isNotEmpty()
                 }
             })
             requestFocus()
@@ -111,69 +111,41 @@ class SearchMovieFragment : Fragment() {
     private fun initSubscriptions() {
         lifecycleScope.launchWhenStarted {
             viewModel.state.collect { state ->
-                when {
-                    state.isLoadingMore -> binding.moreLoader.show()
-                    state.isLoading -> {
-                        binding.loader.show()
-                        movieAdapter.submitList(emptyList()) // clears the list when show the loader
-                    }
-
-                    state.error != null -> doOnError(state.error)
-                    else -> doOnFetchData(state)
-                }
+                handleState(state)
             }
         }
     }
 
-    private fun doOnFetchData(state: SearchState) {
+    private fun handleState(state: SearchState) {
         hideLoadersAndErrorLayout()
-        handleSuggestions(state.suggestions)
-        handleMovieResults(state)
-    }
-
-    private fun handleMovieResults(state: SearchState) {
-        when {
-            state.movies.isNotEmpty() && state.query.isNotEmpty() -> {
+        when (state) {
+            SearchState.Loading -> binding.loader.show()
+            SearchState.LoadingMore -> binding.moreLoader.show()
+            is SearchState.Error -> doOnError(state.error)
+            is SearchState.Result -> {
+                binding.suggestionsGroup.isVisible = state.needsToSuggestMovies()
+                binding.noResultsLbl.isVisible = state.searchFailed()
                 movieAdapter.submitList(state.movies)
-                binding.moviesList.isVisible = true
-                binding.noResultsLbl.isVisible = false
-                binding.suggestionsList.isVisible = false
             }
 
-            state.movies.isEmpty() && state.query.isEmpty() -> {
-                movieAdapter.submitList(state.movies)
-                binding.noResultsLbl.isVisible = false
-                binding.suggestionsList.isVisible = false
-            }
-
-            state.movies.isEmpty() && state.query.isNotEmpty() -> {
-                movieAdapter.submitList(state.movies)
-                binding.noResultsLbl.isVisible = true
-                binding.suggestionsList.isVisible = false
-            }
-
-            state.movies.isEmpty() && state.suggestions.isNotEmpty() -> {
+            is SearchState.SuggestionsFetched -> {
+                binding.suggestionsGroup.isVisible = state.suggestions.isNotEmpty()
                 suggestionAdapter.submitList(state.suggestions)
-                binding.suggestionsList.isVisible = true
             }
         }
-    }
-
-    private fun handleSuggestions(suggestions: List<SearchSuggestion>) {
-        binding.suggestionsList.isVisible = suggestions.isNotEmpty()
-        suggestionAdapter.submitList(suggestions)
-    }
-
-    private fun doOnError(error: ApiError) {
-        hideLoadersAndErrorLayout()
-        showErrorLayout(error)
-        if (error == ApiError.NoInternetConnection) showConnectionErrorDialog()
     }
 
     private fun hideLoadersAndErrorLayout() {
         binding.moreLoader.hide()
         binding.loader.hide()
         binding.errorLbl.isVisible = false
+        binding.noResultsLbl.isVisible = false
+    }
+
+    private fun doOnError(error: ApiError) {
+        hideLoadersAndErrorLayout()
+        showErrorLayout(error)
+        if (error == ApiError.NoInternetConnection) showConnectionErrorDialog()
     }
 
     private fun showErrorLayout(error: ApiError) {
@@ -184,6 +156,10 @@ class SearchMovieFragment : Fragment() {
             setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, error.drawableId)
         }
     }
+
+    private fun SearchState.Result.searchFailed() = query.isNotEmpty() && movies.isEmpty()
+    private fun SearchState.Result.searchSucceed() = query.isNotEmpty() && movies.isNotEmpty()
+    private fun SearchState.Result.needsToSuggestMovies() = query.isEmpty()
 
     override fun onDestroyView() {
         super.onDestroyView()

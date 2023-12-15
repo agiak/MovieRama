@@ -14,9 +14,9 @@ import com.example.movierama.model.storage.StoredSearchSuggestion
 import com.example.movierama.model.toSearchMovie
 import com.example.myutils.isNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -28,7 +28,7 @@ class SearchMovieViewModel @Inject constructor(
     private val searchRepository: SearchRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(SearchState())
+    private val _state = MutableStateFlow<SearchState>(SearchState.Loading)
     val state: StateFlow<SearchState> = _state
 
     private var pagingData = PagingData<SearchedMovie>()
@@ -40,14 +40,12 @@ class SearchMovieViewModel @Inject constructor(
 
     private fun fetchSuggestions() {
         viewModelScope.launch {
+            emitLoading()
             runCatching {
+                delay(1000)
                 searchRepository.fetchSearchHistory()
             }.onSuccess { searchHistory ->
-                _state.update {
-                    it.copy(
-                        suggestions = searchHistory.toSearchHistory()
-                    )
-                }
+                _state.value = SearchState.SuggestionsFetched(searchHistory.toSearchHistory())
             }
         }
     }
@@ -56,13 +54,15 @@ class SearchMovieViewModel @Inject constructor(
         emitLoading()
         pagingData.reset()
         query = input.toSearchFilter()
-        saveQuery(query)
+        saveQuery(query) // save the query to suggestions unless is empty
         fetchMovies()
     }
 
     private fun saveQuery(query: SearchFilter) {
         viewModelScope.launch {
-            searchRepository.saveSearch(query = query.toStoredSearchSuggestion())
+            if (!query.isEmpty()) {
+                searchRepository.saveSearch(query = query.toStoredSearchSuggestion())
+            }
         }
     }
 
@@ -84,7 +84,7 @@ class SearchMovieViewModel @Inject constructor(
 
     fun fetchMore() {
         // Check if we are already fetching movies. In that case we need to skip that call of the function
-        if (state.value.isLoadingMore) return
+        if (state.value is SearchState.LoadingMore) return
 
         if (pagingData.hasMorePagesToFetch().not()) return
         pagingData++
@@ -93,32 +93,20 @@ class SearchMovieViewModel @Inject constructor(
     }
 
     private fun handleError(ex: Exception) {
-        _state.update {
-            it.copy(
-                isLoading = false,
-                isLoadingMore = false,
-                error = ex.toApiError()
-            )
-        }
+        _state.value = SearchState.Error(ex.toApiError())
     }
 
     private fun handleMovieResponse(response: MoviesResponse) {
         pagingData.totalPages = response.totalPages
         pagingData.currentMoviesList.addAll(response.getSearchResults())
-        _state.update { state ->
-            state.copy(
-                movies = pagingData.currentMoviesList.toList(),
-                isLoading = false,
-                isLoadingMore = false,
-                error = null,
-                query = query.value
-            )
-        }
+        _state.value =
+            SearchState.Result(movies = pagingData.currentMoviesList.toList(), query = query.value)
     }
 
     private fun emitLoading(isLoadingMore: Boolean = false) {
-        _state.update {
-            it.copy(isLoadingMore = isLoadingMore, isLoading = isLoadingMore.not())
+        when {
+            isLoadingMore -> _state.value = SearchState.LoadingMore
+            else -> _state.value = SearchState.Loading
         }
     }
 
@@ -146,20 +134,23 @@ class SearchMovieViewModel @Inject constructor(
         }
 
     private fun Long.toDate(): String {
-        val format = SimpleDateFormat("dd/MM/yyyy")
+        val format = SimpleDateFormat("dd/MM/yyyy hh/mm//ss")
         val date = Date(this)
         return format.format(date)
     }
 }
 
-data class SearchState(
-    val suggestions: List<SearchSuggestion> = emptyList(),
-    val movies: List<SearchedMovie> = emptyList(),
-    val query: String = "",
-    val isLoading: Boolean = false,
-    val isLoadingMore: Boolean = false,
-    val error: ApiError? = null,
-)
+sealed class SearchState {
+    object Loading : SearchState()
+    object LoadingMore : SearchState()
+    data class SuggestionsFetched(val suggestions: List<SearchSuggestion> = emptyList()) :
+        SearchState()
+
+    data class Result(val movies: List<SearchedMovie> = emptyList(), val query: String = "") :
+        SearchState()
+
+    data class Error(val error: ApiError) : SearchState()
+}
 
 data class SearchFilter(
     val movieName: String? = null,

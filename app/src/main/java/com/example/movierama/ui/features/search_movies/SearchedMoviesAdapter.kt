@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,9 @@ class SearchedMoviesAdapter(
 
     private lateinit var context: Context
 
+    private val lastPosition: Int
+        get() = itemCount - 1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchMovieBinding.inflate(inflater, parent, false)
@@ -27,13 +31,13 @@ class SearchedMoviesAdapter(
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = getItem(position)
-        holder.bind(movie)
+        holder.bind(movie, position)
     }
 
     inner class MovieViewHolder(private val binding: ItemSearchMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: SearchedMovie) {
+        fun bind(movie: SearchedMovie, position: Int) {
             with(movie) {
                 Glide.with(context)
                     .load(logo)
@@ -50,6 +54,8 @@ class SearchedMoviesAdapter(
                 binding.root.setOnClickListener {
                     onClick(movie)
                 }
+
+                binding.divider.isVisible = position != lastPosition
             }
         }
     }

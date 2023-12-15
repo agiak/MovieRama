@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.databinding.ItemSearchMovieSuggestionBinding
 import com.example.movierama.model.search_movie.SearchSuggestion
+import timber.log.Timber
 
 class SearchMovieSuggestionAdapter(
-    private val onDelete: (movie: SearchSuggestion) -> Unit = {},
     private val onClick: (movie: SearchSuggestion) -> Unit,
 ) : ListAdapter<SearchSuggestion, SearchMovieSuggestionAdapter.SearchSuggestionViewHolder>(
     DiffCallback()
@@ -35,6 +35,7 @@ class SearchMovieSuggestionAdapter(
 
         fun bind(suggestion: SearchSuggestion) {
             binding.root.text = suggestion.query
+            Timber.d("now text has ${binding.root.text}")
 
             binding.root.setOnClickListener {
                 onClick(suggestion)

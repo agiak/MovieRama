@@ -22,7 +22,7 @@
             android:name="com.example.movierama.ui.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="sensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.App.Starting"
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="LockedOrientationActivity">

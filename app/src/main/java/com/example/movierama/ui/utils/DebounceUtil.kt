@@ -16,11 +16,11 @@ import javax.inject.Inject
 const val DEFAULT_DEBOUNCE_TIME = 600
 
 class DebounceUtil @Inject constructor(
-    private val dispatcher: IDispatchers,
-    private var debounceDelay: Int = DEFAULT_DEBOUNCE_TIME
+    dispatcher: IDispatchers,
+    private var debounceDelay: Int = DEFAULT_DEBOUNCE_TIME,
 ) {
     private var searchJob: Job? = null
-    private val coroutineScope: CoroutineScope = CoroutineScope(dispatcher.backgroundThread())
+    private val coroutineScope: CoroutineScope = CoroutineScope(dispatcher.mainThread())
 
     /**
      * Debounces the given suspend action.

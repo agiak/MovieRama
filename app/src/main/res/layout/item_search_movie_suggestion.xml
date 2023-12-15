@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:drawablePadding="@dimen/space_medium"
-    android:paddingHorizontal="@dimen/space_medium"
+    android:gravity="center_vertical"
     android:paddingVertical="@dimen/space_small"
-    app:drawableEndCompat="@drawable/ic_clear_text"
+    android:textColor="@color/black"
+    app:drawableStartCompat="@drawable/ic_recent_search"
+    app:drawableTint="@color/black"
     tools:text="Fast and " />

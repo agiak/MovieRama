@@ -23,6 +23,8 @@
 
     <color name="main_error">#FF9E80</color>
 
+    <color name="main_divider">#DDDDDD</color>
+
     <!-- TextViews - Labels -->
     <color name="label_title">#202c44</color>
     <color name="label_subtitle">#cbd0d8</color>

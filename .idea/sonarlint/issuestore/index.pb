@@ -69,3 +69,13 @@ Yapp/src/main/java/com/example/movierama/ui/features/search_movies/SearchMovieVi
 Xapp/src/main/java/com/example/movierama/ui/features/search_movies/SearchMovieFragment.kt,4\3\43449122061203b5ab586ea3e7a080271d842232
 Š
 Zapp/src/main/java/com/example/movierama/ui/features/search_movies/SearchedMoviesAdapter.kt,5\d\5d8cc0b7fb5aa550d8e659163d9e910fd0f498af
+f
+6myutils/src/main/java/com/example/myutils/ViewUtils.kt,7\2\72148afe3c4b41c4e1bcf91a0bc8bce5c31c4125
+y
+Iapp/src/main/java/com/example/movierama/network/services/MoviesService.kt,4\e\4e3391b92eec85c550ff0a498f638772a81b16e7
+j
+:myutils/src/main/java/com/example/myutils/TextViewUtils.kt,4\3\432c61e4687c8744b91f0bdfaf9b75d32aa743aa
+
+Oapp/src/main/java/com/example/movierama/model/storage/StoredSearchSuggestion.kt,9\e\9ee5d474c65bf81f26c8097316d63e744e7699e3
+i
+9myutils/src/main/java/com/example/myutils/EditextUtils.kt,a\3\a38215a735355efd6af758eb8c2f9c5f0bf26a74

@@ -24,15 +24,20 @@ class SearchRepositoryImpl(
 
     override suspend fun saveSearch(query: StoredSearchSuggestion) {
         withContext(dispatchers.backgroundThread()) {
-            val currentList: MutableList<StoredSearchSuggestion> =
+            if (query.isEmpty()) return@withContext
+
+            val previousSearches: MutableList<StoredSearchSuggestion> =
                 getSavedHistory().toMutableList()
-            if (currentList.size == maxSavedSuggestions) currentList.removeAt(maxSavedSuggestions - 1)
-            currentList.add(query)
-            dataSource.put(searchHistoryKey, currentList)
+            if (previousSearches.contains(query)) return@withContext
+            if (previousSearches.size == maxSavedSuggestions) previousSearches.removeAt(
+                maxSavedSuggestions - 1
+            )
+            previousSearches.add(query)
+            dataSource.put(searchHistoryKey, previousSearches)
         }
     }
 
-    private fun getSavedHistory() =
+    private fun getSavedHistory(): List<StoredSearchSuggestion> =
         dataSource.get<List<StoredSearchSuggestion>>(searchHistoryKey, emptyList())
             .sortedByDescending { it.time }
 }

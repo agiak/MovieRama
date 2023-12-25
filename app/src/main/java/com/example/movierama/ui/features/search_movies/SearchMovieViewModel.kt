@@ -14,7 +14,6 @@ import com.example.movierama.model.storage.StoredSearchSuggestion
 import com.example.movierama.model.toSearchMovie
 import com.example.myutils.isNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -40,9 +39,7 @@ class SearchMovieViewModel @Inject constructor(
 
     private fun fetchSuggestions() {
         viewModelScope.launch {
-            emitLoading()
             runCatching {
-                delay(1000)
                 searchRepository.fetchSearchHistory()
             }.onSuccess { searchHistory ->
                 _state.value = SearchState.SuggestionsFetched(searchHistory.toSearchHistory())
@@ -50,17 +47,35 @@ class SearchMovieViewModel @Inject constructor(
         }
     }
 
-    fun onSearchTyped(input: String) {
+    fun onSearchTyped(newQuery: String) {
         emitLoading()
-        pagingData.reset()
-        query = input.toSearchFilter()
-        saveQuery(query) // save the query to suggestions unless is empty
+        when {
+            newQuery.isCurrentSearch() -> return
+            newQuery.isEmpty() -> {
+                resetSearchData(newQuery)
+                fetchSuggestions()
+            }
+
+            else -> {
+                resetSearchData(newQuery)
+                searchMovies()
+            }
+        }
+    }
+
+    private fun searchMovies() {
+        saveQuery(query)
         fetchMovies()
+    }
+
+    private fun resetSearchData(newQuery: String) {
+        pagingData.reset()
+        query = newQuery.toSearchFilter()
     }
 
     private fun saveQuery(query: SearchFilter) {
         viewModelScope.launch {
-            if (!query.isEmpty()) {
+            runCatching {
                 searchRepository.saveSearch(query = query.toStoredSearchSuggestion())
             }
         }
@@ -99,8 +114,15 @@ class SearchMovieViewModel @Inject constructor(
     private fun handleMovieResponse(response: MoviesResponse) {
         pagingData.totalPages = response.totalPages
         pagingData.currentMoviesList.addAll(response.getSearchResults())
-        _state.value =
-            SearchState.Result(movies = pagingData.currentMoviesList.toList(), query = query.value)
+        if (pagingData.currentMoviesList.isEmpty() && query.isEmpty()) {
+            fetchSuggestions()
+        } else {
+            _state.value =
+                SearchState.Result(
+                    movies = pagingData.currentMoviesList.toList(),
+                    query = query.value
+                )
+        }
     }
 
     private fun emitLoading(isLoadingMore: Boolean = false) {
@@ -124,7 +146,7 @@ class SearchMovieViewModel @Inject constructor(
         }
 
     private fun SearchFilter.toStoredSearchSuggestion() =
-        StoredSearchSuggestion(searchInput = value, time = System.currentTimeMillis())
+        StoredSearchSuggestion(searchInput = value.trim(), time = System.currentTimeMillis())
 
     private fun List<StoredSearchSuggestion>.toSearchHistory() =
         ArrayList<SearchSuggestion>().apply {
@@ -138,6 +160,8 @@ class SearchMovieViewModel @Inject constructor(
         val date = Date(this)
         return format.format(date)
     }
+
+    private fun String.isCurrentSearch() = this == query.value
 }
 
 sealed class SearchState {

@@ -20,6 +20,8 @@ import com.example.movierama.ui.utils.showConnectionErrorDialog
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.hide
 import com.example.myutils.hideKeyboard
+import com.example.myutils.setCursorPositionToEnd
+import com.example.myutils.setEndDrawable
 import com.example.myutils.setLightStatusBars
 import com.example.myutils.show
 import com.example.myutils.showKeyboard
@@ -34,7 +36,10 @@ class SearchMovieFragment : Fragment() {
     private val viewModel: SearchMovieViewModel by viewModels()
 
     private val suggestionAdapter = SearchMovieSuggestionAdapter(onClick = {
-        binding.searchBar.setText(it.query)
+        binding.searchBar.apply {
+            setText(it.query)
+            setCursorPositionToEnd()
+        }
     })
 
     private val movieAdapter = SearchedMoviesAdapter {
@@ -67,7 +72,10 @@ class SearchMovieFragment : Fragment() {
         binding.backButton.setOnClickListener { findNavController().popBackStack() }
         initSearchBar()
         initResultsList()
+        initSuggestionsList()
+    }
 
+    private fun initSuggestionsList() {
         binding.suggestionsList.adapter = suggestionAdapter
     }
 
@@ -94,12 +102,10 @@ class SearchMovieFragment : Fragment() {
             setActions(object : DebounceViewActions {
                 override fun doBeforeDebounce(text: String) {
                     binding.loader.show()
-                    binding.suggestionsGroup.isVisible = false
                 }
 
                 override fun doAfterDebounce(text: String) {
                     viewModel.onSearchTyped(text)
-                    binding.suggestionsGroup.isVisible = text.isNotEmpty()
                 }
             })
             requestFocus()
@@ -125,11 +131,13 @@ class SearchMovieFragment : Fragment() {
             is SearchState.Result -> {
                 binding.suggestionsGroup.isVisible = state.needsToSuggestMovies()
                 binding.noResultsLbl.isVisible = state.searchFailed()
+                binding.moviesList.isVisible = true
                 movieAdapter.submitList(state.movies)
             }
 
             is SearchState.SuggestionsFetched -> {
-                binding.suggestionsGroup.isVisible = state.suggestions.isNotEmpty()
+                binding.moviesList.hide()
+                binding.suggestionsGroup.show()
                 suggestionAdapter.submitList(state.suggestions)
             }
         }
@@ -138,8 +146,8 @@ class SearchMovieFragment : Fragment() {
     private fun hideLoadersAndErrorLayout() {
         binding.moreLoader.hide()
         binding.loader.hide()
-        binding.errorLbl.isVisible = false
-        binding.noResultsLbl.isVisible = false
+        binding.errorLbl.hide()
+        binding.noResultsLbl.hide()
     }
 
     private fun doOnError(error: ApiError) {
@@ -149,11 +157,11 @@ class SearchMovieFragment : Fragment() {
     }
 
     private fun showErrorLayout(error: ApiError) {
-        binding.moviesList.isVisible = false
+        binding.moviesList.hide()
         binding.errorLbl.apply {
-            isVisible = true
+            show()
             text = getString(error.messageId)
-            setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, error.drawableId)
+            setEndDrawable(error.drawableId)
         }
     }
 

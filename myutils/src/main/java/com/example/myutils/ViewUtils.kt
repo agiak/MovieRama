@@ -127,3 +127,11 @@ fun View.fadeOut(duration: Long = ANIM_FAST, onAnimationEnd: () -> Unit = {}) {
             onAnimationEnd()
         }
 }
+
+fun View.show() {
+    isVisible = true
+}
+
+fun View.hide() {
+    isVisible = false
+}

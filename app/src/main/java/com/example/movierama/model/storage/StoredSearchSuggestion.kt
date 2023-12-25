@@ -7,4 +7,20 @@ import androidx.room.PrimaryKey
 data class StoredSearchSuggestion(
     @PrimaryKey val time: Long,
     val searchInput: String,
-)
+) {
+    override fun equals(other: Any?): Boolean =
+        when {
+            other == null -> false
+            this === other -> true
+            other !is StoredSearchSuggestion -> false
+            else -> searchInput == other.searchInput
+        }
+
+    override fun hashCode(): Int {
+        var result = time.hashCode()
+        result = 31 * result + searchInput.hashCode()
+        return result
+    }
+
+    fun isEmpty() = searchInput.isEmpty()
+}

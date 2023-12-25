@@ -41,40 +41,40 @@ class MovieDetailsUseCaseTest {
         val movieResponse = MovieDetailsResponse(
             id = movieId,
             adult = false,
-            backdrop_path = "backdrop_path",
-            belongs_to_collection = Any(),
+            backdropPath = "backdrop_path",
+            belongsToCollection = Any(),
             budget = 10000000,
             genres = listOf(Genre(id = 1, name = "Action"), Genre(id = 2, name = "Adventure")),
             homepage = "https://www.example.com/movie",
-            imdb_id = "tt1234567",
-            original_language = "en",
-            original_title = "Original Title",
+            imdbId = "tt1234567",
+            originalLanguage = "en",
+            originalTitle = "Original Title",
             overview = "Movie overview",
             popularity = 7.8,
             posterPath = "poster_path",
-            production_companies = listOf(
+            productionCompanies = listOf(
                 ProductionCompany(
                     id = 1,
-                    logo_path = "logo_path",
+                    logoPath = "logo_path",
                     name = "Company 1",
-                    origin_country = "US"
+                    originCountry = "US"
                 ),
                 ProductionCompany(
                     id = 2,
-                    logo_path = "logo_path",
+                    logoPath = "logo_path",
                     name = "Company 2",
-                    origin_country = "UK"
+                    originCountry = "UK"
                 )
             ),
-            production_countries = listOf(
-                ProductionCountry(iso_3166_1 = "US", name = "United States"),
-                ProductionCountry(iso_3166_1 = "UK", name = "United Kingdom")
+            productionCountries = listOf(
+                ProductionCountry(iso31661 = "US", name = "United States"),
+                ProductionCountry(iso31661 = "UK", name = "United Kingdom")
             ),
             releaseDate = "2023-06-25",
             revenue = 50000000,
             runtime = 120,
-            spoken_languages = listOf(
-                SpokenLanguage(english_name = "English", iso_639_1 = "en", name = "English")
+            spokenLanguages = listOf(
+                SpokenLanguage(englishName = "English", iso6391 = "en", name = "English")
             ),
             status = "Released",
             tagline = "Movie tagline",

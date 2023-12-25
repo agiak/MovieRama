@@ -96,7 +96,7 @@ class SearchMovieFragment : Fragment() {
 
     private fun initSearchBar() {
         binding.searchBar.apply {
-            doOnTextChanged { text, start, before, count ->
+            doOnTextChanged { text, _, _, _ ->
                 binding.clearTextBtn.isVisible = text.isNullOrBlank().not()
             }
             setActions(object : DebounceViewActions {
@@ -166,7 +166,6 @@ class SearchMovieFragment : Fragment() {
     }
 
     private fun SearchState.Result.searchFailed() = query.isNotEmpty() && movies.isEmpty()
-    private fun SearchState.Result.searchSucceed() = query.isNotEmpty() && movies.isNotEmpty()
     private fun SearchState.Result.needsToSuggestMovies() = query.isEmpty()
 
     override fun onDestroyView() {

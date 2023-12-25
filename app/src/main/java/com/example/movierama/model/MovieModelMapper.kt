@@ -18,16 +18,16 @@ fun Movie.toStoredFavouriteMovie() = StoredFavouriteMovie(
 fun MovieNetwork.toHomeMovie() = Movie(
     id = this.id,
     title = title,
-    rating = (vote_average / 2.0F).roundToTwoDecimal(), // round the rating to a 5 stars scale
-    releaseDate = release_date.mapToDate(),
-    poster = URL_POSTER + poster_path, // add base image url because server returns only the prefix
+    rating = (voteAverage / 2.0F).roundToTwoDecimal(), // round the rating to a 5 stars scale
+    releaseDate = releaseDate.mapToDate(),
+    poster = URL_POSTER + posterPath, // add base image url because server returns only the prefix
     isFavourite = false // by default is false
 )
 
 fun MovieNetwork.toSearchMovie() = SearchedMovie(
     id = this.id,
     title = title,
-    logo = URL_POSTER + poster_path,
+    logo = URL_POSTER + posterPath,
 )
 
 fun MovieDetails.toStoredFavouriteMovie() = StoredFavouriteMovie(

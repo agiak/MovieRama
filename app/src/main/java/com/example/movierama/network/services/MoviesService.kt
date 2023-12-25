@@ -40,7 +40,7 @@ interface MoviesService {
         @Query("language") language: String = "en-US",
         @Query("query") movieName: String? = null,
         @Query("page") page: Int,
-        @Query("include_adult") include_adult: Boolean = false,
+        @Query("include_adult") includeAdult: Boolean = false,
         @Query("year") year: String? = null
     ): MoviesResponse
 

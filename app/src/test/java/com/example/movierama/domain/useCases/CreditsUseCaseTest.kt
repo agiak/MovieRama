@@ -34,59 +34,59 @@ class CreditsUseCaseTest {
         val crew = listOf(
             Crew(
                 adult = false,
-                credit_id = "credit_id_3",
+                creditId = "credit_id_3",
                 department = "Department 3",
                 gender = 0,
                 id = 789,
                 job = "Job 1",
-                known_for_department = "Known For Department 1",
+                knownForDepartment = "Known For Department 1",
                 name = "Name 3",
-                original_name = "Original Name 3",
+                originalName = "Original Name 3",
                 popularity = 3.0,
-                profile_path = "profile_path_3"
+                profilePath = "profile_path_3"
             ),
             Crew(
                 adult = false,
-                credit_id = "credit_id_4",
+                creditId = "credit_id_4",
                 department = "Directing",
                 gender = 0,
                 id = 101,
                 job = "Job 2",
-                known_for_department = "Known For Department 4",
+                knownForDepartment = "Known For Department 4",
                 name = "Name 4",
-                original_name = "Original Name 4",
+                originalName = "Original Name 4",
                 popularity = 4.0,
-                profile_path = "profile_path_4"
+                profilePath = "profile_path_4"
             )
         )
         val cast = listOf(
             Cast(
                 adult = false,
-                cast_id = 1,
+                castId = 1,
                 character = "Character 1",
-                credit_id = "credit_id_1",
+                creditId = "credit_id_1",
                 gender = 0,
                 id = 123,
-                known_for_department = "Acting",
+                knownForDepartment = "Acting",
                 name = "Name 1",
                 order = 1,
-                original_name = "Original Name 1",
+                originalName = "Original Name 1",
                 popularity = 1.0,
-                profile_path = "profile_path_1"
+                profilePath = "profile_path_1"
             ),
             Cast(
                 adult = false,
-                cast_id = 2,
+                castId = 2,
                 character = "Character 2",
-                credit_id = "credit_id_2",
+                creditId = "credit_id_2",
                 gender = 0,
                 id = 456,
-                known_for_department = "Department 2",
+                knownForDepartment = "Department 2",
                 name = "Name 2",
                 order = 2,
-                original_name = "Original Name 2",
+                originalName = "Original Name 2",
                 popularity = 2.0,
-                profile_path = "profile_path_2"
+                profilePath = "profile_path_2"
             )
         )
 

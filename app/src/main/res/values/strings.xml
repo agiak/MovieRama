@@ -4,6 +4,7 @@
     <!-- Navigation labels -->
     <string name="nav_label_movie_details">Movie Details</string>
     <string name="nav_label_home">Home</string>
+    <string name="nav_label_home_new">Home new</string>
     <string name="nav_label_settings">Settings</string>
     <string name="nav_label_favourites">Favourite Movies</string>
     <string name="nav_label_search_movies">Search Movie</string>

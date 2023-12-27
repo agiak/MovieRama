@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_home_new">
 
     <fragment
         android:id="@+id/nav_movie"
@@ -26,6 +26,27 @@
         android:id="@+id/nav_home"
         android:name="com.example.movierama.ui.features.home.HomeFragment"
         android:label="@string/nav_label_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_movies_to_nav_movie"
+            app:destination="@id/nav_movie"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_search_movie"
+            app:destination="@id/nav_search_movie"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_home_new"
+        android:name="com.example.movierama.ui.features.home.HomeNewFragment"
+        android:label="@string/nav_label_home_new"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_movies_to_nav_movie"

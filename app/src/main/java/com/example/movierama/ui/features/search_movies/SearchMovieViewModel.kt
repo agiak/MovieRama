@@ -48,16 +48,15 @@ class SearchMovieViewModel @Inject constructor(
     }
 
     fun onSearchTyped(newQuery: String) {
-        emitLoading()
         when {
             newQuery.isCurrentSearch() -> return
             newQuery.isEmpty() -> {
-                resetSearchData(newQuery)
+                doOnPreFetch(newQuery)
                 fetchSuggestions()
             }
 
             else -> {
-                resetSearchData(newQuery)
+                doOnPreFetch(newQuery)
                 searchMovies()
             }
         }
@@ -68,7 +67,8 @@ class SearchMovieViewModel @Inject constructor(
         fetchMovies()
     }
 
-    private fun resetSearchData(newQuery: String) {
+    private fun doOnPreFetch(newQuery: String) {
+        emitLoading()
         pagingData.reset()
         query = newQuery.toSearchFilter()
     }

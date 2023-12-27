@@ -2,6 +2,7 @@ package com.example.myutils
 
 import android.content.Context
 import android.view.View
+import android.widget.AbsListView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -83,3 +84,16 @@ fun RecyclerView.addTitleElevationAnimation(titleViews: List<View>) {
     })
 }
 
+/**
+ * Hide keyboard if visible and user scrolls the recyclerView
+ * */
+fun RecyclerView.hideKeyboardOnScroll() {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                hideKeyboard()
+            }
+        }
+    })
+}

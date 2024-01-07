@@ -2,6 +2,7 @@ package com.example.myutils
 
 import android.view.View
 import android.widget.ScrollView
+import androidx.core.widget.NestedScrollView
 import com.google.android.material.appbar.AppBarLayout
 import kotlin.math.abs
 
@@ -10,6 +11,25 @@ fun ScrollView.addTitleElevation(title: View){
         title.isSelected = scrollView.canScrollVertically(-1)
     }
 }
+
+/**
+ * When NestedScrollView is scrolled up adds elevation to the given titleView
+ *
+ * @param titleView = represents the title view
+ *
+ * Note that you need to set stateListAnimator with @animator/elevation_title and a background to your
+ * titleView
+ * */
+fun NestedScrollView.addTitleElevation(titleViews: List<View>){
+    setOnScrollChangeListener { scrollView, _, _, _, _ ->
+        val isScrolled = scrollView.canScrollVertically(-1)
+        titleViews.forEach {
+            it.isSelected = isScrolled
+        }
+    }
+}
+
+
 
 // Constants for height percentages used in calculations
 private const val HALF_HEIGHT_PERCENTAGE = 0.5

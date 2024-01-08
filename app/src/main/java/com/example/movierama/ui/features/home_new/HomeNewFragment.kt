@@ -1,4 +1,4 @@
-package com.example.movierama.ui.features.home
+package com.example.movierama.ui.features.home_new
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,7 @@ import com.example.movierama.R
 import com.example.movierama.databinding.FragmentHomeNewBinding
 import com.example.movierama.model.MoviesType
 import com.example.movierama.ui.base.MenuScreen
+import com.example.movierama.ui.features.home.HomeNewFragmentDirections
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.myutils.addTitleElevation
 import com.example.myutils.disableFullScreenTheme
@@ -34,6 +35,14 @@ class HomeNewFragment : Fragment() {
     private lateinit var nowPlayingAdapter: HomeMovieAdapter
     private lateinit var topRatedAdapter: HomeMovieAdapter
     private lateinit var upcomingAdapter: HomeMovieAdapter
+
+    private val menuAdapter = HomeListAdapter(onItemClick = {
+        HomeNewFragmentDirections.actionNavNewMoviesToNavMovie(
+            it
+        )
+    }, onLabelClicked = {
+        HomeNewFragmentDirections.actionNavHomeNewToMoviesList(it)
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater,

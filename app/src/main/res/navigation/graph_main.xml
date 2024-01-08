@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/nav_home_new"
-        android:name="com.example.movierama.ui.features.home.HomeNewFragment"
+        android:name="com.example.movierama.ui.features.home_new.HomeNewFragment"
         android:label="@string/nav_label_home_new"
         tools:layout="@layout/fragment_home_new">
         <action

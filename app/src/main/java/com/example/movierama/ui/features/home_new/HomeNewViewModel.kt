@@ -1,4 +1,4 @@
-package com.example.movierama.ui.features.home
+package com.example.movierama.ui.features.home_new
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

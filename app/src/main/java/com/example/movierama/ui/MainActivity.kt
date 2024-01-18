@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), MenuScreen {
     private fun setUpSideBar() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_movies_list,
+                R.id.nav_home_new,
                 R.id.nav_favourites,
                 R.id.nav_settings
             ),

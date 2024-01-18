@@ -24,7 +24,6 @@ import com.example.myutils.enableFullScreenTheme
 import com.example.myutils.setLightStatusBars
 import com.example.myutils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
@@ -56,7 +55,6 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.d("args movieId: ${args.movieId}")
         viewModel.movieId = args.movieId
         initViews()
         initSubscriptions()

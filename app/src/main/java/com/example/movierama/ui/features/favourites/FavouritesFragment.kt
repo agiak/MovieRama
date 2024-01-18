@@ -10,7 +10,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.example.movierama.databinding.FragmentFavouritesBinding
 import com.example.movierama.ui.base.MenuScreen
-import com.example.movierama.ui.features.home.MovieAdapter
+import com.example.movierama.ui.features.movies.MovieAdapter
 import com.example.myutils.addTitleElevationAnimation
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.setLightStatusBars

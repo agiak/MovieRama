@@ -101,7 +101,7 @@ class SearchMovieViewModel @Inject constructor(
         // Check if we are already fetching movies. In that case we need to skip that call of the function
         if (state.value is SearchState.LoadingMore) return
 
-        if (pagingData.hasMorePagesToFetch().not()) return
+        if (pagingData.canFetchMore().not()) return
         pagingData++
 
         fetchMovies()

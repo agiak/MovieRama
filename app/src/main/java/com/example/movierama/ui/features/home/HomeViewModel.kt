@@ -2,156 +2,107 @@ package com.example.movierama.ui.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.domain.useCases.FetchMoviesUseCase
-import com.example.movierama.model.Movie
+import com.example.movierama.domain.useCases.MoviesTypeResponse
 import com.example.movierama.model.MoviesType
-import com.example.movierama.model.error_handling.ApiError
 import com.example.movierama.model.error_handling.toApiError
-import com.example.movierama.model.paging.PagingData
-import com.example.movierama.model.remote.movies.MoviesResponse
-import com.example.movierama.model.toStoredFavouriteMovie
-import com.example.movierama.ui.features.search_movies.SearchFilter
+import com.example.movierama.model.remote.movies.toUiMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val moviesRepository: MoviesRepository,
     private val fetchMoviesUseCase: FetchMoviesUseCase,
 ) : ViewModel() {
 
-    private val _homeState = MutableStateFlow(HomeUiState())
-    val homeState: StateFlow<HomeUiState> = _homeState
+    private val _homeState = MutableStateFlow<HomeState>(HomeState.Loading)
+    val homeState: StateFlow<HomeState> = _homeState
 
-    private var searchFilter = SearchFilter()
-    private var moviesPagingData = PagingData<Movie>()
+    private val pagingDataSet = hashMapOf(
+        MoviesType.POPULAR to HomePagingData(),
+        MoviesType.NOW_PLAYING to HomePagingData(),
+        MoviesType.TOP_RATED to HomePagingData(),
+        MoviesType.UPCOMING to HomePagingData(),
+    )
 
     init {
-        fetchMovies()
+        fetchAllMoviesTypes()
     }
 
-    private fun fetchMovies(isLoadingMore: Boolean = false) {
+    private fun fetchAllMoviesTypes() {
         viewModelScope.launch {
-            emitLoading(isLoadingMore)
+            emitLoading()
             runCatching {
-                fetchMoviesUseCase.fetchMovies(
-                    homeState.value.moviesType,
-                    moviesPagingData.currentPage
-                )
-            }.onSuccess {
-                handleMovieResponse(it)
-            }.onFailure {
-                handleError(it as Exception)
+                val popularResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.POPULAR, 1) }
+                val upcomingResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.UPCOMING, 1) }
+                val topRatedResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.TOP_RATED, 1) }
+                val nowPlayingResponse =
+                    async { fetchMoviesUseCase.fetchMovies(MoviesType.NOW_PLAYING, 1) }
+                awaitAll(popularResponse, upcomingResponse, topRatedResponse, nowPlayingResponse)
+            }.onSuccess { menuItemsList ->
+                menuItemsList.forEach { setPagingData(it) }
+                _homeState.value = HomeState.Result(menuItemsList.toHomeTypeList())
+            }.onFailure { error ->
+                _homeState.value = HomeState.Error((error as Exception).toApiError())
             }
         }
     }
 
-    private fun handleError(ex: Exception) {
-        _homeState.update {
-            it.copy(
-                isLoading = false,
-                isLoadingMore = false,
-                error = ex.toApiError()
-            )
+    private fun List<MoviesTypeResponse>.toHomeTypeList(): List<HomeMovieTypeList> = ArrayList<HomeMovieTypeList>().apply {
+        this@toHomeTypeList.forEach { response ->
+            add(HomeMovieTypeList(
+                moviesType = response.type,
+                movies = response.moviesNetwork.toUiMovies(),
+                label = response.type.description
+            ))
         }
     }
 
-    fun fetchMore() {
-        // Check if we are already fetching movies. In that case we need to skip that call of the function
-        if (homeState.value.isLoadingMore) return
+    private fun emitLoading() {
+        _homeState.value = HomeState.Loading
+    }
 
-        if (moviesPagingData.hasMorePagesToFetch().not()) return
-        moviesPagingData++
-
-        if (searchFilter.isEmpty().not()) {
-            searchMovies(isLoadingMore = true)
-        } else {
-            fetchMovies(isLoadingMore = true)
+    fun fetchMore(moviesType: MoviesType) {
+        when {
+            moviesType.isFetching() -> return
+            !moviesType.canFetchMore() -> return
+            else -> fetchMoviesByType(moviesType)
         }
     }
 
-    fun refresh() {
-        moviesPagingData.reset()
-        fetchMovies()
-    }
-
-    fun onMovieTypeSelected(type: MoviesType) {
-        viewModelScope.launch {
-            moviesPagingData.reset()
-            _homeState.update {
-                it.copy(
-                    moviesType = type,
-                    isLoading = true,
-                )
-            }
-            fetchMovies()
-        }
-    }
-
-    private fun searchMovies(isLoadingMore: Boolean) {
-        emitLoading(isLoadingMore)
-        if (!isLoadingMore) moviesPagingData.reset()
+    private fun fetchMoviesByType(moviesType: MoviesType) {
         viewModelScope.launch {
             runCatching {
-                moviesRepository.searchMovies(
-                    page = moviesPagingData.currentPage,
-                    movieName = searchFilter.movieName,
-                    year = searchFilter.year
+                val page = getNextPage(moviesType)
+                fetchMoviesUseCase.fetchMovies(moviesType, page)
+            }.onSuccess { moviesResponse ->
+                setPagingData(moviesResponse)
+                _homeState.value = HomeState.FetchingMore(
+                    moviesType = moviesType,
+                    movies = moviesResponse.moviesNetwork.toUiMovies()
                 )
-            }.onSuccess {
-                handleMovieResponse(it)
-            }.onFailure {
-                handleError(it as Exception)
             }
         }
     }
 
-    private suspend fun handleMovieResponse(response: MoviesResponse) {
-        moviesPagingData.totalPages = response.totalPages
-        moviesPagingData.currentMoviesList.addAll(response.getUiMovies().also { fetchedMovies ->
-            fetchedMovies.setIsFavouriteToMovies() // updates movies list and sets favourite state
-        })
-        _homeState.update { state ->
-            state.copy(
-                movies = moviesPagingData.currentMoviesList.toList(),
-                isLoading = false,
-                isLoadingMore = false,
-                error = null,
-                moviesType = state.moviesType
-            )
-        }
-    }
+    private fun MoviesType.canFetchMore() = pagingDataSet[this]?.canFetchMore ?: false
 
-    private fun emitLoading(isLoadingMore: Boolean = false) {
-        _homeState.update {
-            it.copy(isLoadingMore = isLoadingMore, isLoading = isLoadingMore.not())
-        }
-    }
+    private fun MoviesType.isFetching() = pagingDataSet[this]?.isFetching ?: false
 
-    fun onFavouriteChanged(movie: Movie) {
-        viewModelScope.launch {
-            moviesRepository.onFavouriteStatusChanged(movie.toStoredFavouriteMovie())
-        }
-    }
+    private fun getNextPage(moviesType: MoviesType): Int =
+        pagingDataSet[moviesType]?.let {
+            it.pagingData++
+            it.currentPage
+        } ?: 0
 
-    // updates isFavourite state of each movie element of the list
-    private suspend fun List<Movie>.setIsFavouriteToMovies() {
-        forEach { movie ->
-            movie.isFavourite = moviesRepository.isMovieFavourite(movie.id)
+    private fun setPagingData(response: MoviesTypeResponse) {
+        pagingDataSet[response.type]?.apply {
+            this.setPagingData(response.totalPages, response.moviesNetwork.toUiMovies())
         }
     }
 }
-
-data class HomeUiState(
-    val movies: List<Movie> = emptyList(),
-    val isLoading: Boolean = true,
-    val isLoadingMore: Boolean = false,
-    val error: ApiError? = null,
-    val searchFilter: SearchFilter = SearchFilter(),
-    val moviesType: MoviesType = MoviesType.POPULAR,
-)

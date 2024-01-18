@@ -9,13 +9,12 @@ data class MoviesResponse(
     @SerializedName("results") val moviesNetwork: List<MovieNetwork>,
     @SerializedName("total_pages") val totalPages: Int,
     @SerializedName("total_results") val totalResults: Int
-) {
-    fun getUiMovies(): List<Movie> =
-        ArrayList<Movie>().apply {
-            moviesNetwork.forEach { networkMovie ->
-                add(networkMovie.toHomeMovie())
-            }
-        }
+)
+
+fun List<MovieNetwork>.toUiMovies() = ArrayList<Movie>().apply {
+    this@toUiMovies.forEach { networkMovie ->
+        add(networkMovie.toHomeMovie())
+    }
 }
 
 data class MovieNetwork(

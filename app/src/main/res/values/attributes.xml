@@ -5,6 +5,7 @@
         <attr name="showMenuButton" format="boolean" />
         <attr name="screenTitle" format="string" />
         <attr name="supportsSearchView" format="boolean" />
+        <attr name="leftIconImage" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="CustomSearchView">

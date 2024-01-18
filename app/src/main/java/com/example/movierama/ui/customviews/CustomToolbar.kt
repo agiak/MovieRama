@@ -61,7 +61,12 @@ class CustomToolbar : ConstraintLayout {
         ).apply {
             // Get and set the title from attributes or use an empty string
             setTitle(getString(R.styleable.CustomToolbar_screenTitle) ?: "")
+            binding.menuBtn.setImageResource(getResourceId(R.styleable.CustomToolbar_leftIconImage, R.drawable.ic_menu))
         }
+    }
+
+    fun setLeftIconListener(onClick: () -> Unit = {}) {
+        binding.menuBtn.setOnClickListener { onClick() }
     }
 
     // Set a click listener for the menu button to open/close a DrawerLayout

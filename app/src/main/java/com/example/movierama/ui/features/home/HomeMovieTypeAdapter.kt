@@ -1,4 +1,4 @@
-package com.example.movierama.ui.features.home_new
+package com.example.movierama.ui.features.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,27 +11,27 @@ import com.example.movierama.model.Movie
 import com.example.movierama.model.MoviesType
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 
-class HomeListAdapter(
-    private val onLabelClicked: (label: String) -> Unit = {},
+class HomeMovieTypeAdapter(
+    private val onLabelClicked: (label: MoviesType) -> Unit = {},
     private val onItemClick: (movieId: Long) -> Unit = {},
-    private val fetchingMovies: (movieType: MoviesType) -> Unit = {}
-) : ListAdapter<HomeList, HomeListAdapter.MovieViewHolder>(HomeListDiffCallback()) {
+    private val onFetchingMovies: (movieType: MoviesType) -> Unit = {}
+) : ListAdapter<HomeMovieTypeList, HomeMovieTypeAdapter.MovieViewHolder>(HomeMovieTypeDiffCallback()) {
 
     private lateinit var context: Context
 
-    private val popularAdapter = HomeMovieAdapter(onClick = {
+    private val popularAdapter = HomeAdapter(onClick = {
         onItemClick(it)
     })
 
-    private val topRatedAdapter = HomeMovieAdapter(onClick = {
+    private val topRatedAdapter = HomeAdapter(onClick = {
         onItemClick(it)
     })
 
-    private val nowPlayingAdapter = HomeMovieAdapter(onClick = {
+    private val nowPlayingAdapter = HomeAdapter(onClick = {
         onItemClick(it)
     })
 
-    private val upcomingAdapter = HomeMovieAdapter(onClick = {
+    private val upcomingAdapter = HomeAdapter(onClick = {
         onItemClick(it)
     })
 
@@ -50,33 +50,30 @@ class HomeListAdapter(
     inner class MovieViewHolder(private val binding: ItemHomeListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(selectedList: HomeList) {
+        fun bind(selectedList: HomeMovieTypeList) {
             with(selectedList){
                 binding.label.apply {
                     text = label
-                    setOnClickListener { onLabelClicked(label) }
+                    setOnClickListener { onLabelClicked(moviesType) }
                 }
 
                 binding.list.apply {
                     val adapter = getAdapter(moviesType)
                     this.adapter = adapter
                     adapter.submitList(movies)
-                    addOnLoadMoreListener { fetchingMovies(moviesType) }
+                    addOnLoadMoreListener { onFetchingMovies(moviesType) }
                 }
             }
         }
     }
 
-    private fun submitMoviesByType(movieType: MoviesType, newMovies: List<Movie>) {
-        when(movieType) {
-            MoviesType.POPULAR -> popularAdapter.submitList(newMovies)
-            MoviesType.NOW_PLAYING -> nowPlayingAdapter.submitList(newMovies)
-            MoviesType.TOP_RATED -> topRatedAdapter.submitList(newMovies)
-            MoviesType.UPCOMING -> upcomingAdapter.submitList(newMovies)
-        }
+    fun submitMoviesByType(movieType: MoviesType, newMovies: List<Movie>) {
+        val currentList = getAdapter(movieType).currentList.toMutableList()
+        currentList.addAll(newMovies)
+        getAdapter(movieType).submitList(currentList)
     }
 
-    private fun getAdapter(movieType: MoviesType): HomeMovieAdapter =
+    private fun getAdapter(movieType: MoviesType): HomeAdapter =
         when(movieType){
             MoviesType.POPULAR -> popularAdapter
             MoviesType.NOW_PLAYING -> nowPlayingAdapter
@@ -84,12 +81,12 @@ class HomeListAdapter(
             MoviesType.UPCOMING -> upcomingAdapter
         }
 
-    private class HomeListDiffCallback : DiffUtil.ItemCallback<HomeList>() {
-        override fun areItemsTheSame(oldItem: HomeList, newItem: HomeList): Boolean {
+    private class HomeMovieTypeDiffCallback : DiffUtil.ItemCallback<HomeMovieTypeList>() {
+        override fun areItemsTheSame(oldItem: HomeMovieTypeList, newItem: HomeMovieTypeList): Boolean {
             return oldItem.label == newItem.label
         }
 
-        override fun areContentsTheSame(oldItem: HomeList, newItem: HomeList): Boolean {
+        override fun areContentsTheSame(oldItem: HomeMovieTypeList, newItem: HomeMovieTypeList): Boolean {
             return oldItem == newItem
         }
     }

@@ -16,5 +16,5 @@ data class PagingData<T>(
         return this
     }
 
-    fun hasMorePagesToFetch() = currentPage < totalPages
+    fun canFetchMore() = currentPage < totalPages
 }

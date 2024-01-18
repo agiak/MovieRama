@@ -1,4 +1,4 @@
-package com.example.movierama.ui.features.home_new
+package com.example.movierama.ui.features.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,9 +12,9 @@ import com.example.movierama.R
 import com.example.movierama.databinding.ItemSimilarMovieBinding
 import com.example.movierama.model.Movie
 
-class HomeMovieAdapter(
+class HomeAdapter(
     private val onClick: (movieId: Long) -> Unit = {},
-) : ListAdapter<Movie, HomeMovieAdapter.MovieViewHolder>(MovieDiffCallback()) {
+) : ListAdapter<Movie, HomeAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
     private lateinit var context: Context
 
@@ -26,22 +26,22 @@ class HomeMovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val similarMovie = getItem(position)
-        holder.bind(similarMovie)
+        val movie = getItem(position)
+        holder.bind(movie)
     }
 
     inner class MovieViewHolder(private val binding: ItemSimilarMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(similarMovie: Movie) {
-            Glide.with(context).load(similarMovie.poster).placeholder(
+        fun bind(movie: Movie) {
+            Glide.with(context).load(movie.poster).placeholder(
                     ContextCompat.getDrawable(
                         context, R.drawable.ic_movie_placeholder
                     )
                 ).into(binding.poster)
 
             binding.root.setOnClickListener {
-                onClick(similarMovie.id)
+                onClick(movie.id)
             }
         }
     }

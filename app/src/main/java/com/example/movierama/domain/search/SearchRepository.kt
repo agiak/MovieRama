@@ -10,8 +10,8 @@ interface SearchRepository {
     suspend fun saveSearch(query: StoredSearchSuggestion)
 }
 
-const val searchHistoryKey = "searchHistoryKey"
-const val maxSavedSuggestions = 5
+private const val searchHistoryKey = "searchHistoryKey"
+private const val maxSavedSuggestions = 5
 
 class SearchRepositoryImpl(
     private val dispatchers: IDispatchers,

@@ -24,11 +24,36 @@ class UtilsTest {
         val float = 2.463593F
 
         // When
-        val result = float.roundToTwoDecimal()
+        val result = float.roundToTwoDecimal(2)
 
         // Then
         assertThat(result).isEqualTo(2.46F)
     }
+
+    @Test
+    fun `test round to 1 decimals function`() {
+        // Given
+        val float = 2.463593F
+
+        // When
+        val result = float.roundToTwoDecimal(1)
+
+        // Then
+        assertThat(result).isEqualTo(2.4F)
+    }
+
+    @Test
+    fun `test round to 3 decimals function`() {
+        // Given
+        val float = 2.463593F
+
+        // When
+        val result = float.roundToTwoDecimal(3)
+
+        // Then
+        assertThat(result).isEqualTo(2.463F)
+    }
+
 
     @Test
     fun `test round to 2 decimals function with not decimals`() {

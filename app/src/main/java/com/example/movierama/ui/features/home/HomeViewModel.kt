@@ -13,6 +13,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,10 +40,11 @@ class HomeViewModel @Inject constructor(
             emitLoading()
             runCatching {
                 val popularResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.POPULAR, 1) }
-                val upcomingResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.UPCOMING, 1) }
-                val topRatedResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.TOP_RATED, 1) }
                 val nowPlayingResponse =
                     async { fetchMoviesUseCase.fetchMovies(MoviesType.NOW_PLAYING, 1) }
+                val topRatedResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.TOP_RATED, 1) }
+                val upcomingResponse = async { fetchMoviesUseCase.fetchMovies(MoviesType.UPCOMING, 1) }
+
                 awaitAll(popularResponse, upcomingResponse, topRatedResponse, nowPlayingResponse)
             }.onSuccess { menuItemsList ->
                 menuItemsList.forEach { setPagingData(it) }
@@ -69,8 +71,8 @@ class HomeViewModel @Inject constructor(
 
     fun fetchMore(moviesType: MoviesType) {
         when {
-            moviesType.isFetching() -> return
-            !moviesType.canFetchMore() -> return
+            isFetching(moviesType) -> return
+            !canFetchMore(moviesType) -> return
             else -> fetchMoviesByType(moviesType)
         }
     }
@@ -86,13 +88,15 @@ class HomeViewModel @Inject constructor(
                     moviesType = moviesType,
                     movies = moviesResponse.moviesNetwork.toUiMovies()
                 )
+            }.onFailure {
+                Timber.e(it)
             }
         }
     }
 
-    private fun MoviesType.canFetchMore() = pagingDataSet[this]?.canFetchMore ?: false
+    private fun canFetchMore(type: MoviesType) = pagingDataSet[type]?.canFetchMore ?: false
 
-    private fun MoviesType.isFetching() = pagingDataSet[this]?.isFetching ?: false
+    private fun isFetching(type: MoviesType) = pagingDataSet[type]?.isFetching ?: false
 
     private fun getNextPage(moviesType: MoviesType): Int =
         pagingDataSet[moviesType]?.let {

@@ -1,4 +1,4 @@
-package com.example.movierama.ui.features.search_movies
+package com.example.movierama.ui.features.search
 
 import android.content.Context
 import android.view.LayoutInflater

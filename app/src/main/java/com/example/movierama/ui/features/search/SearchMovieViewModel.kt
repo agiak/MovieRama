@@ -1,4 +1,4 @@
-package com.example.movierama.ui.features.search_movies
+package com.example.movierama.ui.features.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

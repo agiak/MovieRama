@@ -13,5 +13,5 @@ import com.example.movierama.model.storage.StoredFavouriteMovie
 )
 abstract class FavouriteMoviesDatabase : RoomDatabase() {
 
-    abstract fun sessionDao(): FavouriteMovieDao
+    abstract fun favouriteMovieDao(): FavouriteMovieDao
 }

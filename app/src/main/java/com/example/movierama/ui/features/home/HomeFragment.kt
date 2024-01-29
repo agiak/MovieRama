@@ -9,12 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import com.example.movierama.R
 import com.example.movierama.databinding.FragmentHomeBinding
 import com.example.movierama.model.MoviesType
+import com.example.movierama.model.error_handling.ApiError
+import com.example.movierama.model.getHomePosition
 import com.example.movierama.ui.base.MenuScreen
+import com.example.movierama.ui.features.home.viewholders.HomeViewHolder
+import com.example.movierama.ui.features.home.viewholders.HomeViewHolderActions
 import com.example.myutils.addTitleElevationAnimation
 import com.example.myutils.disableFullScreenTheme
 import com.example.myutils.setLightStatusBars
+import com.example.myutils.showDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,13 +32,14 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val movieTypeAdapter = HomeMovieTypeAdapter(
-        onItemClick = { movieId ->
+        actions = HomeViewHolderActions(onItemClick = { movieId ->
             navigateToMovieDetails(movieId)
         }, onLabelClicked = { movieTypeLabel ->
             navigateToMoviesList(movieTypeLabel)
-        }, onFetchingMovies = {
-            viewModel.fetchMore(it)
+        }, onFetchingMovies = { moviesType ->
+            viewModel.fetchMore(moviesType)
         })
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,18 +68,30 @@ class HomeFragment : Fragment() {
             viewModel.homeState.collect { state ->
                 binding.loader.isVisible = state is HomeState.Loading
                 when (state) {
-                    is HomeState.FetchingMore -> movieTypeAdapter.submitMoviesByType(
-                        movieType = state.moviesType,
-                        newMovies = state.movies
-                    )
+                    is HomeState.FetchingMore -> {
+                        val viewHolder = binding.menuList.findViewHolderForLayoutPosition(state.moviesType.getHomePosition()) as? HomeViewHolder<*>
+                        viewHolder?.addMovies(state.movies)
+                    }
 
                     is HomeState.Result -> movieTypeAdapter.submitList(state.data)
+                    is HomeState.Error -> handleError(state.error)
                     else -> {
                         // Do nothing at the moment
                     }
                 }
             }
         }
+    }
+
+    private fun handleError(error: ApiError) {
+        showDialog(
+            context = requireContext(),
+            title = error.name,
+            message = getString(error.messageId),
+            drawableId = error.drawableId,
+            isCancelable = true,
+            mandatoryButton = getString(R.string.dialog_btn_ok)
+        )
     }
 
     private fun initViews() {

@@ -37,8 +37,7 @@ class MoviesModule {
         favouriteUseCase: FavouriteUseCase,
         repository: MoviesRepository,
         errorHandler: ErrorHandler
-    ) =
-        MovieDetailsUseCase(favouriteUseCase, repository, errorHandler)
+    ) = MovieDetailsUseCase(favouriteUseCase, repository, errorHandler)
 
     @Provides
     @ViewModelScoped

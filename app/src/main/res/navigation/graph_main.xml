@@ -92,7 +92,7 @@
 
     <fragment
         android:id="@+id/nav_search_movie"
-        android:name="com.example.movierama.ui.features.search_movies.SearchMovieFragment"
+        android:name="com.example.movierama.ui.features.search.SearchMovieFragment"
         android:label="@string/nav_label_search_movies"
         tools:layout="@layout/fragment_search_movie">
         <action

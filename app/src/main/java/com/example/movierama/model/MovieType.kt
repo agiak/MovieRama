@@ -7,11 +7,11 @@ enum class MoviesType(val description: String) {
     UPCOMING("Upcoming")
 }
 
-data class SelectedType(val type: MoviesType, var isSelected: Boolean = false)
 
-fun mapMoviesTypeToSelectedTypeList(selectedType: MoviesType = MoviesType.POPULAR): List<SelectedType> =
-    ArrayList<SelectedType>().apply {
-        MoviesType.values().forEach { moviesType ->
-            add(SelectedType(type = moviesType, isSelected = moviesType == selectedType))
-        }
+fun MoviesType.getHomePosition(): Int =
+    when(this){
+        MoviesType.POPULAR -> 0
+        MoviesType.NOW_PLAYING -> 3
+        MoviesType.TOP_RATED -> 2
+        MoviesType.UPCOMING -> 1
     }

@@ -1,6 +1,8 @@
 package com.example.myutils
 
-import java.util.Locale
+import kotlin.math.pow
 
-fun Float.roundToTwoDecimal(): Float =
-    String.format(Locale.getDefault(), "%.2f", this).toFloat()
+fun Float.roundToTwoDecimal(decimals: Int = 2): Float {
+    val factor = 10.0.pow(decimals).toFloat()
+    return (this * factor).toInt() / factor
+}

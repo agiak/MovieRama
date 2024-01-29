@@ -22,7 +22,6 @@ class StorageModule {
     fun providePreferenceManager(@ApplicationContext context: Context): PreferenceManager =
         PreferenceManagerImpl(context)
 
-
     @Singleton
     @Provides
     fun provideFavouriteMoviesDatabase(@ApplicationContext applicationContext: Context): FavouriteMoviesDatabase =
@@ -33,5 +32,5 @@ class StorageModule {
 
     @Singleton
     @Provides
-    fun provideSessionDao(db: FavouriteMoviesDatabase): FavouriteMovieDao = db.sessionDao()
+    fun provideFavouriteDao(db: FavouriteMoviesDatabase): FavouriteMovieDao = db.favouriteMovieDao()
 }

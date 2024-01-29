@@ -6,10 +6,18 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import javax.inject.Inject
 
+/**
+ * ConnectionController interface provides a contract for checking internet availability.
+ */
 fun interface ConnectionController {
     fun isInternetAvailable(): Boolean
 }
 
+/**
+ * Implementation of the ConnectionController interface.
+ * This class provides functionality to check internet availability using the Android Context.
+ * @param context The Android Context used to check internet availability.
+ */
 class ConnectionControllerImpl @Inject constructor(
     private val context: Context
 ) : ConnectionController {

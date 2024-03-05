@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.R
+import com.example.movierama.databinding.ItemHomeNowPlayingBinding
 import com.example.movierama.databinding.ItemHomeUpcomingBinding
 import com.example.movierama.model.Movie
 import com.example.movierama.ui.features.home.viewholders.HomeMovieDiffCallback
 import com.example.movierama.ui.utils.load
+import com.example.movierama.ui.utils.loadRoundedCorners
 
 class NowPlayingAdapter(
     private val onClick: (movieId: Long) -> Unit = {},
@@ -19,7 +21,7 @@ class NowPlayingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemHomeUpcomingBinding.inflate(inflater, parent, false)
+        val binding = ItemHomeNowPlayingBinding.inflate(inflater, parent, false)
         context = parent.context
         return MovieViewHolder(binding)
     }
@@ -29,16 +31,14 @@ class NowPlayingAdapter(
         holder.bind(movie)
     }
 
-    inner class MovieViewHolder(private val binding: ItemHomeUpcomingBinding) :
+    inner class MovieViewHolder(private val binding: ItemHomeNowPlayingBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            binding.poster.load(url = movie.poster, placeholder = R.drawable.ic_movie_placeholder)
-
+            binding.logo.loadRoundedCorners(url = movie.poster, placeholder = R.drawable.ic_movie_placeholder, roundness = 14)
             binding.title.text = movie.title
-            binding.releaseDate.text = "Coming at: ${movie.releaseDate}"
 
-            binding.posterCard.setOnClickListener {
+            binding.root.setOnClickListener {
                 onClick(movie.id)
             }
         }

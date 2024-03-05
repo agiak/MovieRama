@@ -13,9 +13,9 @@ import com.example.movierama.ui.utils.addOnLoadMoreListener
 class NowPlayingViewHolder(
     private val binding: ItemHomeListBinding,
     private val actions: HomeViewHolderActions,
-) : RecyclerView.ViewHolder(binding.root), HomeViewHolder<HomeAdapter.MovieViewHolder> {
+) : RecyclerView.ViewHolder(binding.root), HomeViewHolder<NowPlayingAdapter.MovieViewHolder> {
 
-    override val adapter: ListAdapter<Movie, HomeAdapter.MovieViewHolder> = HomeAdapter(onClick = {
+    override val adapter: ListAdapter<Movie, NowPlayingAdapter.MovieViewHolder> = NowPlayingAdapter(onClick = {
         actions.onItemClick(it)
     })
 

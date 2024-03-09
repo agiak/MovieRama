@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import com.example.common.myutils.showKeyboard
 import com.example.movierama.R
 import com.example.movierama.databinding.CustomSearchViewBinding
-import com.example.myutils.showKeyboard
 
 /**
  * CustomHomeToolbar is a specialized toolbar widget in Kotlin, extending ConstraintLayout.

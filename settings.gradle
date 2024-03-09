@@ -1,4 +1,0 @@
-rootProject.name = "MovieRama"
-include ':app'
-include ':myresources'
-include ':myutils'

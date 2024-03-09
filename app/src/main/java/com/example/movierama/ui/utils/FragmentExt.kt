@@ -1,8 +1,8 @@
 package com.example.movierama.ui.utils
 
 import androidx.fragment.app.Fragment
+import com.example.common.myutils.showDialog
 import com.example.movierama.R
-import com.example.myutils.showDialog
 
 fun Fragment.showConnectionErrorDialog(retryAction: () -> Unit = {}) {
     showDialog(

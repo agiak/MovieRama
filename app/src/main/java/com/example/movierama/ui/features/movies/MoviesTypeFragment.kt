@@ -10,17 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.common.myutils.addTitleElevationAnimation
+import com.example.common.myutils.disableFullScreenTheme
+import com.example.common.myutils.hide
+import com.example.common.myutils.scrollToUp
+import com.example.common.myutils.setLightStatusBars
+import com.example.common.myutils.show
+import com.example.common.myutils.showUpButtonListener
 import com.example.movierama.databinding.FragmentMoviesTypeBinding
 import com.example.movierama.model.error_handling.ApiError
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.showConnectionErrorDialog
-import com.example.myutils.addTitleElevationAnimation
-import com.example.myutils.disableFullScreenTheme
-import com.example.myutils.hide
-import com.example.myutils.scrollToUp
-import com.example.myutils.setLightStatusBars
-import com.example.myutils.show
-import com.example.myutils.showUpButtonListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

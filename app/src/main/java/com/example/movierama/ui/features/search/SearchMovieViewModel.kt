@@ -2,6 +2,7 @@ package com.example.movierama.ui.features.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.common.myutils.isNumber
 import com.example.movierama.domain.movies.MoviesRepository
 import com.example.movierama.domain.search.SearchRepository
 import com.example.movierama.model.error_handling.ApiError
@@ -12,7 +13,6 @@ import com.example.movierama.model.search_movie.SearchSuggestion
 import com.example.movierama.model.search_movie.SearchedMovie
 import com.example.movierama.model.storage.StoredSearchSuggestion
 import com.example.movierama.model.toSearchMovie
-import com.example.myutils.isNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

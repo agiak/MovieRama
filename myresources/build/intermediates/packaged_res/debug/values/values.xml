@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <color name="alternative">#FFAB40</color>
+    <color name="alternative_dark">#FF9100</color>
+    <color name="alternative_light">#FFD180</color>
+    <color name="black">#FF000000</color>
+    <color name="label_subtitle">#cbd0d8</color>
+    <color name="label_title">#202c44</color>
+    <color name="main_divider">#DDDDDD</color>
+    <color name="main_error">#FF9E80</color>
+    <color name="main_grey">#F3E5F5</color>
+    <color name="primary">#00756A</color>
+    <color name="primary_dark">#00635A</color>
+    <color name="primary_light">#00A595</color>
+    <color name="secondary">#40C4FF</color>
+    <color name="secondary_dark">#00B0FF</color>
+    <color name="secondary_light">#80D8FF</color>
+    <color name="status_bar_color">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="back_button_backgrounded">42dp</dimen>
+    <dimen name="main_margin_horizontal">@dimen/space_xxlarge</dimen>
+    <dimen name="main_margin_vertical">@dimen/space_xxlarge</dimen>
+    <dimen name="main_stroke_width">2dp</dimen>
+    <dimen name="main_vector_size">24dp</dimen>
+    <dimen name="main_vector_size_large">36dp</dimen>
+    <dimen name="main_vector_size_medium">24dp</dimen>
+    <dimen name="main_vector_size_pre_large">36dp</dimen>
+    <dimen name="main_vector_size_small">12dp</dimen>
+    <dimen name="radius_large">16dp</dimen>
+    <dimen name="radius_main">8dp</dimen>
+    <dimen name="radius_normal">12dp</dimen>
+    <dimen name="radius_small">6dp</dimen>
+    <dimen name="screen_title_size">@dimen/text_xlarge</dimen>
+    <dimen name="space_huge">32dp</dimen>
+    <dimen name="space_large">12dp</dimen>
+    <dimen name="space_medium">8dp</dimen>
+    <dimen name="space_pre_huge">28dp</dimen>
+    <dimen name="space_pre_large">10dp</dimen>
+    <dimen name="space_small">6dp</dimen>
+    <dimen name="space_xlarge">16dp</dimen>
+    <dimen name="space_xsmall">4dp</dimen>
+    <dimen name="space_xxlarge">24dp</dimen>
+    <dimen name="subtitle_size">@dimen/text_medium</dimen>
+    <dimen name="text_huge">32sp</dimen>
+    <dimen name="text_large">16sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_pre_huge">28sp</dimen>
+    <dimen name="text_pre_medium">12sp</dimen>
+    <dimen name="text_small">10sp</dimen>
+    <dimen name="text_xlarge">18sp</dimen>
+    <dimen name="text_xsmall">6sp</dimen>
+    <dimen name="text_xxlarge">24sp</dimen>
+    <dimen name="toolbar_height">84dp</dimen>
+    <style name="AlternativeButton">
+        <item name="android:background">@drawable/button_alternative</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="BackButtonBackgrounded">
+        <item name="android:layout_width">@dimen/back_button_backgrounded</item>
+        <item name="android:layout_height">@dimen/back_button_backgrounded</item>
+        <item name="android:background">@drawable/bg_circle_grey</item>
+        <item name="srcCompat">@drawable/ic_back_black</item>
+    </style>
+    <style name="BackButtonBlack">
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_width">@dimen/main_vector_size_medium</item>
+        <item name="android:layout_height">@dimen/main_vector_size_medium</item>
+        <item name="srcCompat">@drawable/ic_back_black</item>
+    </style>
+    <style name="BaseThemeApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_light</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:forceDarkAllowed" ns1:targetApi="q">false</item>
+
+        
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_light</item>
+        <item name="colorOnSecondary">@color/secondary</item>
+
+        
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <style name="PrimaryButton">
+        <item name="android:background">@drawable/button_primary</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="ScreenTitle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/screen_title_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="SecondaryButton">
+        <item name="android:background">@drawable/button_secondary</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="SubTitle">
+        <item name="android:textColor">@color/label_subtitle</item>
+        <item name="android:textSize">@dimen/subtitle_size</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+</resources>

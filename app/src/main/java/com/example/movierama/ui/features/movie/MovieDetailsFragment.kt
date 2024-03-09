@@ -11,6 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.common.myutils.addScrollListener
+import com.example.common.myutils.enableFullScreenTheme
+import com.example.common.myutils.setLightStatusBars
+import com.example.common.myutils.showToast
 import com.example.movierama.R
 import com.example.movierama.databinding.FragmentMovieDetailsBinding
 import com.example.movierama.domain.useCases.moviedetails.CreditsDetails
@@ -19,10 +23,6 @@ import com.example.movierama.domain.useCases.moviedetails.ReviewsState
 import com.example.movierama.domain.useCases.moviedetails.SimilarMoviesState
 import com.example.movierama.ui.utils.addOnLoadMoreListener
 import com.example.movierama.ui.utils.collectInViewScope
-import com.example.myutils.addScrollListener
-import com.example.myutils.enableFullScreenTheme
-import com.example.myutils.setLightStatusBars
-import com.example.myutils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

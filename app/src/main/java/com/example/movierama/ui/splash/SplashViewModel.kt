@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     private fun showSplashDuration() {
         viewModelScope.launch {
-            delay(BuildConfig.SPLASH_DURATION.toLong())
+            delay(3000.toLong())
             _showSplash.value = false
         }
     }

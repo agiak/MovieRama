@@ -1,0 +1,9 @@
+com.example.myutils
+drawable bg_dialog
+drawable bg_rounded_white_dialog
+id dialogImage
+id dialogMessage
+id dialogTitle
+id mandatoryButton
+id optionalButton
+layout dialog_base

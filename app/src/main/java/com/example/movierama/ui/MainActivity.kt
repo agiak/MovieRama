@@ -11,11 +11,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.example.common.myutils.addPrintingBackstack
 import com.example.movierama.R
 import com.example.movierama.databinding.ActivityMainBinding
 import com.example.movierama.ui.base.MenuScreen
 import com.example.movierama.ui.splash.SplashViewModel
-import com.example.myutils.addPrintingBackstack
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 

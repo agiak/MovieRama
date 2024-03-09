@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import com.example.common.myutils.addTitleElevationAnimation
+import com.example.common.myutils.disableFullScreenTheme
+import com.example.common.myutils.setLightStatusBars
+import com.example.common.myutils.showDialog
 import com.example.movierama.R
 import com.example.movierama.databinding.FragmentHomeBinding
 import com.example.movierama.model.MoviesType
@@ -17,10 +21,6 @@ import com.example.movierama.model.getHomePosition
 import com.example.movierama.ui.base.MenuScreen
 import com.example.movierama.ui.features.home.viewholders.HomeViewHolder
 import com.example.movierama.ui.features.home.viewholders.HomeViewHolderActions
-import com.example.myutils.addTitleElevationAnimation
-import com.example.myutils.disableFullScreenTheme
-import com.example.myutils.setLightStatusBars
-import com.example.myutils.showDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

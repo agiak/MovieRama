@@ -1,11 +1,11 @@
 package com.example.movierama.model
 
+import com.example.common.myutils.roundToTwoDecimal
 import com.example.movierama.model.remote.movies.MovieNetwork
 import com.example.movierama.model.search_movie.SearchedMovie
 import com.example.movierama.model.storage.StoredFavouriteMovie
 import com.example.movierama.ui.URL_POSTER
 import com.example.movierama.ui.utils.mapToDate
-import com.example.myutils.roundToTwoDecimal
 
 fun Movie.toStoredFavouriteMovie() = StoredFavouriteMovie(
     id = id,

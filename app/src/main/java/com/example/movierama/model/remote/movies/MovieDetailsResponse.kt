@@ -1,9 +1,9 @@
 package com.example.movierama.model.remote.movies
 
+import com.example.common.myutils.roundToTwoDecimal
 import com.example.movierama.model.MovieDetails
 import com.example.movierama.ui.URL_POSTER
 import com.example.movierama.ui.utils.mapToDate
-import com.example.myutils.roundToTwoDecimal
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailsResponse(

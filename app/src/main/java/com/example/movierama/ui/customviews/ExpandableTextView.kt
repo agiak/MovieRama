@@ -9,8 +9,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
-import com.example.myutils.fadeIn
-import com.example.myutils.fadeOut
+import com.example.common.myutils.fadeIn
+import com.example.common.myutils.fadeOut
 
 // TODO fix a bug when expanded text is not expanded all
 class ExpandableTextView @JvmOverloads constructor(

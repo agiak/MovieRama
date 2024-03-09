@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import com.example.common.myutils.addTitleElevationAnimation
+import com.example.common.myutils.disableFullScreenTheme
+import com.example.common.myutils.setLightStatusBars
 import com.example.movierama.databinding.FragmentFavouritesBinding
 import com.example.movierama.ui.base.MenuScreen
 import com.example.movierama.ui.features.movies.MovieAdapter
-import com.example.myutils.addTitleElevationAnimation
-import com.example.myutils.disableFullScreenTheme
-import com.example.myutils.setLightStatusBars
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

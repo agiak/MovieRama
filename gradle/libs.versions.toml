@@ -1,0 +1,134 @@
+#########################################   VERSIONS   ###############################################
+[versions]
+
+# Config values
+minSdk = "26"
+targetSdk = "34"
+compileSdk = "34"
+
+agp = "8.2.1"
+ksp = "1.8.10-1.0.9"
+
+# Core dependencies
+kotlin = "1.9.22"
+core-ktx = "1.12.0"
+appcompat = "1.6.1"
+coroutines = "1.7.3"
+
+# UI components
+material = "1.11.0"
+constraintLayout = "2.1.4"
+recyclerView = "1.3.0"
+swipeRefreshLayout = "1.2.0-alpha01"
+
+lifecycleVersion = "2.5.1"
+
+splash = '1.0.0'
+
+# Navigation
+hilt = "2.51"
+navigation = "2.5.3"
+
+# Network
+retrofit = '2.9.0'
+okHttp3Logging = '5.0.0-alpha.11'
+
+# Storage
+room = "2.6.1"
+hawk = "2.0.1"
+
+glide = "4.15.1"
+timber = "4.7.1"
+
+# Testing
+jUnit = "4.13.2"
+testCoreKtx = "1.5.0"
+testJunit = "1.1.5"
+espresso = "3.5.1"
+truth = "1.1.4"
+mockito = "5.3.0"
+
+######################################  LIBRARIES  ##################################################
+
+[libraries]
+# Core dependencies
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+# UI components
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+recycler = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
+swipeRefreshLayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipeRefreshLayout" }
+splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
+
+# Lifecycle components
+viewModelKtx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
+runTimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
+lifecycleProcess = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleVersion" }
+liveDataKtx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
+
+# Network
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+logging-interceptror = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp3Logging" }
+
+# Dagger - Hilt
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+
+# Navigation
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+
+# Storage - Room database - SharePrefs (Hawk)
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-compiler-kapt = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+hawk = { group = "com.orhanobut", name = "hawk", version.ref = "hawk" }
+
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "jUnit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "testJunit" }
+androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "testCoreKtx" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+
+######################################  PLUGINS  ####################################################
+
+[plugins]
+# Android
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+# Kotlin
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+# Dagger - Hilt
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
+# Navigation
+navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+
+########################################  BUNDLES ##################################################
+
+[bundles]
+kotlin-main = ["appcompat", "core-ktx", "coroutines"]
+ui-components = ["material", "constraintlayout", "recycler", "swipeRefreshLayout", "splash"]
+lifecycle-components = ["viewModelKtx", "runTimeKtx", "lifecycleProcess", "liveDataKtx"]
+navigation = ["navigation-fragment", "navigation-ui"]
+network = ["retrofit", "converter-gson", "logging-interceptror"]
+room = ["room-runtime", "room-ktx"]
+
+# Testing
+testImplementationLibs = ["junit", "truth", "mockito"]
+androidTestImplementationLibs = ["androidx-test-ext-junit", "espresso-core", "androidx-test-core"]
+

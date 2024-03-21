@@ -1,10 +1,10 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.domain.movies.MoviesRepository
-import com.example.movierama.domain.useCases.moviedetails.CreditsUseCase
-import com.example.movierama.model.remote.credits.Cast
-import com.example.movierama.model.remote.credits.CreditsResponse
-import com.example.movierama.model.remote.credits.Crew
+import com.example.movierama.core.domain.movies.MoviesRepository
+import com.example.movierama.features.details.domain.usecases.CreditsUseCase
+import com.example.movierama.features.details.data.Cast
+import com.example.movierama.features.details.data.CreditsResponse
+import com.example.movierama.features.details.data.Crew
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

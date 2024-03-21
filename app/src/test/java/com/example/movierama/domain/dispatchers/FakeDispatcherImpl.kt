@@ -1,5 +1,6 @@
 package com.example.movierama.domain.dispatchers
 
+import com.example.movierama.core.domain.dispatchers.IDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

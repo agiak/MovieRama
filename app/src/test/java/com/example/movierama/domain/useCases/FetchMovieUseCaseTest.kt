@@ -1,12 +1,5 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.domain.FakeMovieRepository
-import com.example.movierama.model.MoviesType
-import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.runBlocking
-import org.junit.Before
-import org.junit.Test
-
 class FetchMovieUseCaseTest {
 //
 //    private lateinit var useCase: FetchMoviesUseCase

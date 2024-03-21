@@ -1,14 +1,14 @@
 package com.example.movierama.domain.useCases
 
 import com.example.movierama.domain.error_handling.FakeErrorHandler
-import com.example.movierama.domain.movies.MoviesRepository
-import com.example.movierama.domain.useCases.favourites.FavouriteUseCase
-import com.example.movierama.domain.useCases.moviedetails.MovieDetailsUseCase
-import com.example.movierama.model.remote.movies.Genre
-import com.example.movierama.model.remote.movies.MovieDetailsResponse
-import com.example.movierama.model.remote.movies.ProductionCompany
-import com.example.movierama.model.remote.movies.ProductionCountry
-import com.example.movierama.model.remote.movies.SpokenLanguage
+import com.example.movierama.core.domain.movies.MoviesRepository
+import com.example.movierama.features.favourites.domain.FavouriteUseCase
+import com.example.movierama.features.details.domain.usecases.MovieDetailsUseCase
+import com.example.movierama.features.details.data.Genre
+import com.example.movierama.features.details.data.MovieDetailsResponse
+import com.example.movierama.features.details.data.ProductionCompany
+import com.example.movierama.features.details.data.ProductionCountry
+import com.example.movierama.features.details.data.SpokenLanguage
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

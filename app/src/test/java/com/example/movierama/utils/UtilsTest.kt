@@ -1,6 +1,6 @@
 package com.example.movierama.utils
 
-import com.example.movierama.ui.utils.mapToDate
+import com.example.movierama.core.presentation.utils.mapToDate
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

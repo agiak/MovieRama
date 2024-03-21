@@ -1,16 +1,5 @@
 package com.example.movierama.domain
 
-import com.example.movierama.domain.movies.MoviesRepository
-import com.example.movierama.helpers.fake_responses.validMovieResponse
-import com.example.movierama.helpers.parseJsonFromFile
-import com.example.movierama.model.remote.credits.CreditsResponse
-import com.example.movierama.model.remote.movies.MovieDetailsResponse
-import com.example.movierama.model.remote.movies.MoviesResponse
-import com.example.movierama.model.remote.reviews.ReviewsResponse
-import com.example.movierama.model.remote.similar.SimilarResponse
-import com.example.movierama.model.storage.StoredFavouriteMovie
-import kotlinx.coroutines.flow.Flow
-
 class FakeMovieRepository {
 
 //    override suspend fun getPopularMovies(currentPage: Int): MoviesResponse {

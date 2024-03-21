@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.features.favourites.FavouritesFragment">
+    tools:context=".features.favourites.presentation.FavouritesFragment">
 
-    <com.example.movierama.ui.customviews.CustomToolbar
+    <com.example.movierama.core.presentation.customviews.CustomToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

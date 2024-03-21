@@ -1,6 +1,6 @@
 package com.example.movierama.model.remote
 
-import com.example.movierama.model.remote.similar.SimilarMovieNetwork
+import com.example.movierama.features.details.data.SimilarMovieNetwork
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

@@ -1,6 +1,11 @@
 package com.example.movierama.model
 
-import com.example.movierama.model.storage.StoredFavouriteMovie
+import com.example.movierama.core.data.movies.Movie
+import com.example.movierama.core.data.movies.MovieDetails
+import com.example.movierama.core.data.movies.toStoredFavouriteMovie
+import com.example.movierama.core.data.movies.toUiMovie
+import com.example.movierama.core.data.movies.toUiMovieList
+import com.example.movierama.features.favourites.data.StoredFavouriteMovie
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

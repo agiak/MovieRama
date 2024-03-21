@@ -1,7 +1,7 @@
 package com.example.movierama.model
 
-import com.example.movierama.model.remote.reviews.AuthorDetails
-import com.example.movierama.model.remote.reviews.ReviewNetwork
+import com.example.movierama.features.details.data.AuthorDetails
+import com.example.movierama.features.details.data.ReviewNetwork
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

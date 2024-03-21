@@ -1,6 +1,6 @@
 package com.example.movierama.storage
 
-import com.example.movierama.storage.sharedpreferences.PreferenceManager
+import com.example.movierama.core.domain.storage.sharedpreferences.PreferenceManager
 
 class FakePreferenceManager<G>: PreferenceManager {
 

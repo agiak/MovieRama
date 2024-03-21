@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_movie"
-        android:name="com.example.movierama.ui.features.movie.MovieDetailsFragment"
+        android:name="com.example.movierama.features.details.presentation.MovieDetailsFragment"
         android:label="@string/nav_label_movie_details"
         tools:layout="@layout/fragment_movie_details">
         <argument
@@ -24,12 +24,12 @@
 
     <fragment
         android:id="@+id/nav_movies_list"
-        android:name="com.example.movierama.ui.features.movies.MoviesTypeFragment"
+        android:name="com.example.movierama.features.movies.presentation.MoviesTypeFragment"
         android:label="@string/nav_label_home"
         tools:layout="@layout/fragment_movies_type">
         <argument
             android:name="movieType"
-            app:argType="com.example.movierama.model.MoviesType" />
+            app:argType="com.example.movierama.core.data.movies.MoviesType" />
         <action
             android:id="@+id/action_nav_movies_to_nav_movie"
             app:destination="@id/nav_movie"
@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/nav_home_new"
-        android:name="com.example.movierama.ui.features.home.HomeFragment"
+        android:name="com.example.movierama.features.home.presentation.HomeFragment"
         android:label="@string/nav_label_home_new"
         tools:layout="@layout/fragment_home">
         <action
@@ -76,13 +76,13 @@
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.movierama.ui.features.settings.SettingsFragment"
+        android:name="com.example.movierama.features.settings.presentation.SettingsFragment"
         android:label="@string/nav_label_settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_favourites"
-        android:name="com.example.movierama.ui.features.favourites.FavouritesFragment"
+        android:name="com.example.movierama.features.favourites.presentation.FavouritesFragment"
         android:label="@string/nav_label_favourites"
         tools:layout="@layout/fragment_favourites">
         <action
@@ -92,7 +92,7 @@
 
     <fragment
         android:id="@+id/nav_search_movie"
-        android:name="com.example.movierama.ui.features.search.SearchMovieFragment"
+        android:name="com.example.movierama.features.search.presentation.SearchMovieFragment"
         android:label="@string/nav_label_search_movies"
         tools:layout="@layout/fragment_search_movie">
         <action

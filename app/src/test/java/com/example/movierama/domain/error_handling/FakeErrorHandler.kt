@@ -1,6 +1,6 @@
 package com.example.movierama.domain.error_handling
 
-import com.example.movierama.domain.error_hadling.ErrorHandler
+import com.example.movierama.core.domain.error_hadling.ErrorHandler
 
 class FakeErrorHandler: ErrorHandler {
 

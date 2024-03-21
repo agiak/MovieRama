@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_back_black" />
 
-            <com.example.movierama.ui.customviews.DebounceEditText
+            <com.example.movierama.core.presentation.customviews.DebounceEditText
                 android:id="@+id/search_bar"
                 android:layout_width="0dp"
                 android:layout_height="48dp"

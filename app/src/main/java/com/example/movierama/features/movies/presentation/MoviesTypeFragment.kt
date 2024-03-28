@@ -18,9 +18,9 @@ import com.example.common.myutils.setLightStatusBars
 import com.example.common.myutils.show
 import com.example.common.myutils.showUpButtonListener
 import com.example.movierama.databinding.FragmentMoviesTypeBinding
-import com.example.movierama.core.data.error_handling.ApiError
 import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
 import com.example.movierama.core.presentation.utils.showConnectionErrorDialog
+import com.example.movierama.network.data.ApiError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -89,11 +89,6 @@ class MoviesTypeFragment : Fragment() {
         binding.moviesList.apply {
             addTitleElevationAnimation(listOf(binding.toolbar, binding.searchIcon))
             adapter = moviesAdapter
-            addTitleElevationAnimation(
-                listOf(
-                    binding.toolbar,
-                )
-            )
             addOnLoadMoreListener(loadMoreAction = { viewModel.fetchMore() })
             showUpButtonListener(binding.moveUpBtn)
         }

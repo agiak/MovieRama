@@ -1,6 +1,6 @@
 package com.example.movierama.features.details.di
 
-import com.example.movierama.core.domain.error_hadling.ErrorHandler
+import com.example.movierama.core.domain.errorhadling.ErrorHandler
 import com.example.movierama.features.favourites.domain.FavouriteUseCase
 import com.example.movierama.features.details.domain.usecases.CreditsUseCase
 import com.example.movierama.features.details.domain.usecases.MovieDetailsUseCase

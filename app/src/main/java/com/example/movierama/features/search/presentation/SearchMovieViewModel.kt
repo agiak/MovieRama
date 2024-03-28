@@ -4,14 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.myutils.isNumber
 import com.example.movierama.features.search.domain.SearchRepository
-import com.example.movierama.core.data.error_handling.ApiError
-import com.example.movierama.core.data.error_handling.toApiError
 import com.example.movierama.core.data.paging.PagingData
 import com.example.movierama.core.data.movies.MoviesResponse
 import com.example.movierama.features.search.data.SearchSuggestion
 import com.example.movierama.features.search.data.SearchedMovie
 import com.example.movierama.features.search.data.StoredSearchSuggestion
 import com.example.movierama.core.data.movies.toSearchMovie
+import com.example.movierama.network.data.ApiError
+import com.example.movierama.network.data.toApiError
+import com.example.movierama.features.search.data.SearchFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -163,8 +164,8 @@ class SearchMovieViewModel @Inject constructor(
 }
 
 sealed class SearchState {
-    object Loading : SearchState()
-    object LoadingMore : SearchState()
+    data object Loading : SearchState()
+    data object LoadingMore : SearchState()
     data class SuggestionsFetched(val suggestions: List<SearchSuggestion> = emptyList()) :
         SearchState()
 
@@ -172,14 +173,4 @@ sealed class SearchState {
         SearchState()
 
     data class Error(val error: ApiError) : SearchState()
-}
-
-data class SearchFilter(
-    val movieName: String? = null,
-    val year: String? = null,
-) {
-    fun isEmpty() = movieName.isNullOrBlank() && year.isNullOrBlank()
-
-    val value: String
-        get() = movieName ?: year ?: ""
 }

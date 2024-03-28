@@ -2,8 +2,8 @@ package com.example.movierama.domain.error_handling
 
 
 import com.example.movierama.R
-import com.example.movierama.core.domain.error_hadling.ErrorHandler
-import com.example.movierama.core.domain.error_hadling.getErrorMessageResource
+import com.example.movierama.core.domain.errorhadling.ErrorHandler
+import com.example.movierama.core.domain.errorhadling.getErrorMessageResource
 import com.google.common.truth.Truth.assertThat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -24,7 +24,7 @@ class ErrorHandlerTest {
         val expectedResult = "Failed to read the response"
 
         // When
-        val result = errorHandler.getErrorMessage(exception)
+        val result = ""
 
         // Then
         assertThat(result).isEqualTo(expectedResult)

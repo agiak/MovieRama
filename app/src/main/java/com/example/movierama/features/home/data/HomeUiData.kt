@@ -2,8 +2,8 @@ package com.example.movierama.features.home.data
 
 import com.example.movierama.core.data.movies.Movie
 import com.example.movierama.core.data.movies.MoviesType
-import com.example.movierama.core.data.error_handling.ApiError
 import com.example.movierama.core.data.paging.PagingData
+import com.example.movierama.network.data.ApiError
 
 sealed class HomeState {
     object Loading : HomeState()

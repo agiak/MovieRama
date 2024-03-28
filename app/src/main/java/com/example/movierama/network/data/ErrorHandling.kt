@@ -1,11 +1,11 @@
-package com.example.movierama.core.data.error_handling
+package com.example.movierama.network.data
 
 import com.example.movierama.R
-import com.example.movierama.core.domain.network.interceptors.AuthFailedException
-import com.example.movierama.core.domain.network.interceptors.DeserializationException
-import com.example.movierama.core.domain.network.interceptors.NoInternetException
-import com.example.movierama.core.domain.network.interceptors.ServerException
-import com.example.movierama.core.domain.network.interceptors.ServerNotFoundException
+import com.example.movierama.network.domain.interceptors.AuthFailedException
+import com.example.movierama.network.domain.interceptors.DeserializationException
+import com.example.movierama.network.domain.interceptors.NoInternetException
+import com.example.movierama.network.domain.interceptors.ServerException
+import com.example.movierama.network.domain.interceptors.ServerNotFoundException
 
 enum class ApiError(val messageId: Int, val drawableId: Int) {
     NoInternetConnection(R.string.error_network, R.drawable.ic_no_conection),

@@ -4,7 +4,4 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
-class FavouritesViewModelTest {
-
-
-}
+class FavouritesViewModelTest

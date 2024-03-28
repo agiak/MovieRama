@@ -3,7 +3,7 @@ package com.example.movierama.domain.useCases
 import com.example.movierama.domain.dispatchers.FakeDispatcherImpl
 import com.example.movierama.features.favourites.domain.FavouriteUseCase
 import com.example.movierama.features.favourites.data.StoredFavouriteMovie
-import com.example.movierama.core.domain.storage.localdb.FavouriteMovieDao
+import com.example.movierama.storage.domain.localdb.FavouriteMovieDao
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf

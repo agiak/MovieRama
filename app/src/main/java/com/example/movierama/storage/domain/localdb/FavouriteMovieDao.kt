@@ -1,4 +1,4 @@
-package com.example.movierama.core.domain.storage.localdb
+package com.example.movierama.storage.domain.localdb
 
 import androidx.room.Dao
 import androidx.room.Delete

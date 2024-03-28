@@ -1,7 +1,7 @@
-package com.example.movierama.core.domain.network.interceptors
+package com.example.movierama.network.domain.interceptors
 
 import com.example.movierama.BuildConfig
-import com.example.movierama.core.domain.network.RequestHeader
+import com.example.movierama.network.domain.RequestHeader
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

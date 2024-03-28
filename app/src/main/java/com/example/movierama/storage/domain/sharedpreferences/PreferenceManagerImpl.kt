@@ -1,4 +1,4 @@
-package com.example.movierama.core.domain.storage.sharedpreferences
+package com.example.movierama.storage.domain.sharedpreferences
 
 import android.content.Context
 import com.orhanobut.hawk.Hawk

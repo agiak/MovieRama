@@ -1,6 +1,6 @@
 package com.example.movierama.network
 
-import com.example.movierama.core.domain.network.ConnectionController
+import com.example.movierama.network.domain.ConnectionController
 
 class FakeConnectionController : ConnectionController {
 

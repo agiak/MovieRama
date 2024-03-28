@@ -2,17 +2,16 @@ package com.example.movierama.features.movies.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movierama.core.domain.movies.MoviesRepository
-import com.example.movierama.core.domain.movies.usecases.FetchMoviesUseCase
-import com.example.movierama.core.domain.movies.usecases.MoviesTypeResponse
 import com.example.movierama.core.data.movies.Movie
 import com.example.movierama.core.data.movies.MoviesType
-import com.example.movierama.core.data.error_handling.ApiError
-import com.example.movierama.core.data.error_handling.toApiError
-import com.example.movierama.core.data.paging.PagingData
-import com.example.movierama.core.data.movies.toUiMovies
 import com.example.movierama.core.data.movies.toStoredFavouriteMovie
+import com.example.movierama.core.data.movies.toUiMovies
+import com.example.movierama.core.data.paging.PagingData
+import com.example.movierama.core.domain.movies.usecases.FetchMoviesUseCase
+import com.example.movierama.core.domain.movies.usecases.MoviesTypeResponse
 import com.example.movierama.features.favourites.domain.FavouriteRepository
+import com.example.movierama.network.data.ApiError
+import com.example.movierama.network.data.toApiError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

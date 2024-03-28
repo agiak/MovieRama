@@ -1,4 +1,4 @@
-package com.example.movierama.core.domain.error_hadling
+package com.example.movierama.core.domain.errorhadling
 
 fun interface ErrorHandler {
 

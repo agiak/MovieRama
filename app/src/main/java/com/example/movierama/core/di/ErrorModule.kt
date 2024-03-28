@@ -1,8 +1,8 @@
 package com.example.movierama.core.di
 
 import android.content.Context
-import com.example.movierama.core.domain.error_hadling.ErrorHandler
-import com.example.movierama.core.domain.error_hadling.ErrorHandlerImpl
+import com.example.movierama.core.domain.errorhadling.ErrorHandler
+import com.example.movierama.core.domain.errorhadling.ErrorHandlerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

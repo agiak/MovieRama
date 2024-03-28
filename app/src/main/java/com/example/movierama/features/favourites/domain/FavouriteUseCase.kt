@@ -2,7 +2,7 @@ package com.example.movierama.features.favourites.domain
 
 import com.example.movierama.core.domain.dispatchers.IDispatchers
 import com.example.movierama.features.favourites.data.StoredFavouriteMovie
-import com.example.movierama.core.domain.storage.localdb.FavouriteMovieDao
+import com.example.movierama.storage.domain.localdb.FavouriteMovieDao
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

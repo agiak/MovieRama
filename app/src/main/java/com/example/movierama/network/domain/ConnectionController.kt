@@ -1,4 +1,4 @@
-package com.example.movierama.core.domain.network
+package com.example.movierama.network.domain
 
 import android.content.Context
 import android.net.ConnectivityManager

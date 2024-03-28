@@ -20,11 +20,12 @@ import com.example.common.myutils.setLightStatusBars
 import com.example.common.myutils.show
 import com.example.common.myutils.showKeyboard
 import com.example.movierama.databinding.FragmentSearchMovieBinding
-import com.example.movierama.core.data.error_handling.ApiError
 import com.example.movierama.core.presentation.customviews.DebounceViewActions
 import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
 import com.example.movierama.core.presentation.utils.showConnectionErrorDialog
+import com.example.movierama.network.data.ApiError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchMovieFragment : Fragment() {
@@ -41,9 +42,7 @@ class SearchMovieFragment : Fragment() {
         }
     })
 
-    private val movieAdapter = SearchedMoviesAdapter {
-        findNavController().navigate(SearchMovieFragmentDirections.actionNavSearchMovieToNavMovie(it.id))
-    }
+    private val movieAdapter = SearchedMoviesAdapter { navigateToMovieDetails(it.id) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,7 +107,7 @@ class SearchMovieFragment : Fragment() {
     }
 
     private fun initSubscriptions() {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             viewModel.state.collect { state ->
                 handleState(state)
             }
@@ -166,3 +165,7 @@ class SearchMovieFragment : Fragment() {
         _binding = null
     }
 }
+
+
+private fun SearchMovieFragment.navigateToMovieDetails(movieId: Long) =
+    findNavController().navigate(SearchMovieFragmentDirections.actionNavSearchMovieToNavMovie(movieId))

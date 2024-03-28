@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.movierama.core.domain.movies.usecases.FetchMoviesUseCase
 import com.example.movierama.core.domain.movies.usecases.MoviesTypeResponse
 import com.example.movierama.core.data.movies.MoviesType
-import com.example.movierama.core.data.error_handling.ApiError
-import com.example.movierama.core.data.error_handling.toApiError
 import com.example.movierama.core.data.movies.toUiMovies
+import com.example.movierama.network.data.ApiError
+import com.example.movierama.network.data.toApiError
 import com.example.movierama.features.home.data.HomeMovieTypeList
 import com.example.movierama.features.home.data.HomePagingData
 import com.example.movierama.features.home.data.HomeState

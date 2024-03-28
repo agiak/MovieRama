@@ -1,11 +1,11 @@
 package com.example.movierama.network
 
-import com.example.movierama.core.domain.network.interceptors.AuthFailedException
-import com.example.movierama.core.domain.network.interceptors.DeserializationException
-import com.example.movierama.core.domain.network.interceptors.ErrorHandlerInterceptor
-import com.example.movierama.core.domain.network.interceptors.NoInternetException
-import com.example.movierama.core.domain.network.interceptors.ServerException
-import com.example.movierama.core.domain.network.interceptors.ServerNotFoundException
+import com.example.movierama.network.domain.interceptors.AuthFailedException
+import com.example.movierama.network.domain.interceptors.DeserializationException
+import com.example.movierama.network.domain.interceptors.ErrorHandlerInterceptor
+import com.example.movierama.network.domain.interceptors.NoInternetException
+import com.example.movierama.network.domain.interceptors.ServerException
+import com.example.movierama.network.domain.interceptors.ServerNotFoundException
 import com.google.common.truth.Truth.assertThat
 import okhttp3.Interceptor
 import okhttp3.Request

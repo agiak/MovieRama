@@ -1,7 +1,7 @@
 package com.example.movierama.network
 
 import com.example.movierama.BuildConfig
-import com.example.movierama.core.domain.network.interceptors.AuthInterceptor
+import com.example.movierama.network.domain.interceptors.AuthInterceptor
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Request

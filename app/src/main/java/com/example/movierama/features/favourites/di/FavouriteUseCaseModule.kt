@@ -1,7 +1,7 @@
 package com.example.movierama.features.favourites.di
 
 import com.example.movierama.core.domain.dispatchers.IDispatchers
-import com.example.movierama.core.domain.storage.localdb.FavouriteMovieDao
+import com.example.movierama.storage.domain.localdb.FavouriteMovieDao
 import com.example.movierama.features.favourites.domain.FavouriteUseCase
 import dagger.Module
 import dagger.Provides

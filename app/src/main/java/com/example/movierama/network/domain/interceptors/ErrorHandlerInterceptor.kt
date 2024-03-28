@@ -1,6 +1,6 @@
-package com.example.movierama.core.domain.network.interceptors
+package com.example.movierama.network.domain.interceptors
 
-import com.example.movierama.core.domain.network.ConnectionController
+import com.example.movierama.network.domain.ConnectionController
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

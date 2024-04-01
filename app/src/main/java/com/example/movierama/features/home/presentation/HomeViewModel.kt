@@ -6,6 +6,8 @@ import com.example.movierama.core.domain.movies.usecases.FetchMoviesUseCase
 import com.example.movierama.core.domain.movies.usecases.MoviesTypeResponse
 import com.example.movierama.core.data.movies.MoviesType
 import com.example.movierama.core.data.movies.toUiMovies
+import com.example.movierama.core.domain.utils.logPagingResult
+import com.example.movierama.core.domain.utils.logPagingStart
 import com.example.movierama.network.data.ApiError
 import com.example.movierama.network.data.toApiError
 import com.example.movierama.features.home.data.HomeMovieTypeList
@@ -45,13 +47,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             emitLoading()
             val popularResponse =
-                asyncCatching { fetchMoviesUseCase.fetchMovies(MoviesType.POPULAR, 1) }
+                asyncCatching { fetchMoviesUseCase.execute(MoviesType.POPULAR, 1) }
             val nowPlayingResponse =
-                asyncCatching { fetchMoviesUseCase.fetchMovies(MoviesType.NOW_PLAYING, 1) }
+                asyncCatching { fetchMoviesUseCase.execute(MoviesType.NOW_PLAYING, 1) }
             val topRatedResponse =
-                asyncCatching { fetchMoviesUseCase.fetchMovies(MoviesType.TOP_RATED, 1) }
+                asyncCatching { fetchMoviesUseCase.execute(MoviesType.TOP_RATED, 1) }
             val upcomingResponse =
-                asyncCatching { fetchMoviesUseCase.fetchMovies(MoviesType.UPCOMING, 1) }
+                asyncCatching { fetchMoviesUseCase.execute(MoviesType.UPCOMING, 1) }
 
             val result = awaitAll(popularResponse, upcomingResponse, topRatedResponse, nowPlayingResponse)
 
@@ -96,9 +98,14 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 val page = getNextPage(moviesType)
-                fetchMoviesUseCase.fetchMovies(moviesType, page)
+                moviesType.logPagingStart(page)
+                fetchMoviesUseCase.execute(moviesType, page)
             }.onSuccess { moviesResponse ->
                 setPagingData(moviesResponse)
+                moviesType.logPagingResult(
+                    fetchedSize = moviesResponse.moviesNetwork.size,
+                    totalSize = pagingDataSet[moviesType]?.pagingData?.currentMoviesList?.size ?: 0
+                )
                 _homeState.value = HomeState.FetchingMore(
                     moviesType = moviesType,
                     movies = moviesResponse.moviesNetwork.toUiMovies()

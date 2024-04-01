@@ -3,6 +3,7 @@ package com.example.movierama.features.search.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.myutils.isNumber
+import com.example.movierama.core.data.errorhandling.ResultError
 import com.example.movierama.features.search.domain.SearchRepository
 import com.example.movierama.core.data.paging.PagingData
 import com.example.movierama.core.data.movies.MoviesResponse
@@ -10,6 +11,8 @@ import com.example.movierama.features.search.data.SearchSuggestion
 import com.example.movierama.features.search.data.SearchedMovie
 import com.example.movierama.features.search.data.StoredSearchSuggestion
 import com.example.movierama.core.data.movies.toSearchMovie
+import com.example.movierama.core.domain.utils.logPagingResult
+import com.example.movierama.core.domain.utils.logPagingStart
 import com.example.movierama.network.data.ApiError
 import com.example.movierama.network.data.toApiError
 import com.example.movierama.features.search.data.SearchFilter
@@ -83,6 +86,7 @@ class SearchMovieViewModel @Inject constructor(
     private fun fetchMovies() {
         viewModelScope.launch {
             runCatching {
+                logPagingStart(pagingData.currentPage)
                 searchRepository.searchMovies(
                     page = pagingData.currentPage,
                     movieName = query.movieName,
@@ -113,6 +117,8 @@ class SearchMovieViewModel @Inject constructor(
     private fun handleMovieResponse(response: MoviesResponse) {
         pagingData.totalPages = response.totalPages
         pagingData.currentMoviesList.addAll(response.getSearchResults())
+        logPagingResult(response.moviesNetwork.size, pagingData.currentMoviesList.size)
+
         if (pagingData.currentMoviesList.isEmpty() && query.isEmpty()) {
             fetchSuggestions()
         } else {

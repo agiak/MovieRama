@@ -12,7 +12,7 @@ import javax.inject.Inject
 class FetchMoviesUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
-    suspend fun fetchMovies(type: MoviesType, page: Int): MoviesTypeResponse =
+    suspend fun execute(type: MoviesType, page: Int): MoviesTypeResponse =
         MoviesTypeResponse(
             when (type) {
                 MoviesType.POPULAR -> fetchPopularMovies(page)

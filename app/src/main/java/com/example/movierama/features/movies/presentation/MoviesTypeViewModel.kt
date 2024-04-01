@@ -9,6 +9,8 @@ import com.example.movierama.core.data.movies.toUiMovies
 import com.example.movierama.core.data.paging.PagingData
 import com.example.movierama.core.domain.movies.usecases.FetchMoviesUseCase
 import com.example.movierama.core.domain.movies.usecases.MoviesTypeResponse
+import com.example.movierama.core.domain.utils.logPagingResult
+import com.example.movierama.core.domain.utils.logPagingStart
 import com.example.movierama.features.favourites.domain.FavouriteRepository
 import com.example.movierama.network.data.ApiError
 import com.example.movierama.network.data.toApiError
@@ -36,8 +38,10 @@ class MoviesTypeViewModel @Inject constructor(
         viewModelScope.launch {
             emitLoading(isLoadingMore)
             movieType = moviesType
+
+            moviesType.logPagingStart(moviesPagingData.currentPage)
             runCatching {
-                fetchMoviesUseCase.fetchMovies(
+                fetchMoviesUseCase.execute(
                     movieType,
                     moviesPagingData.currentPage
                 )
@@ -82,6 +86,8 @@ class MoviesTypeViewModel @Inject constructor(
                 fetchedMovies.setIsFavouriteToMovies() // updates movies list and sets favourite state
             })
         }
+        movieType.logPagingResult(response.moviesNetwork.size, moviesPagingData.currentMoviesList.size)
+
         _homeState.update { state ->
             state.copy(
                 movies = moviesPagingData.currentMoviesList.toList(),

@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -24,6 +25,8 @@ import com.example.movierama.features.details.domain.usecases.SimilarMoviesState
 import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
 import com.example.movierama.core.presentation.utils.collectInViewScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
@@ -106,11 +109,14 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun initSubscriptions() {
-        viewModel.movieState.collectInViewScope(viewLifecycleOwner) {
-            handleMovieDetails(it.movieDetailsState)
-            handleReviews(it.reviewsState)
-            handleSimilarMovies(it.similarMoviesState)
-            handleMovieCredits(it.creditsDetails)
+        lifecycleScope.launch {
+            viewModel.movieState.collect {
+                Timber.d("observer was called ${it}")
+                handleMovieDetails(it.movieDetailsState)
+                handleReviews(it.reviewsState)
+                handleSimilarMovies(it.similarMoviesState)
+                handleMovieCredits(it.creditsDetails)
+            }
         }
     }
 

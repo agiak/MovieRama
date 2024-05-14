@@ -39,10 +39,10 @@ class MovieDetailsViewModel @Inject constructor(
     private val creditsState = MutableStateFlow(CreditsDetails())
 
     val movieState: StateFlow<MovieState> = combine(
-        similarMoviesState,
-        reviewsState,
-        creditsState,
-        movieDetailsState,
+        movieUseCases.similarMoviesUseCase.similarMoviesState,
+        movieUseCases.reviewsUseCase.reviewsState,
+        movieUseCases.creditsUseCase.creditsState,
+        movieUseCases.movieDetailsUseCase.movieDetailsState,
     ) { similarMoviesState: SimilarMoviesState,
         reviewsState: ReviewsState,
         creditsDetails: CreditsDetails,

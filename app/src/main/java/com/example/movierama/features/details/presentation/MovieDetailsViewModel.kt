@@ -15,6 +15,7 @@ import com.example.movierama.features.favourites.domain.FavouriteRepository
 import com.example.movierama.core.data.movies.toStoredFavouriteMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -32,11 +33,16 @@ class MovieDetailsViewModel @Inject constructor(
 
     var movieId: Long = 0L
 
+    private val similarMoviesState = MutableStateFlow(SimilarMoviesState())
+    private val reviewsState = MutableStateFlow(ReviewsState())
+    private val movieDetailsState = MutableStateFlow(MovieDetailsState())
+    private val creditsState = MutableStateFlow(CreditsDetails())
+
     val movieState: StateFlow<MovieState> = combine(
-        movieUseCases.similarMoviesUseCase.similarMoviesState,
-        movieUseCases.reviewsUseCase.reviewsState,
-        movieUseCases.creditsUseCase.creditsState,
-        movieUseCases.movieDetailsUseCase.movieDetailsState
+        similarMoviesState,
+        reviewsState,
+        creditsState,
+        movieDetailsState,
     ) { similarMoviesState: SimilarMoviesState,
         reviewsState: ReviewsState,
         creditsDetails: CreditsDetails,

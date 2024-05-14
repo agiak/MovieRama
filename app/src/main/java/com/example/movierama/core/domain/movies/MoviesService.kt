@@ -34,39 +34,4 @@ interface MoviesService {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int
     ): MoviesResponse
-
-    @GET("search/movie")
-    suspend fun searchMovies(
-        @Query("language") language: String = "en-US",
-        @Query("query") movieName: String? = null,
-        @Query("page") page: Int,
-        @Query("include_adult") includeAdult: Boolean = false,
-        @Query("year") year: String? = null
-    ): MoviesResponse
-
-    @GET("movie/{movie_id}/credits")
-    suspend fun getMovieCredits(
-        @Path("movie_id") movieId: Long,
-        @Query("language") language: String = "en-US",
-    ): CreditsResponse
-
-    @GET("movie/{movie_id}")
-    suspend fun getMovieDetails(
-        @Path("movie_id") movieId: Long,
-        @Query("language") language: String = "en-US",
-    ): MovieDetailsResponse
-
-    @GET("movie/{movie_id}/reviews")
-    suspend fun getReviews(
-        @Path("movie_id") movieId: Long,
-        @Query("language") language: String = "en-US",
-        @Query("page") page: Int,
-    ): ReviewsResponse
-
-    @GET("movie/{movie_id}/similar")
-    suspend fun getSimilarMovies(
-        @Path("movie_id") movieId: Long,
-        @Query("language") language: String = "en-US",
-        @Query("page") page: Int,
-    ): SimilarResponse
 }

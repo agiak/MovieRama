@@ -67,7 +67,7 @@
         android:id="@+id/error_lbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableBottom="@drawable/ic_generic_error"
+        android:drawableTop="@drawable/ic_generic_error"
         android:drawablePadding="@dimen/space_large"
         android:drawableTint="@color/main_error"
         android:gravity="center"

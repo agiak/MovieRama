@@ -13,7 +13,6 @@ import com.example.common.myutils.disableFullScreenTheme
 import com.example.common.myutils.setLightStatusBars
 import com.example.movierama.databinding.FragmentFavouritesBinding
 import com.example.movierama.core.presentation.base.MenuScreen
-import com.example.movierama.features.movies.presentation.MovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

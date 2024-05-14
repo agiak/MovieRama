@@ -88,7 +88,7 @@ class MovieDetailsUseCaseTest {
 
         // When
         movieDetailsUseCase.movieId = movieId
-        movieDetailsUseCase.getMovieDetails()
+        movieDetailsUseCase.execute()
         val movieDetailsState = movieDetailsUseCase.movieDetailsState.first()
 
         // Then
@@ -113,7 +113,7 @@ class MovieDetailsUseCaseTest {
 
             // When
             movieDetailsUseCase.movieId = movieId
-            movieDetailsUseCase.getMovieDetails()
+            movieDetailsUseCase.execute()
             val movieDetailsState = movieDetailsUseCase.movieDetailsState.first()
 
             // Then

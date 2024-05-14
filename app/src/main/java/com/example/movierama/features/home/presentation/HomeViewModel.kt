@@ -2,14 +2,14 @@ package com.example.movierama.features.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movierama.R
+import com.example.movierama.core.data.errorhandling.UiMessage
 import com.example.movierama.core.domain.movies.usecases.FetchMoviesUseCase
 import com.example.movierama.core.domain.movies.usecases.MoviesTypeResponse
 import com.example.movierama.core.data.movies.MoviesType
 import com.example.movierama.core.data.movies.toUiMovies
 import com.example.movierama.core.domain.utils.logPagingResult
 import com.example.movierama.core.domain.utils.logPagingStart
-import com.example.movierama.network.data.ApiError
-import com.example.movierama.network.data.toApiError
 import com.example.movierama.features.home.data.HomeMovieTypeList
 import com.example.movierama.features.home.data.HomePagingData
 import com.example.movierama.features.home.data.HomeState
@@ -55,7 +55,8 @@ class HomeViewModel @Inject constructor(
             val upcomingResponse =
                 asyncCatching { fetchMoviesUseCase.execute(MoviesType.UPCOMING, 1) }
 
-            val result = awaitAll(popularResponse, upcomingResponse, topRatedResponse, nowPlayingResponse)
+            val result =
+                awaitAll(popularResponse, upcomingResponse, topRatedResponse, nowPlayingResponse)
 
             if (result.isSuccess()) {
                 result.getSuccessData().apply {
@@ -104,7 +105,7 @@ class HomeViewModel @Inject constructor(
                 setPagingData(moviesResponse)
                 moviesType.logPagingResult(
                     fetchedSize = moviesResponse.moviesNetwork.size,
-                    totalSize = pagingDataSet[moviesType]?.pagingData?.currentMoviesList?.size ?: 0
+                    totalSize = pagingDataSet[moviesType]?.pagingData?.currentItemsList?.size ?: 0
                 )
                 _homeState.value = HomeState.FetchingMore(
                     moviesType = moviesType,
@@ -121,7 +122,7 @@ class HomeViewModel @Inject constructor(
             try {
                 HomeMovieState.Success(block())
             } catch (e: Exception) {
-                HomeMovieState.Error(e.toApiError())
+                HomeMovieState.Error(UiMessage.Dynamic(e.localizedMessage?.toString() ?: ""))
             }
         }
 
@@ -134,8 +135,9 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-    private fun List<HomeMovieState>.getErrorData(): ApiError =
-        (find { it is HomeMovieState.Error } as? HomeMovieState.Error)?.error ?: ApiError.Generic
+    private fun List<HomeMovieState>.getErrorData(): UiMessage =
+        (find { it is HomeMovieState.Error } as? HomeMovieState.Error)?.error
+            ?: UiMessage.Resource(R.string.error_generic)
 
     private fun canFetchMore(type: MoviesType) = pagingDataSet[type]?.canFetchMore ?: false
 
@@ -148,13 +150,14 @@ class HomeViewModel @Inject constructor(
         } ?: 0
 
     private fun setPagingData(response: MoviesTypeResponse) {
-        pagingDataSet[response.type]?.apply {
-            this.setPagingData(response.totalPages, response.moviesNetwork.toUiMovies())
-        }
+        pagingDataSet[response.type]?.pagingData?.setData(
+            totalPages = response.totalPages,
+            newItems = response.moviesNetwork.toUiMovies()
+        )
     }
 }
 
 private sealed class HomeMovieState {
     data class Success(val moviesResponse: MoviesTypeResponse) : HomeMovieState()
-    data class Error(val error: ApiError) : HomeMovieState()
+    data class Error(val error: UiMessage) : HomeMovieState()
 }

@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.common.myutils.addTitleElevationAnimation
 import com.example.common.myutils.disableFullScreenTheme
+import com.example.common.myutils.hide
 import com.example.common.myutils.setLightStatusBars
-import com.example.common.myutils.showDialog
-import com.example.movierama.R
+import com.example.common.myutils.show
 import com.example.movierama.core.data.movies.MoviesType
 import com.example.movierama.core.data.movies.getHomePosition
 import com.example.movierama.core.presentation.base.MenuScreen
@@ -21,7 +21,6 @@ import com.example.movierama.databinding.FragmentHomeBinding
 import com.example.movierama.features.home.data.HomeState
 import com.example.movierama.features.home.presentation.viewholders.HomeViewHolder
 import com.example.movierama.features.home.presentation.viewholders.HomeViewHolderActions
-import com.example.movierama.network.data.ApiError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -69,6 +68,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.homeState.collect { state ->
                 binding.loader.isVisible = state is HomeState.Loading
+                binding.errorGroup.hide()
                 when (state) {
                     is HomeState.FetchingMore -> {
                         val viewHolder = binding.menuList.findViewHolderForLayoutPosition(state.moviesType.getHomePosition()) as? HomeViewHolder<*>
@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
                     }
 
                     is HomeState.Result -> movieTypeAdapter.submitList(state.data)
-                    is HomeState.Error -> handleError(state.error)
+                    is HomeState.Error -> handleError(state.error.asError(requireContext()))
                     else -> {
                         // Do nothing at the moment
                     }
@@ -85,15 +85,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun handleError(error: ApiError) {
-        showDialog(
-            context = requireContext(),
-            title = error.name,
-            message = getString(error.messageId),
-            drawableId = error.drawableId,
-            isCancelable = true,
-            mandatoryButton = getString(R.string.dialog_btn_ok)
-        )
+    private fun handleError(error: String) {
+        binding.errorGroup.show()
+        binding.errorLabel.text = error
     }
 
     private fun initViews() {

@@ -20,6 +20,7 @@ material = "1.11.0"
 constraintLayout = "2.1.4"
 recyclerView = "1.3.2"
 swipeRefreshLayout = "1.2.0-alpha01"
+pagination = "3.2.1"
 
 lifecycleVersion = "2.7.0"
 
@@ -48,6 +49,7 @@ espresso = "3.5.1"
 truth = "1.4.2"
 mockito = "5.6.0"
 
+
 ######################################  LIBRARIES  ##################################################
 
 [libraries]
@@ -62,6 +64,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 recycler = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
 swipeRefreshLayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipeRefreshLayout" }
 splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
+pagination = { group= "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagination"}
 
 # Lifecycle components
 viewModelKtx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
@@ -122,7 +125,7 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
 kotlin-main = ["appcompat", "core-ktx", "coroutines"]
-ui-components = ["material", "constraintlayout", "recycler", "swipeRefreshLayout", "splash"]
+ui-components = ["material", "constraintlayout", "recycler", "swipeRefreshLayout", "splash", "pagination"]
 lifecycle-components = ["viewModelKtx", "runTimeKtx", "lifecycleProcess", "liveDataKtx"]
 navigation = ["navigation-fragment", "navigation-ui"]
 network = ["retrofit", "converter-gson", "logging-interceptror"]

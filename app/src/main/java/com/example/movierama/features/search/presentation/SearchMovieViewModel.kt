@@ -3,7 +3,6 @@ package com.example.movierama.features.search.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.myutils.isNumber
-import com.example.movierama.core.data.errorhandling.ResultError
 import com.example.movierama.features.search.domain.SearchRepository
 import com.example.movierama.core.data.paging.PagingData
 import com.example.movierama.core.data.movies.MoviesResponse
@@ -116,15 +115,15 @@ class SearchMovieViewModel @Inject constructor(
 
     private fun handleMovieResponse(response: MoviesResponse) {
         pagingData.totalPages = response.totalPages
-        pagingData.currentMoviesList.addAll(response.getSearchResults())
-        logPagingResult(response.moviesNetwork.size, pagingData.currentMoviesList.size)
+        pagingData.currentItemsList.addAll(response.getSearchResults())
+        logPagingResult(response.moviesNetwork.size, pagingData.currentItemsList.size)
 
-        if (pagingData.currentMoviesList.isEmpty() && query.isEmpty()) {
+        if (pagingData.currentItemsList.isEmpty() && query.isEmpty()) {
             fetchSuggestions()
         } else {
             _state.value =
                 SearchState.Result(
-                    movies = pagingData.currentMoviesList.toList(),
+                    movies = pagingData.currentItemsList.toList(),
                     query = query.value
                 )
         }

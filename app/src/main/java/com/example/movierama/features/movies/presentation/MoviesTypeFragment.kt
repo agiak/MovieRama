@@ -8,8 +8,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import com.example.common.myutils.addTitleElevationAnimation
 import com.example.common.myutils.disableFullScreenTheme
 import com.example.common.myutils.hide
@@ -22,7 +25,10 @@ import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
 import com.example.movierama.core.presentation.utils.showConnectionErrorDialog
 import com.example.movierama.network.data.ApiError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MoviesTypeFragment : Fragment() {
@@ -34,7 +40,13 @@ class MoviesTypeFragment : Fragment() {
 
     private val args: MoviesTypeFragmentArgs by navArgs()
 
-    private lateinit var moviesAdapter: MovieAdapter
+    private val movieTypeAdapter by lazy {
+        MovieTypeAdapter(onClick = {
+            navigateToMovieDetails(it.id)
+        }, onFavouriteClick = {
+            viewModel.onFavouriteChanged(it)
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,23 +66,17 @@ class MoviesTypeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        viewModel.movieType = args.movieType // needs to be initialized before movies flow is initialized
         initToolbar()
         initSubscriptions()
-        viewModel.fetchMovies(args.movieType)
     }
 
     private fun initViews() {
         initMoviesListView()
 
-        binding.moveUpBtn.setOnClickListener {
-            binding.moviesList.scrollToUp()
-        }
-        binding.refreshLayout.setOnRefreshListener {
-            viewModel.refresh()
-        }
-        binding.searchIcon.setOnClickListener {
-            navigateToSearch()
-        }
+        binding.moveUpBtn.setOnClickListener { binding.moviesList.scrollToUp() }
+        binding.refreshLayout.setOnRefreshListener { movieTypeAdapter.refresh() }
+        binding.searchIcon.setOnClickListener { navigateToSearch() }
     }
 
     private fun initToolbar() {
@@ -81,16 +87,28 @@ class MoviesTypeFragment : Fragment() {
     }
 
     private fun initMoviesListView() {
-        moviesAdapter = MovieAdapter(onClick = {
-            findNavController().navigate(MoviesTypeFragmentDirections.actionNavMoviesToNavMovie(it.id))
-        }, onFavouriteClick = {
-            viewModel.onFavouriteChanged(it)
-        })
         binding.moviesList.apply {
             addTitleElevationAnimation(listOf(binding.toolbar, binding.searchIcon))
-            adapter = moviesAdapter
-            addOnLoadMoreListener(loadMoreAction = { viewModel.fetchMore() })
+            adapter =
+                movieTypeAdapter.withLoadStateFooter(MoviesTypeLoadStateAdapter { movieTypeAdapter.refresh() })
             showUpButtonListener(binding.moveUpBtn)
+        }
+        movieTypeAdapter.addLoadStateListener { loadState ->
+            when (loadState.source.refresh) {
+                LoadState.Loading -> {
+                    binding.loader.isVisible = loadState.source.refresh is LoadState.Loading
+                            && !binding.refreshLayout.isRefreshing
+                }
+
+                is LoadState.Error -> {
+                    showErrorLayout((loadState.source.refresh as LoadState.Error).error.message.toString())
+                }
+
+                is LoadState.NotLoading -> {
+                    hideLoadersAndErrorLayout()
+                    handleEmptyData(movieTypeAdapter.itemCount < 1)
+                }
+            }
         }
     }
 
@@ -98,46 +116,22 @@ class MoviesTypeFragment : Fragment() {
         binding.moreLoader.hide()
         binding.loader.hide()
         binding.refreshLayout.hide()
-        binding.errorLbl.isVisible = false
+        binding.errorLbl.hide()
     }
 
     private fun initSubscriptions() {
-        lifecycle.coroutineScope.launch {
-            viewModel.homeState.collect { state ->
-                when {
-                    state.isLoadingMore -> binding.moreLoader.show()
-                    state.isLoading -> {
-                        binding.loader.show()
-                        moviesAdapter.submitList(emptyList()) // clears the list when show the loader
-                    }
-
-                    state.error != null -> doOnError(state.error)
-                    else -> doOnFetchData(state)
-                }
+        lifecycleScope.launch {
+            viewModel.movies.collectLatest {
+                movieTypeAdapter.submitData(it)
             }
         }
     }
 
-    private fun doOnFetchData(state: MoviesTypeState) {
-        with(state) {
-            hideLoadersAndErrorLayout()
-            moviesAdapter.submitList(movies)
-            handleEmptyData(movies.isEmpty())
-        }
-    }
-
-    private fun doOnError(error: ApiError) {
-        hideLoadersAndErrorLayout()
-        showErrorLayout(error)
-        if (error == ApiError.NoInternetConnection) showConnectionErrorDialog()
-    }
-
-    private fun showErrorLayout(error: ApiError) {
+    private fun showErrorLayout(error: String) {
         binding.moviesList.isVisible = false
         binding.errorLbl.apply {
             isVisible = true
-            text = getString(error.messageId)
-            setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, error.drawableId)
+            text = error
         }
     }
 
@@ -151,6 +145,9 @@ class MoviesTypeFragment : Fragment() {
         _binding = null
     }
 }
+
+private fun MoviesTypeFragment.navigateToMovieDetails(movieId: Long) =
+    findNavController().navigate(MoviesTypeFragmentDirections.actionNavMoviesToNavMovie(movieId))
 
 private fun MoviesTypeFragment.navigateToSearch() =
     findNavController().navigate(MoviesTypeFragmentDirections.actionNavMoviesListToNavSearchMovie())

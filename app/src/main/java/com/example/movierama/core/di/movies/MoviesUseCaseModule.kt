@@ -6,7 +6,7 @@ import com.example.movierama.features.details.domain.usecases.CreditsUseCase
 import com.example.movierama.features.details.domain.usecases.MovieDetailsUseCase
 import com.example.movierama.features.details.domain.usecases.ReviewsUseCase
 import com.example.movierama.features.details.domain.usecases.SimilarMoviesUseCase
-import com.example.movierama.features.details.presentation.MovieUseCases
+import com.example.movierama.features.details.presentation.MovieDetailsUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +28,7 @@ class MoviesUseCaseModule {
         similarMoviesUseCase: SimilarMoviesUseCase,
         reviewsUseCase: ReviewsUseCase,
         creditsUseCase: CreditsUseCase,
-    ) = MovieUseCases(
+    ) = MovieDetailsUseCases(
         movieDetailsUseCase = movieDetailsUseCase,
         similarMoviesUseCase = similarMoviesUseCase,
         reviewsUseCase = reviewsUseCase,

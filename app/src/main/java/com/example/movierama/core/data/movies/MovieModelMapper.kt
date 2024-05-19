@@ -1,10 +1,10 @@
 package com.example.movierama.core.data.movies
 
 import com.example.common.myutils.roundToTwoDecimal
-import com.example.movierama.features.search.data.SearchedMovie
-import com.example.movierama.features.favourites.data.StoredFavouriteMovie
 import com.example.movierama.core.domain.URL_POSTER
 import com.example.movierama.core.presentation.utils.mapToDate
+import com.example.movierama.features.favourites.data.StoredFavouriteMovie
+import com.example.movierama.features.search.data.SearchedMovie
 
 fun Movie.toStoredFavouriteMovie() = StoredFavouriteMovie(
     id = id,

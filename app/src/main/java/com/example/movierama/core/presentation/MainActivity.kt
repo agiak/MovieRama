@@ -13,8 +13,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.example.common.myutils.addPrintingBackstack
 import com.example.movierama.R
-import com.example.movierama.databinding.ActivityMainBinding
 import com.example.movierama.core.presentation.base.MenuScreen
+import com.example.movierama.databinding.ActivityMainBinding
 import com.example.movierama.features.splash.SplashViewModel
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint

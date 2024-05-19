@@ -2,6 +2,7 @@ package com.example.movierama.features.details.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movierama.core.data.movies.toStoredFavouriteMovie
 import com.example.movierama.core.domain.dispatchers.IDispatchers
 import com.example.movierama.features.details.domain.usecases.CreditsDetails
 import com.example.movierama.features.details.domain.usecases.CreditsUseCase
@@ -12,9 +13,7 @@ import com.example.movierama.features.details.domain.usecases.ReviewsUseCase
 import com.example.movierama.features.details.domain.usecases.SimilarMoviesState
 import com.example.movierama.features.details.domain.usecases.SimilarMoviesUseCase
 import com.example.movierama.features.favourites.domain.FavouriteRepository
-import com.example.movierama.core.data.movies.toStoredFavouriteMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine

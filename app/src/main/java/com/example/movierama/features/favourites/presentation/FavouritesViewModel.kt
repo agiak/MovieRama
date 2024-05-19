@@ -2,7 +2,6 @@ package com.example.movierama.features.favourites.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movierama.core.domain.movies.MoviesRepository
 import com.example.movierama.core.data.movies.Movie
 import com.example.movierama.core.data.movies.toStoredFavouriteMovie
 import com.example.movierama.core.data.movies.toUiMovieList

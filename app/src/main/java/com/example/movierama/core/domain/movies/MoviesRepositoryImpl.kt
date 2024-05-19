@@ -1,7 +1,7 @@
 package com.example.movierama.core.domain.movies
 
-import com.example.movierama.core.domain.dispatchers.IDispatchers
 import com.example.movierama.core.data.movies.MoviesResponse
+import com.example.movierama.core.domain.dispatchers.IDispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

@@ -19,10 +19,10 @@ import com.example.common.myutils.setEndDrawable
 import com.example.common.myutils.setLightStatusBars
 import com.example.common.myutils.show
 import com.example.common.myutils.showKeyboard
-import com.example.movierama.databinding.FragmentSearchMovieBinding
 import com.example.movierama.core.presentation.customviews.DebounceViewActions
 import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
 import com.example.movierama.core.presentation.utils.showConnectionErrorDialog
+import com.example.movierama.databinding.FragmentSearchMovieBinding
 import com.example.movierama.network.data.ApiError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

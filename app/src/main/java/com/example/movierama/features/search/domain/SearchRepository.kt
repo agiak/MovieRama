@@ -1,9 +1,9 @@
 package com.example.movierama.features.search.domain
 
+import com.example.movierama.core.data.movies.MoviesResponse
 import com.example.movierama.core.domain.dispatchers.IDispatchers
 import com.example.movierama.features.search.data.StoredSearchSuggestion
 import com.example.movierama.storage.domain.sharedpreferences.PreferenceManager
-import com.example.movierama.core.data.movies.MoviesResponse
 import kotlinx.coroutines.withContext
 
 interface SearchRepository {

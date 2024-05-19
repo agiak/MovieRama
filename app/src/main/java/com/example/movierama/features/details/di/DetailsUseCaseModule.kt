@@ -1,12 +1,12 @@
 package com.example.movierama.features.details.di
 
 import com.example.movierama.core.domain.errorhadling.ErrorHandler
-import com.example.movierama.features.favourites.domain.FavouriteUseCase
+import com.example.movierama.features.details.domain.DetailsRepository
 import com.example.movierama.features.details.domain.usecases.CreditsUseCase
 import com.example.movierama.features.details.domain.usecases.MovieDetailsUseCase
 import com.example.movierama.features.details.domain.usecases.ReviewsUseCase
 import com.example.movierama.features.details.domain.usecases.SimilarMoviesUseCase
-import com.example.movierama.features.details.domain.DetailsRepository
+import com.example.movierama.features.favourites.domain.FavouriteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.core.data.movies.Movie
-import com.example.movierama.databinding.ItemHomeListBinding
 import com.example.movierama.core.data.movies.MoviesType
-import com.example.movierama.features.home.presentation.viewholders.HomeViewHolder
+import com.example.movierama.databinding.ItemHomeListBinding
 import com.example.movierama.features.home.data.HomeItemActions
+import com.example.movierama.features.home.data.HomeMovieTypeList
+import com.example.movierama.features.home.presentation.viewholders.HomeViewHolder
 import com.example.movierama.features.home.presentation.viewholders.nowplaying.NowPlayingViewHolder
 import com.example.movierama.features.home.presentation.viewholders.popular.PopularViewHolder
 import com.example.movierama.features.home.presentation.viewholders.toprated.TopRatedViewHolder
 import com.example.movierama.features.home.presentation.viewholders.upcoming.UpcomingViewHolder
-import com.example.movierama.features.home.data.HomeMovieTypeList
 import kotlinx.coroutines.flow.Flow
 
 class HomeMovieTypeAdapter(

@@ -2,11 +2,11 @@ package com.example.movierama.network.di
 
 import android.content.Context
 import com.example.movierama.BuildConfig
-import com.example.movierama.network.domain.interceptors.AuthInterceptor
-import com.example.movierama.network.domain.interceptors.ErrorHandlerInterceptor
+import com.example.movierama.core.domain.movies.MoviesService
 import com.example.movierama.network.domain.ConnectionController
 import com.example.movierama.network.domain.ConnectionControllerImpl
-import com.example.movierama.core.domain.movies.MoviesService
+import com.example.movierama.network.domain.interceptors.AuthInterceptor
+import com.example.movierama.network.domain.interceptors.ErrorHandlerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

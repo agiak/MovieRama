@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.common.myutils.disableFullScreenTheme
 import com.example.common.myutils.setLightStatusBars
-import com.example.movierama.databinding.FragmentSettingsBinding
 import com.example.movierama.core.presentation.base.MenuScreen
+import com.example.movierama.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -9,7 +9,6 @@ import com.example.movierama.core.data.movies.MoviesType
 import com.example.movierama.core.domain.movies.MoviesService
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 private const val PAGE_SIZE = 30

@@ -4,25 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.common.myutils.addTitleElevationAnimation
 import com.example.common.myutils.disableFullScreenTheme
-import com.example.common.myutils.hide
 import com.example.common.myutils.setLightStatusBars
 import com.example.common.myutils.show
 import com.example.movierama.core.data.movies.MoviesType
-import com.example.movierama.core.data.movies.getHomePosition
 import com.example.movierama.core.presentation.base.MenuScreen
 import com.example.movierama.databinding.FragmentHomeBinding
-import com.example.movierama.features.home.data.HomeState
-import com.example.movierama.features.home.presentation.viewholders.HomeViewHolder
-import com.example.movierama.features.home.presentation.viewholders.HomeViewHolderActions
+import com.example.movierama.features.home.data.HomeMovieTypeList
+import com.example.movierama.features.home.data.HomeItemActions
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -32,15 +27,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val movieTypeAdapter = HomeMovieTypeAdapter(
-        actions = HomeViewHolderActions(onItemClick = { movieId ->
-            navigateToMovieDetails(movieId)
-        }, onLabelClicked = { movieTypeLabel ->
-            navigateToMoviesList(movieTypeLabel)
-        }, onFetchingMovies = { moviesType ->
-            viewModel.fetchMore(moviesType)
-        })
-    )
+    private lateinit var movieTypeAdapter: HomeMovieTypeAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,24 +53,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initSubscriptions() {
-        lifecycleScope.launch {
-            viewModel.homeState.collect { state ->
-                binding.loader.isVisible = state is HomeState.Loading
-                binding.errorGroup.hide()
-                when (state) {
-                    is HomeState.FetchingMore -> {
-                        val viewHolder = binding.menuList.findViewHolderForLayoutPosition(state.moviesType.getHomePosition()) as? HomeViewHolder<*>
-                        viewHolder?.addMovies(state.movies)
-                    }
 
-                    is HomeState.Result -> movieTypeAdapter.submitList(state.data)
-                    is HomeState.Error -> handleError(state.error.asError(requireContext()))
-                    else -> {
-                        // Do nothing at the moment
-                    }
-                }
-            }
-        }
     }
 
     private fun handleError(error: String) {
@@ -91,14 +62,40 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViews() {
+
+        movieTypeAdapter = HomeMovieTypeAdapter(
+            actions = HomeItemActions(onItemClick = { movieId ->
+                navigateToMovieDetails(movieId)
+            }, onLabelClicked = { movieTypeLabel ->
+                navigateToMoviesList(movieTypeLabel)
+            }), lifecycleCoroutineScope = lifecycleScope, moviesTypeData = viewModel.moviesDataMap
+        )
+
         binding.searchIcon.setOnClickListener { navigateToSearch() }
         binding.menuList.addTitleElevationAnimation(listOf(binding.searchIcon, binding.toolbar))
         initList()
+
     }
 
     private fun initList() {
         binding.menuList.apply { adapter = movieTypeAdapter }
+        movieTypeAdapter.submitList(initialValue)
     }
+
+    private val initialValue = listOf(
+        HomeMovieTypeList(
+            MoviesType.POPULAR.name, emptyList(), MoviesType.POPULAR
+        ),
+        HomeMovieTypeList(
+            MoviesType.NOW_PLAYING.name, emptyList(), MoviesType.NOW_PLAYING
+        ),
+        HomeMovieTypeList(
+            MoviesType.UPCOMING.name, emptyList(), MoviesType.UPCOMING
+        ),
+        HomeMovieTypeList(
+            MoviesType.TOP_RATED.name, emptyList(), MoviesType.TOP_RATED
+        ),
+    )
 
     private fun initToolbar() {
         binding.toolbar.apply {

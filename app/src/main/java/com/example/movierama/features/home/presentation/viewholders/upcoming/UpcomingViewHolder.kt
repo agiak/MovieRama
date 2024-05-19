@@ -1,23 +1,31 @@
 package com.example.movierama.features.home.presentation.viewholders.upcoming
 
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.common.myutils.hide
+import com.example.common.myutils.show
 import com.example.movierama.databinding.ItemHomeListBinding
 import com.example.movierama.core.data.movies.Movie
 import com.example.movierama.features.home.data.HomeMovieTypeList
 import com.example.movierama.features.home.presentation.viewholders.HomeViewHolder
-import com.example.movierama.features.home.presentation.viewholders.HomeViewHolderActions
-import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
+import com.example.movierama.features.home.data.HomeItemActions
+import com.example.movierama.features.home.presentation.viewholders.HomeLoadStateAdapter
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class UpcomingViewHolder(
     private val binding: ItemHomeListBinding,
-    private val actions: HomeViewHolderActions,
-) : RecyclerView.ViewHolder(binding.root), HomeViewHolder<UpcomingAdapter.MovieViewHolder> {
+    private val actions: HomeItemActions,
+    private val lifecycle: LifecycleCoroutineScope,
+    private val data: Flow<PagingData<Movie>>?,
+) : RecyclerView.ViewHolder(binding.root), HomeViewHolder<UpcomingPagingAdapter.MovieViewHolder> {
 
-    override val adapter: ListAdapter<Movie, UpcomingAdapter.MovieViewHolder> = UpcomingAdapter(onClick = {
-        actions.onItemClick(it)
-    })
+    private val pagingAdapter: UpcomingPagingAdapter =
+        UpcomingPagingAdapter { actions.onItemClick(it) }
 
     override fun bind(selectedList: HomeMovieTypeList, position: Int) {
         with(selectedList) {
@@ -28,16 +36,24 @@ class UpcomingViewHolder(
 
             binding.list.apply {
                 layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
-                this.adapter = this@UpcomingViewHolder.adapter
-                this@UpcomingViewHolder.adapter.submitList(movies)
-                addOnLoadMoreListener { actions.onFetchingMovies(moviesType) }
+                this.adapter =
+                    pagingAdapter.withLoadStateFooter(HomeLoadStateAdapter(retry = { pagingAdapter.refresh() }))
+                pagingAdapter.addLoadStateListener {
+                    when(it.source.refresh) {
+                        is LoadState.Error -> {
+
+                        }
+                        LoadState.Loading -> binding.loader.show()
+                        is LoadState.NotLoading -> binding.loader.hide()
+                    }
+                }
+            }
+
+            lifecycle.launch {
+                data?.collectLatest {
+                    pagingAdapter.submitData(it)
+                }
             }
         }
-    }
-
-    override fun addMovies(newMovies: List<Movie>) {
-        val currentList = adapter.currentList.toMutableList()
-        currentList.addAll(newMovies)
-        adapter.submitList(currentList)
     }
 }

@@ -3,21 +3,27 @@ package com.example.movierama.features.home.presentation
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movierama.core.data.movies.Movie
 import com.example.movierama.databinding.ItemHomeListBinding
 import com.example.movierama.core.data.movies.MoviesType
 import com.example.movierama.features.home.presentation.viewholders.HomeViewHolder
-import com.example.movierama.features.home.presentation.viewholders.HomeViewHolderActions
+import com.example.movierama.features.home.data.HomeItemActions
 import com.example.movierama.features.home.presentation.viewholders.nowplaying.NowPlayingViewHolder
 import com.example.movierama.features.home.presentation.viewholders.popular.PopularViewHolder
 import com.example.movierama.features.home.presentation.viewholders.toprated.TopRatedViewHolder
 import com.example.movierama.features.home.presentation.viewholders.upcoming.UpcomingViewHolder
 import com.example.movierama.features.home.data.HomeMovieTypeList
+import kotlinx.coroutines.flow.Flow
 
 class HomeMovieTypeAdapter(
-    private val actions: HomeViewHolderActions,
+    private val actions: HomeItemActions,
+    private val lifecycleCoroutineScope: LifecycleCoroutineScope,
+    private val moviesTypeData: HashMap<MoviesType, Flow<PagingData<Movie>>>
 ) : ListAdapter<HomeMovieTypeList, RecyclerView.ViewHolder>(HomeMovieTypeDiffCallback()) {
 
     private lateinit var context: Context
@@ -28,20 +34,44 @@ class HomeMovieTypeAdapter(
         return when (viewType) {
             MoviesType.POPULAR.ordinal -> {
                 val binding = ItemHomeListBinding.inflate(inflater, parent, false)
-                PopularViewHolder(binding = binding, actions = actions)
+                PopularViewHolder(
+                    binding = binding,
+                    actions = actions,
+                    lifecycle = lifecycleCoroutineScope,
+                    data = moviesTypeData[MoviesType.POPULAR]
+                )
             }
+
             MoviesType.NOW_PLAYING.ordinal -> {
                 val binding = ItemHomeListBinding.inflate(inflater, parent, false)
-                NowPlayingViewHolder(binding = binding, actions = actions)
+                NowPlayingViewHolder(
+                    binding = binding,
+                    actions = actions,
+                    lifecycle = lifecycleCoroutineScope,
+                    data = moviesTypeData[MoviesType.NOW_PLAYING]
+                )
             }
+
             MoviesType.TOP_RATED.ordinal -> {
                 val binding = ItemHomeListBinding.inflate(inflater, parent, false)
-                TopRatedViewHolder(binding = binding, actions = actions)
+                TopRatedViewHolder(
+                    binding = binding,
+                    actions = actions,
+                    lifecycle = lifecycleCoroutineScope,
+                    data = moviesTypeData[MoviesType.TOP_RATED]
+                )
             }
+
             MoviesType.UPCOMING.ordinal -> {
                 val binding = ItemHomeListBinding.inflate(inflater, parent, false)
-                UpcomingViewHolder(binding = binding, actions = actions)
+                UpcomingViewHolder(
+                    binding = binding,
+                    actions = actions,
+                    lifecycle = lifecycleCoroutineScope,
+                    data = moviesTypeData[MoviesType.UPCOMING]
+                )
             }
+
             else -> throw IllegalArgumentException("Invalid view type: $viewType")
         }
     }
@@ -54,11 +84,17 @@ class HomeMovieTypeAdapter(
         getItem(position).moviesType.ordinal
 
     private class HomeMovieTypeDiffCallback : DiffUtil.ItemCallback<HomeMovieTypeList>() {
-        override fun areItemsTheSame(oldItem: HomeMovieTypeList, newItem: HomeMovieTypeList): Boolean {
+        override fun areItemsTheSame(
+            oldItem: HomeMovieTypeList,
+            newItem: HomeMovieTypeList
+        ): Boolean {
             return oldItem.label == newItem.label
         }
 
-        override fun areContentsTheSame(oldItem: HomeMovieTypeList, newItem: HomeMovieTypeList): Boolean {
+        override fun areContentsTheSame(
+            oldItem: HomeMovieTypeList,
+            newItem: HomeMovieTypeList
+        ): Boolean {
             return oldItem == newItem
         }
     }

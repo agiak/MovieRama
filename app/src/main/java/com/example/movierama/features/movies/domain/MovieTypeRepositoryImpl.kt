@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 private const val PAGE_SIZE = 30
+private const val FETCH_DISTANCE = 2
 
 class MovieTypeRepositoryImpl @Inject constructor(
     private val moviesService: MoviesService,
@@ -25,7 +26,8 @@ class MovieTypeRepositoryImpl @Inject constructor(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
                 maxSize = PAGE_SIZE + (PAGE_SIZE * 2),
-                enablePlaceholders = false
+                enablePlaceholders = false,
+                prefetchDistance = FETCH_DISTANCE
             ),
             pagingSourceFactory = { MoviesTypeDataSource(service = moviesService, moviesType = moviesType)}
         ).flow

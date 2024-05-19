@@ -128,6 +128,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun handleMovieDetails(movieDetailsState: MovieDetailsState) {
+        Timber.d("handleMovieDetails was called")
         binding.contentLoader.isVisible = movieDetailsState.isLoading
         if (movieDetailsState.hasError()) {
             showToast(movieDetailsState.errorMessage)
@@ -161,6 +162,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun handleReviews(reviewsState: ReviewsState) {
+        Timber.d("handle reviews was called")
         if (reviewsState.reviews.isEmpty()) {
             binding.reviewsGroup.isVisible = false
             return

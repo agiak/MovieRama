@@ -25,18 +25,20 @@
         android:paddingHorizontal="@dimen/main_margin_horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/loader"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label"
-        tools:listitem="@layout/item_similar_movie" />
+        tools:listitem="@layout/item_similar_movie"
+        tools:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/space_small"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/list"
+        android:visibility="visible"
+        android:layout_marginTop="@dimen/text_medium"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

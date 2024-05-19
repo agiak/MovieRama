@@ -3,18 +3,18 @@ package com.example.movierama.features.home.presentation.viewholders.toprated
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.R
-import com.example.movierama.databinding.ItemHomeTopRatedBinding
 import com.example.movierama.core.data.movies.Movie
-import com.example.movierama.features.home.presentation.viewholders.HomeMovieDiffCallback
 import com.example.movierama.core.presentation.utils.load
 import com.example.movierama.core.presentation.utils.loadCircle
+import com.example.movierama.databinding.ItemHomeTopRatedBinding
+import com.example.movierama.features.home.presentation.viewholders.HomeMovieDiffCallback
 
-class TopRatedAdapter(
-    private val onClick: (movieId: Long) -> Unit = {},
-) : ListAdapter<Movie, TopRatedAdapter.MovieViewHolder>(HomeMovieDiffCallback()) {
+class TopRatedPagingAdapter(
+    private val onClick: (movieId: Long) -> Unit,
+): PagingDataAdapter<Movie, TopRatedPagingAdapter.MovieViewHolder>(HomeMovieDiffCallback()) {
 
     private lateinit var context: Context
 
@@ -26,8 +26,8 @@ class TopRatedAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = getItem(position)
-        holder.bind(movie)
+        val item: Movie? = getItem(position)
+        item?.let { holder.bind(it) }
     }
 
     inner class MovieViewHolder(private val binding: ItemHomeTopRatedBinding) :

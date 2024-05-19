@@ -62,6 +62,7 @@
 
     <ProgressBar
         android:id="@+id/loader"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,6 +74,7 @@
         android:id="@+id/error_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:constraint_referenced_ids="error_image,error_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

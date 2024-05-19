@@ -1,9 +1,9 @@
 package com.example.movierama.core.domain.movies.usecases
 
-import com.example.movierama.core.domain.movies.MoviesRepository
-import com.example.movierama.core.data.movies.MoviesType
 import com.example.movierama.core.data.movies.MovieNetwork
 import com.example.movierama.core.data.movies.MoviesResponse
+import com.example.movierama.core.data.movies.MoviesType
+import com.example.movierama.core.domain.movies.MoviesRepository
 import com.google.gson.annotations.SerializedName
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject

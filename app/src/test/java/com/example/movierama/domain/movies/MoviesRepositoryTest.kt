@@ -1,18 +1,18 @@
 package com.example.movierama.domain.movies
 
+import com.example.movierama.core.data.movies.MoviesResponse
 import com.example.movierama.core.domain.movies.MoviesRepository
 import com.example.movierama.core.domain.movies.MoviesRepositoryImpl
+import com.example.movierama.core.domain.movies.MoviesService
 import com.example.movierama.domain.dispatchers.FakeDispatcherImpl
+import com.example.movierama.features.details.data.AuthorDetails
 import com.example.movierama.features.details.data.Cast
 import com.example.movierama.features.details.data.CreditsResponse
 import com.example.movierama.features.details.data.Crew
-import com.example.movierama.core.data.movies.MoviesResponse
-import com.example.movierama.features.details.data.AuthorDetails
 import com.example.movierama.features.details.data.ReviewNetwork
 import com.example.movierama.features.details.data.ReviewsResponse
 import com.example.movierama.features.details.data.SimilarMovieNetwork
 import com.example.movierama.features.details.data.SimilarResponse
-import com.example.movierama.core.domain.movies.MoviesService
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

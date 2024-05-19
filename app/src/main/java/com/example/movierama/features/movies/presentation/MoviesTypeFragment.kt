@@ -7,28 +7,20 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import com.example.common.myutils.addTitleElevationAnimation
 import com.example.common.myutils.disableFullScreenTheme
 import com.example.common.myutils.hide
 import com.example.common.myutils.scrollToUp
 import com.example.common.myutils.setLightStatusBars
-import com.example.common.myutils.show
 import com.example.common.myutils.showUpButtonListener
 import com.example.movierama.databinding.FragmentMoviesTypeBinding
-import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
-import com.example.movierama.core.presentation.utils.showConnectionErrorDialog
-import com.example.movierama.network.data.ApiError
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MoviesTypeFragment : Fragment() {

@@ -1,6 +1,5 @@
 package com.example.movierama.features.movies.di
 
-import com.example.movierama.core.domain.dispatchers.IDispatchers
 import com.example.movierama.core.domain.movies.MoviesService
 import com.example.movierama.features.movies.domain.MovieTypeRepositoryImpl
 import com.example.movierama.features.movies.domain.MoviesTypeRepository

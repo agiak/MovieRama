@@ -1,9 +1,9 @@
 package com.example.movierama.model
 
 import com.example.movierama.core.data.movies.Movie
-import com.example.movierama.core.data.movies.toHomeMovie
 import com.example.movierama.core.data.movies.MovieNetwork
 import com.example.movierama.core.data.movies.MoviesResponse
+import com.example.movierama.core.data.movies.toHomeMovie
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

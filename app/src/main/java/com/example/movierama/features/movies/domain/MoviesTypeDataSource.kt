@@ -10,7 +10,6 @@ import com.example.movierama.core.data.movies.MoviesType.POPULAR
 import com.example.movierama.core.data.movies.MoviesType.TOP_RATED
 import com.example.movierama.core.data.movies.MoviesType.UPCOMING
 import com.example.movierama.core.domain.movies.MoviesService
-import kotlinx.coroutines.delay
 import retrofit2.HttpException
 
 private const val STARTING_PAGE_INDEX = 1

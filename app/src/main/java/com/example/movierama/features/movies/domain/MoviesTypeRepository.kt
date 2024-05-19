@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MoviesTypeRepository {
 
-    fun getMovies(moviesType: MoviesType): Flow<PagingData<MovieNetwork>>
+    fun fetchMovies(moviesType: MoviesType): Flow<PagingData<MovieNetwork>>
 }

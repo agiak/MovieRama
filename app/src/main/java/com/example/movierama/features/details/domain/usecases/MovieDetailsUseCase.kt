@@ -1,9 +1,9 @@
 package com.example.movierama.features.details.domain.usecases
 
-import com.example.movierama.core.domain.errorhadling.ErrorHandler
-import com.example.movierama.features.favourites.domain.FavouriteUseCase
-import com.example.movierama.features.details.domain.DetailsRepository
 import com.example.movierama.core.data.movies.MovieDetails
+import com.example.movierama.core.domain.errorhadling.ErrorHandler
+import com.example.movierama.features.details.domain.DetailsRepository
+import com.example.movierama.features.favourites.domain.FavouriteUseCase
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

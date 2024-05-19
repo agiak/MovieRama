@@ -1,10 +1,10 @@
 package com.example.movierama.domain.useCases
 
-import com.example.movierama.domain.error_handling.FakeErrorHandler
 import com.example.movierama.core.domain.movies.MoviesRepository
-import com.example.movierama.features.details.domain.usecases.SimilarMoviesUseCase
+import com.example.movierama.domain.error_handling.FakeErrorHandler
 import com.example.movierama.features.details.data.SimilarMovieNetwork
 import com.example.movierama.features.details.data.SimilarResponse
+import com.example.movierama.features.details.domain.usecases.SimilarMoviesUseCase
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

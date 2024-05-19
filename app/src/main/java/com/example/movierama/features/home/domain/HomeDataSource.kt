@@ -5,12 +5,8 @@ import androidx.paging.PagingState
 import com.example.movierama.core.data.movies.MovieNetwork
 import com.example.movierama.core.data.movies.MoviesResponse
 import com.example.movierama.core.data.movies.MoviesType
-import com.example.movierama.core.domain.movies.MoviesRepository
 import com.example.movierama.core.domain.movies.MoviesService
-import kotlinx.coroutines.delay
 import retrofit2.HttpException
-import timber.log.Timber
-import javax.inject.Inject
 
 private const val STARTING_PAGE_INDEX = 1
 

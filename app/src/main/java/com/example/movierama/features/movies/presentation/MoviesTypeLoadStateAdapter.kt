@@ -7,7 +7,6 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierama.databinding.ItemLoadingMoviesTypeBinding
-import timber.log.Timber
 
 class MoviesTypeLoadStateAdapter(
     private val retry: () -> Unit

@@ -17,13 +17,12 @@ import com.example.common.myutils.enableFullScreenTheme
 import com.example.common.myutils.setLightStatusBars
 import com.example.common.myutils.showToast
 import com.example.movierama.R
+import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
 import com.example.movierama.databinding.FragmentMovieDetailsBinding
 import com.example.movierama.features.details.domain.usecases.CreditsDetails
 import com.example.movierama.features.details.domain.usecases.MovieDetailsState
 import com.example.movierama.features.details.domain.usecases.ReviewsState
 import com.example.movierama.features.details.domain.usecases.SimilarMoviesState
-import com.example.movierama.core.presentation.utils.addOnLoadMoreListener
-import com.example.movierama.core.presentation.utils.collectInViewScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber

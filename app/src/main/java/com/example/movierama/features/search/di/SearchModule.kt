@@ -3,8 +3,8 @@ package com.example.movierama.features.search.di
 import com.example.movierama.core.domain.dispatchers.IDispatchers
 import com.example.movierama.features.search.domain.SearchRepository
 import com.example.movierama.features.search.domain.SearchRepositoryImpl
-import com.example.movierama.storage.domain.sharedpreferences.PreferenceManager
 import com.example.movierama.features.search.domain.SearchService
+import com.example.movierama.storage.domain.sharedpreferences.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

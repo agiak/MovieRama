@@ -15,8 +15,8 @@ import com.example.common.myutils.show
 import com.example.movierama.core.data.movies.MoviesType
 import com.example.movierama.core.presentation.base.MenuScreen
 import com.example.movierama.databinding.FragmentHomeBinding
-import com.example.movierama.features.home.data.HomeMovieTypeList
 import com.example.movierama.features.home.data.HomeItemActions
+import com.example.movierama.features.home.data.HomeMovieTypeList
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,9 +52,7 @@ class HomeFragment : Fragment() {
         initSubscriptions()
     }
 
-    private fun initSubscriptions() {
-
-    }
+    private fun initSubscriptions() {}
 
     private fun handleError(error: String) {
         binding.errorGroup.show()

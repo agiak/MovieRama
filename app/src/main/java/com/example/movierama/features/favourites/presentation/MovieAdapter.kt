@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movierama.R
-import com.example.movierama.databinding.ItemMovieBinding
 import com.example.movierama.core.data.movies.Movie
+import com.example.movierama.databinding.ItemMovieBinding
 
 class MovieAdapter (
     private val onClick: (movie: Movie) -> Unit,
